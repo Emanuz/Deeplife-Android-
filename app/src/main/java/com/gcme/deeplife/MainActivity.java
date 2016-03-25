@@ -17,6 +17,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.gcme.deeplife.Fragments.DiscipleList;
+import com.gcme.deeplife.Fragments.Report_Page;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DiscipleList(), "Disciple List");
         adapter.addFragment(new Schedules(), "Schedules");
-        adapter.addFragment(new Report(), "Report");
+        adapter.addFragment(new Report_Page(), "Report");
 
         viewPager.setAdapter(adapter);
     }

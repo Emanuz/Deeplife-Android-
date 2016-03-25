@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
 
 
@@ -56,6 +57,8 @@ public class Login extends AppCompatActivity{
 		ed_phoneNumber.addTextChangedListener(new MyTextWatcher(ed_phoneNumber));
 		ed_password.addTextChangedListener(new MyTextWatcher(ed_phoneNumber));
 
+
+
 		setButtonActions();
 	}
 
@@ -69,7 +72,7 @@ public class Login extends AppCompatActivity{
 			@Override
 			public void onClick(View v) {
                 submitForm();
-                Intent register = new Intent(getApplicationContext(), AddDisciple.class);
+                Intent register = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(register);
             }
 
@@ -114,6 +117,7 @@ public class Login extends AppCompatActivity{
         if (ed_phoneNumber.getText().toString().trim().isEmpty()) {
             inputLayoutPhone.setError(getString(R.string.err_msg_phone));
             requestFocus(ed_phoneNumber);
+
             return false;
         }
         else {
