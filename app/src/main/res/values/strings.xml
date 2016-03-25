@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Deeplife</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="menu_camera_label">Search</string>
+
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="hint_phone_code">Code</string>
+
+    <string name="hint_country">Country</string>
+    <string name="add_disciple_pic">Add Picture</string>
+
+    <string name="hint_first_name">Full Name</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_add_disciple">ADD DISCIPLE</string>
+    <string name="add_schedule">ADD SCHEDULE</string>
+    <string name="schedule_with">Schedule with</string>
+    <string name="description">Description</string>
+
+    <string name="register_a_disciple">Please add your disciple correctly</string>
+
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Fullname</string>
+    <string name="cancle">Cancel</string>
+
+
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
+
+    <string name="draweropened">Opened</string>
+    <string name="drawerclosed">Closed</string>
+
+    <string-array name="drawerentry">
+        <item>Main Menu</item>
+        <item>Profile</item>
+        <item>WIN</item>
+        <item>BUILD</item>
+        <item>SEND</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>
