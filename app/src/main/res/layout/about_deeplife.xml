@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+<FrameLayout
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/bg_login"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/splashlogo_ldpi"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:text="Deep life is a movement started by Campus Crusade for Christ Southern and Eastern Africa(CCCSEA) Area aiming to build deep spiritual movement among our area.
+
+DeepLife System is developed by CCCSEA in creating a committed, responsible and accountable mentorship to discipleship relationship.  "
+            android:background="#ffffff"
+            android:padding="15dp"
+            android:gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#ffffff"
+                android:text="info@cccsea.org"/>
+            <TextView
+                android:id="@+id/txt_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="#ffffff"
+                android:text="https://www.facebook.com/seadeeplife"/>
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSecondary"
+        android:layout_gravity="bottom|center_horizontal"
+        android:textSize="18dp"
+        android:text="Ok"/>
+
+</FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

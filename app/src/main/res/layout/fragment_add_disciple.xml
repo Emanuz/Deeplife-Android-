@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/add_disciple_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+       >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/add_disciple_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="10dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_collapseMode="parallax" />
+
+        </android.support.design.widget.AppBarLayout>
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                >
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cardElevation="10dp"
+                    >
+
+                    <LinearLayout
+                        style="@style/Widget.CardContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:gravity="center"
+                            android:textSize="20dp"
+                            android:text="Please fill the data carefully"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="25dp"
+            >
+
+    <LinearLayout
+        style="@style/Widget.CardContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/add_disciple_inputtxt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/adddisciple_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="@string/hint_first_name"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/input_login"
+                    android:textColorHint="@color/input_login_hint" />
+</android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/add_disciple_inputtxt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/add_discple_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="@string/hint_email"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/input_login"
+                    android:textColorHint="@color/input_login_hint" />
+</android.support.design.widget.TextInputLayout>
+                <Spinner
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_disciple_countries_spinner"
+                    android:background="@color/white"
+                    android:layout_marginBottom="10dp"
+
+                    >
+
+                </Spinner>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/add_disciple_phone_country_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="@string/hint_phone_code"
+                    android:inputType="phone"
+                    android:focusable="false"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/input_login"
+                    android:textColorHint="@color/input_login_hint" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:text="-"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/add_disciple_inputtxt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/add_disciple_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:hint="@string/hint_phone_number"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/input_login"
+                    android:textColorHint="@color/input_login_hint" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:id="@+id/gender_spinner"
+                    android:entries="@array/gender"
+                    >
+
+                </Spinner>
+
+
+                <!-- Add Button -->
+
+
+
+                <Button
+                    android:id="@+id/btn_add_disciple"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/btn_login_bg"
+                    android:text="@string/btn_add_disciple"
+                    android:textColor="@color/btn_login" />
+            </LinearLayout>
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+   </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+

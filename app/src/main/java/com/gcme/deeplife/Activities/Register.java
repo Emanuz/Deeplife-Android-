@@ -4,17 +4,23 @@ package com.gcme.deeplife.Activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gcme.deeplife.Models.CountryDetails;
 import com.gcme.deeplife.R;
@@ -31,10 +37,12 @@ public class Register extends AppCompatActivity{
 
 	private Button  Register;
 	private EditText Full_Name,Email,Phone,Country,Pass,Ed_Codes;
-	private Spinner sp_countries, sp_gender;
+    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword;
+
+    private Spinner sp_countries, sp_gender;
 	private ProgressDialog pDialog;
-	final String[] list =  CountryDetails.country;
-	final String[] codes = CountryDetails.code;
+	public static String[] list =  CountryDetails.country;
+	public static String[] codes = CountryDetails.code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,15 @@ public class Register extends AppCompatActivity{
         Register = (Button) findViewById(R.id.btnregister);
         sp_gender = (Spinner) findViewById(R.id.register_gender_spinner);
         sp_countries = (Spinner) findViewById(R.id.signup_countries_spinner);
+
+
+        inputLayoutName = (TextInputLayout) findViewById(R.id.signup_txtinput_firstname);
+        inputLayoutEmail = (TextInputLayout) findViewById(R.id.signup_txtinput_email);
+        inputLayoutPassword = (TextInputLayout) findViewById(R.id.signup_txtinput_password);
+
+        Full_Name.addTextChangedListener(new MyTextWatcher(Full_Name));
+        Email.addTextChangedListener(new MyTextWatcher(Email));
+        Pass.addTextChangedListener(new MyTextWatcher(Pass));
 
         /*
             Fill the spinners with data from Country name and code pair.
@@ -95,6 +112,8 @@ public class Register extends AppCompatActivity{
 
 			@Override
 			public void onClick(View arg0) {
+
+                submitForm();
 				// TODO Auto-generated method stub
 
 /*				List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -149,6 +168,101 @@ public class Register extends AppCompatActivity{
             main_text.setText(object[position]);
 
             return mySpinner;
+        }
+    }
+
+
+
+    private void submitForm() {
+        if (!validateName()) {
+            return;
+        }
+
+        if (!validateEmail()) {
+            return;
+        }
+
+        if (!validatePassword()) {
+            return;
+        }
+
+        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean validateName() {
+        if (Full_Name.getText().toString().trim().isEmpty()) {
+            inputLayoutName.setError(getString(R.string.err_msg_name));
+            requestFocus(Full_Name);
+            return false;
+        } else {
+            inputLayoutName.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateEmail() {
+        String email = Email.getText().toString().trim();
+
+        if (email.isEmpty() || !isValidEmail(email)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus(Email);
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+        if (Pass.getText().toString().trim().isEmpty()) {
+            inputLayoutPassword.setError(getString(R.string.err_msg_password));
+            requestFocus(Pass);
+            return false;
+        } else {
+            inputLayoutPassword.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.signup_first_name:
+                    validateName();
+                    break;
+                case R.id.signup_email:
+                    validateEmail();
+                    break;
+                case R.id.signup_password:
+                    validatePassword();
+                    break;
+            }
         }
     }
 }

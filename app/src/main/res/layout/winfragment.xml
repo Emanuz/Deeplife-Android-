@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    >
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:id="@+id/win_image"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="20dp"
+            android:textColor="@color/bg_login"
+            android:text="dgasdgasl dkgjalks jd;lkgja;slkdjg;alskjdg; klajs;lkdgja;sd"
+            android:id="@+id/win_question" />
+
+        <RadioGroup
+            android:id="@+id/win_rg_yes_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/rb_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"/>
+            <RadioButton
+                android:id="@+id/rb_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"/>
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/win_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Note: choose first to go to next question. "/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>

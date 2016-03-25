@@ -41,6 +41,12 @@
     <string name="draweropened">Opened</string>
     <string name="drawerclosed">Closed</string>
 
+    <string name="err_msg_name">Enter your full name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_email_phone">Enter valid email address or phone number</string>
+    <string name="err_msg_password">Enter the password</string>
+    <string name="err_msg_phone">Enter the phone</string>
+
     <string-array name="drawerentry">
         <item>Main Menu</item>
         <item>Profile</item>
