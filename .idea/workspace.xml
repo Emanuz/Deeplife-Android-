@@ -45,27 +45,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DiscipleList.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java">
+      <file leaf-file-name="disciple_profile_page.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/disciple_profile_page.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
+            <state vertical-scroll-proportion="-2.586207">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
-                <element signature="e#1053#1054#0" expanded="true" />
-                <element signature="e#1103#1104#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_disciples_list.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_disciples_list.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.862069">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding>
-                <element signature="e#941#981#0" expanded="true" />
-                <element signature="e#1281#1300#0" expanded="true" />
+                <element signature="e#2182#2222#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -74,11 +60,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Report_Page.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/Report_Page.java">
+      <file leaf-file-name="app_bar_main.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="53" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
+            <state vertical-scroll-proportion="-3.5172415">
+              <caret line="42" column="39" selection-start-line="42" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Disciple_Profile.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Disciple_Profile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7290503">
+              <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,42 +85,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Login.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Login.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.52089137">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-              <folding>
-                <element signature="e#1877#2133#0" expanded="true" />
-                <element signature="e#2132#2133#0" expanded="true" />
-                <element signature="e#2496#2497#0" expanded="true" />
-                <element signature="e#2520#2521#0" expanded="true" />
-                <element signature="e#3296#3332#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/MainActivity.java">
+      <file leaf-file-name="DiscipleList.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
-              <folding />
+              <caret line="36" column="44" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="44" />
+              <folding>
+                <element signature="e#1235#1236#0" expanded="true" />
+                <element signature="e#1285#1286#0" expanded="true" />
+                <element signature="e#2676#2909#0" expanded="true" />
+                <element signature="e#2908#2909#0" expanded="true" />
+                <element signature="e#5296#5558#0" expanded="true" />
+                <element signature="e#5557#5558#0" expanded="true" />
+              </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.413794">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -1727,7 +1704,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Splash.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/register.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Register.java" />
@@ -1750,15 +1726,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/winbuild_thankyou.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/winactivity.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/FileManager/FileManager.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Adapters/ReportItems_Adapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_disciple.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/Report_Page.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_disciples_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/report_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Login.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_disciples_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/disciple_profile_page.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Disciple_Profile.java" />
       </list>
     </option>
   </component>
@@ -1863,6 +1842,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DeepLife-Android-c4tk" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1983,11 +1980,12 @@
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0accda370c591d8a" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\src\main\res\drawable" />
       <recent name="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\src\main\res\layout" />
       <recent name="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\src\main\java\com\gcme\deeplife\Activities" />
       <recent name="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\src\main\res\menu" />
@@ -1996,10 +1994,10 @@
       <recent name="com.gcme.deeplife.Fragments" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.gcme.deeplife.Activities" />
       <recent name="com.gcme.deeplife.Adapters" />
       <recent name="com.gcme.deeplife.Fragments" />
       <recent name="com.gcme.deeplife.FileManager" />
-      <recent name="com.gcme.deeplife.Activities" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -2183,7 +2181,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46175244" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.46314326" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35959885" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962447" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2211,30 +2209,19 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Disciple_Profile.java</url>
+          <line>2</line>
+          <properties />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/AddDisciple.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="43" selection-start-line="19" selection-start-column="43" selection-end-line="19" selection-end-column="43" />
-          <folding>
-            <element signature="e#2757#2758#0" expanded="true" />
-            <element signature="e#2803#2804#0" expanded="true" />
-            <element signature="e#2908#3835#0" expanded="true" />
-            <element signature="e#3834#3835#0" expanded="true" />
-            <element signature="e#3882#3883#0" expanded="true" />
-            <element signature="e#3906#3907#0" expanded="true" />
-            <element signature="e#5157#5189#0" expanded="true" />
-            <element signature="e#5482#5515#0" expanded="true" />
-            <element signature="e#5761#5794#0" expanded="true" />
-            <element signature="e#6359#6360#0" expanded="true" />
-            <element signature="e#6384#6385#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_disciple.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2267,21 +2254,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63987136">
-          <caret line="54" column="58" selection-start-line="54" selection-start-column="58" selection-end-line="54" selection-end-column="58" />
-          <folding>
-            <element signature="e#259#277#0" expanded="true" />
-            <element signature="e#439#457#0" expanded="true" />
-            <element signature="e#759#777#0" expanded="true" />
-            <element signature="e#1148#1166#0" expanded="true" />
-            <element signature="e#1470#1488#0" expanded="true" />
-            <element signature="e#1794#1812#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2382,17 +2354,6 @@
           <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0764045">
-          <caret line="2" column="27" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/winfragment.xml">
@@ -2596,17 +2557,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_disciple.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5235955">
-          <caret line="57" column="51" selection-start-line="57" selection-start-column="51" selection-end-line="57" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/register.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.40898877">
@@ -2618,58 +2568,12 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.413794">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
-          <folding>
-            <element signature="e#1053#1054#0" expanded="true" />
-            <element signature="e#1103#1104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/Report_Page.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="53" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37883008">
           <caret line="16" column="36" selection-start-line="16" selection-start-column="36" selection-end-line="16" selection-end-column="36" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_disciples_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.862069">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#941#981#0" expanded="true" />
-            <element signature="e#1281#1300#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/report_page.xml">
@@ -2685,14 +2589,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="39" selection-start-line="36" selection-start-column="39" selection-end-line="36" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/view/Window.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33147633">
@@ -2706,22 +2602,150 @@
         <state vertical-scroll-proportion="0.52089137">
           <caret line="8397" column="7" selection-start-line="8397" selection-start-column="7" selection-end-line="8397" selection-end-column="7" />
           <folding>
-            <element signature="e#327471#327472#0" expanded="true" />
-            <element signature="e#327523#327524#0" expanded="true" />
+            <element signature="e#327471#327472#0" expanded="false" />
+            <element signature="e#327523#327524#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/pic2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/Report_Page.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5">
+          <caret line="38" column="53" selection-start-line="38" selection-start-column="53" selection-end-line="38" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52089137">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.30088496">
+          <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
           <folding>
-            <element signature="e#1877#2133#0" expanded="true" />
-            <element signature="e#2132#2133#0" expanded="true" />
-            <element signature="e#2496#2497#0" expanded="true" />
-            <element signature="e#2520#2521#0" expanded="true" />
-            <element signature="e#3296#3332#0" expanded="true" />
+            <element signature="e#1877#2133#0" expanded="false" />
+            <element signature="e#2132#2133#0" expanded="false" />
+            <element signature="e#2496#2497#0" expanded="false" />
+            <element signature="e#2520#2521#0" expanded="false" />
+            <element signature="e#3296#3332#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="57" selection-start-line="65" selection-start-column="57" selection-end-line="65" selection-end-column="57" />
+          <folding>
+            <element signature="e#259#277#0" expanded="true" />
+            <element signature="e#439#457#0" expanded="true" />
+            <element signature="e#759#777#0" expanded="true" />
+            <element signature="e#1148#1166#0" expanded="true" />
+            <element signature="e#1470#1488#0" expanded="true" />
+            <element signature="e#1794#1812#0" expanded="true" />
+            <element signature="e#2262#2280#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_disciple.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4863222">
+          <caret line="186" column="41" selection-start-line="186" selection-start-column="41" selection-end-line="186" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_disciples_list.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38905776">
+          <caret line="30" column="51" selection-start-line="30" selection-start-column="51" selection-end-line="30" selection-end-column="51" />
+          <folding>
+            <element signature="e#941#981#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4273743">
+          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Fragments/DiscipleList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="44" selection-start-line="36" selection-start-column="33" selection-end-line="36" selection-end-column="44" />
+          <folding>
+            <element signature="e#1235#1236#0" expanded="true" />
+            <element signature="e#1285#1286#0" expanded="true" />
+            <element signature="e#2676#2909#0" expanded="true" />
+            <element signature="e#2908#2909#0" expanded="true" />
+            <element signature="e#5296#5558#0" expanded="true" />
+            <element signature="e#5557#5558#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20668693">
+          <caret line="4" column="35" selection-start-line="4" selection-start-column="35" selection-end-line="4" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.5172415">
+          <caret line="42" column="39" selection-start-line="42" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/pic.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/disciple_profile_page.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.586207">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="e#2182#2222#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gcme/deeplife/Activities/Disciple_Profile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7290503">
+          <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

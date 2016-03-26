@@ -1,9 +1,11 @@
 package com.gcme.deeplife.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,11 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gcme.deeplife.Activities.AddDisciple;
+import com.gcme.deeplife.Activities.Disciple_Profile;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
 
@@ -27,7 +30,7 @@ public class DiscipleList extends Fragment {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    Button newsBut;
+    FloatingActionButton add_disciple;
     private ListView lv_disciple;
 
     public DiscipleList() {
@@ -47,6 +50,8 @@ public class DiscipleList extends Fragment {
 
 
         lv_disciple = (ListView) view.findViewById(R.id.ls_disciple);
+        add_disciple = (FloatingActionButton) view.findViewById(R.id.disciple_list_add_disciple);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             lv_disciple.setNestedScrollingEnabled(true);
         }
@@ -72,6 +77,15 @@ public class DiscipleList extends Fragment {
         disciplesList.add(d);
 
         lv_disciple.setAdapter(new MyDiscipleListAdapter(getContext(), (ArrayList<Disciples>) disciplesList));
+
+        add_disciple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddDisciple.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
 
     }
@@ -135,6 +149,14 @@ public class DiscipleList extends Fragment {
                 iv_profilepic.setImageBitmap(BitmapFactory.decodeFile(picture, options));
                 iv_profilepic.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), Disciple_Profile.class);
+                    startActivity(intent);
+                }
+            });
 
             return convertView;
         }
