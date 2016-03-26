@@ -40,20 +40,18 @@ public class Disciple_Profile extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.disciple_profile_page);
-        profile_image = (ImageView) findViewById(R.id.disciple_profile_image);
-        //profile_image.setImageResource(R.drawable.disciple_pic);
         setSupportActionBar((Toolbar) findViewById(R.id.disciple_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.disciple_profile_collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Roger Mulugeta");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
+        profile_image = (ImageView) findViewById(R.id.disciple_profile_image);
+        //profile_image.setImageResource(R.drawable.disciple_pic);
+
 /*        dbadapter = new Database(this);
         dbhelper = new DeepLife();
 */
-
-
-
 
     }
 
@@ -70,9 +68,7 @@ public class Disciple_Profile extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
-
         return super.onOptionsItemSelected(item);
     }
 
