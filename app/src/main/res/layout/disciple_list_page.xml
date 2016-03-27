@@ -14,6 +14,7 @@ tools:context="info.androidhive.fab.MainActivity">
 </android.support.design.widget.AppBarLayout>
 
 <android.support.v7.widget.RecyclerView
+    android:layout_marginTop="10dp"
     android:id="@+id/my_recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"

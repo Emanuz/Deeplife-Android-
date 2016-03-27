@@ -34,5 +34,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'me.tatarka.support:jobscheduler:0.1.1'
     compile 'com.github.kittinunf.fuel:fuel-android:1.1.2'
+    compile 'com.github.airk000:trigger:1.0.0'
 
 }

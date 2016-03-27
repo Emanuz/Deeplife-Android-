@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="trigger-1.0.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.airk000/trigger/1.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.airk000/trigger/1.0.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.airk000/trigger/1.0.0/5311e2f47d6de1264f8405fdf11aa9f7d7770579/trigger-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

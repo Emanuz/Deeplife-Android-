@@ -8,18 +8,20 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.gcme.deeplife.Models.Disciples;
+import com.gcme.deeplife.Models.Logs;
 import com.gcme.deeplife.Models.Question;
 import com.gcme.deeplife.Models.QuestionAnswer;
 import com.gcme.deeplife.Models.Schedule;
+import com.gcme.deeplife.Models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
 	private SQLiteDatabase myDatabase;
 	private SQL_Helper mySQL;
 	private Context myContext;
-
     public Database(Context context){
         myContext = context;
         mySQL = new SQL_Helper(myContext);
@@ -28,28 +30,15 @@ public class Database {
         mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
         mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
-        mySQL.createTables(DeepLife.Table_QUESTION_LIST,DeepLife.QUESTION_LIST_FIELDS);
+        mySQL.createTables(DeepLife.Table_QUESTIONS,DeepLife.QUESTIONS_FIELDS);
         mySQL.createTables(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS);
-        mySQL.createTables(DeepLife.Table_Reports, DeepLife.REPORTS_FIELDS);
+        mySQL.createTables(DeepLife.Table_Reports, DeepLife.REPORT_FIELDS);
+        mySQL.createTables(DeepLife.Table_Report_Forms, DeepLife.REPORT_FORM_FIELDS);
     }
 
     public void dispose(){
         myDatabase.close();
     }
-
-
-    public void populateQuestions(){
-        ContentValues cv = new ContentValues();
-        cv.put(DeepLife.QUESTION_LIST_FIELDS[0],"WIN");
-        cv.put(DeepLife.QUESTION_LIST_FIELDS[1],"Have you been following your disciple? ");
-        cv.put(DeepLife.QUESTION_LIST_FIELDS[2],"This is to inform that you are properly following you disciple");
-        cv.put(DeepLife.QUESTION_LIST_FIELDS[3], "Mandatory");
-
-        long state = insert(DeepLife.Table_QUESTION_LIST,cv);
-        if(state!=-1) Log.i("Deep Life", "Database row successfully added!!!");
-    }
-
-
     public long insert(String DB_Table,ContentValues cv){
         long state = myDatabase.insert(DB_Table, null, cv);
         return state;
@@ -70,21 +59,12 @@ public class Database {
     }
     public int count(String DB_Table){
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-        return c.getCount();
+        if(c != null){
+            return c.getCount();
+        }else{
+            return 0;
+        }
     }
-
-    public int count_Questions(String DB_Table, String Category){
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
-        return c.getCount();
-    }
-
-    public long checkExistence(String Db_Table,String column,String id, String build){
-
-        Cursor cursor = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' and "+DeepLife.QUESTION_ANSWER_FIELDS[3]+" = '"+ build+"'",null,null,null,null);
-        return cursor.getCount();
-
-    }
-
     public Cursor getAll(String DB_Table){
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
         return c;
@@ -125,22 +105,6 @@ public class Database {
         name = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_FIELDS[0]));
         return name;
     }
-
-
-/*
-    public Cursor get_value_by_colum_id(String Db_Table, String column, String id,String build){
-        Cursor c = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' &",null,null,null,null);
-        c.moveToFirst();
-        for(int i = 0;i < c.getCount();i++){
-            c.moveToPosition(i);
-            String qId = c.getString(c.getColumnIndex(DeepLife.QUESTION_ANSWER_FIELDS[1]));
-            Cursor question = get_value_by_ID(DeepLife.Table_QUESTION_LIST,qId);
-
-        }
-    }
-*/
-
-
     public long Delete_By_ID(String DB_Table,int pos){
         String[] args = {""+pos};
         long val = myDatabase.delete(DB_Table, "id = ?", args);
@@ -148,7 +112,7 @@ public class Database {
     }
     public long Delete_By_Column(String DB_Table,String column,String val){
         String[] args = {val};
-        long v = myDatabase.delete(DB_Table, column+" = ?", args);
+        long v = myDatabase.delete(DB_Table, column + " = ?", args);
         return v;
     }
     public void deleteTop(String DB_Table){
@@ -192,26 +156,6 @@ public class Database {
 		}
 		return Name;
 	}
-
-    public ArrayList<Question> get_All_Questions(String Category){
-        String DB_Table = DeepLife.Table_QUESTION_LIST;
-        ArrayList<Question> found = new ArrayList<Question>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
-        c.moveToFirst();
-
-        for(int i=0;i<c.getCount();i++){
-            c.moveToPosition(i);
-            Question dis = new Question();
-            dis.setId(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[0])));
-            dis.setCategory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[1])));
-            dis.setDescription(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[2])));
-            dis.setNote(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[3])));
-            dis.setMandatory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[4])));
-            found.add(dis);
-        }
-        return found;
-    }
-
     public ArrayList<Disciples> getDisciples(){
         String DB_Table = DeepLife.Table_DISCIPLES;
         ArrayList<Disciples> found = new ArrayList<Disciples>();
@@ -296,6 +240,39 @@ public class Database {
         }
         return found;
     }
+    public User getUser(){
+        int pos = -1;
+        Cursor c = myDatabase.query(DeepLife.Table_USER, DeepLife.USER_COLUMN, null, null, null, null, null);
+        User newUser = new User();
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            newUser.setId(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[0])));
+            newUser.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[2])));
+            newUser.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
+        }
+        return newUser;
+    }
+    public ArrayList<Logs> getSendLogs(){
+        ArrayList<Logs> Found = new ArrayList<Logs>();
+        Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+                Log.i("SyncService", "Database: \n" + str + " AND "+DeepLife.Sync_Tasks[0]);
+                if(DeepLife.Sync_Tasks[0].equals(str)){
+                    Logs newLogs = new Logs();
+                    newLogs.setId(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0])));
+                    newLogs.setType(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[1])));
+                    newLogs.setTask(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2])));
+                    newLogs.setValue(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3])));
+                    Found.add(newLogs);
+                }
+            }
+        }
+        return Found;
+    }
     private String[] getColumns(String DB_Table){
         String[] strs = null;
         if(DB_Table == DeepLife.Table_DISCIPLES){
@@ -306,12 +283,14 @@ public class Database {
             strs = DeepLife.USER_COLUMN;
         }else if(DB_Table == DeepLife.Table_SCHEDULES){
             strs = DeepLife.SCHEDULES_COLUMN;
-        } else if(DB_Table == DeepLife.Table_QUESTION_LIST){
-            strs = DeepLife.QUESTION_LIST_COLUMN;
+        } else if(DB_Table == DeepLife.Table_QUESTIONS){
+            strs = DeepLife.QUESTIONS_COLUMN;
         } else if(DB_Table == DeepLife.Table_QUESTION_ANSWER){
             strs = DeepLife.QUESTION_ANSWER_COLUMN;
         } else if(DB_Table == DeepLife.Table_Reports){
-            strs = DeepLife.REPORTS_COLUMN;
+            strs = DeepLife.REPORT_COLUMN;
+        }else if(DB_Table == DeepLife.Table_Report_Forms){
+            strs = DeepLife.REPORT_FORM_COLUMN;
         }
         return strs;
     }
