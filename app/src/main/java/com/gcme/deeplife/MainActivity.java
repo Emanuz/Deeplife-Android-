@@ -16,7 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.gcme.deeplife.Alarm.AlarmReciever;
+import com.gcme.deeplife.Disciples.DiscipleListFragment;
 import com.gcme.deeplife.Fragments.DiscipleList;
 import com.gcme.deeplife.Fragments.Report_Page;
 
@@ -48,7 +51,9 @@ public class MainActivity extends AppCompatActivity
         });
 
         */
-
+        AlarmReciever alarmReciever = new AlarmReciever();
+        alarmReciever.setAlarm(this);
+        Toast.makeText(this,"Alarm Set",Toast.LENGTH_LONG).show();
         image = (ImageView) findViewById(R.id.image);
         image.setImageResource(R.drawable.splash);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new DiscipleList(), "Disciple List");
+        adapter.addFragment(new DiscipleListFragment(), "Disciple List");
         adapter.addFragment(new Schedules(), "Schedules");
         adapter.addFragment(new Report_Page(), "Report");
 
