@@ -1,15 +1,20 @@
 package com.gcme.deeplife.Disciples;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gcme.deeplife.Activities.AddDisciple;
+import com.gcme.deeplife.Activities.Disciple_Profile;
 import com.gcme.deeplife.R;
 
 import java.util.ArrayList;
@@ -22,6 +27,9 @@ public class DiscipleListFragment extends Fragment {
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
+
+    FloatingActionButton add_disciple;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +42,9 @@ public class DiscipleListFragment extends Fragment {
         myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
+        add_disciple = (FloatingActionButton) view.findViewById(R.id.disciple_list_add_disciple);
+        myContext = getActivity();
+
         ArrayList<DiscipleObject> items = new ArrayList<DiscipleObject>();
         items.add(new DiscipleObject());
         items.add(new DiscipleObject());
@@ -41,7 +52,31 @@ public class DiscipleListFragment extends Fragment {
         items.add(new DiscipleObject());
         mAdapter = new DiscipleListAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);
-        myContext = getActivity();
+        myRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+                Intent intent = new Intent(getActivity(), Disciple_Profile.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
+        add_disciple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddDisciple.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
     public static void update_view(){

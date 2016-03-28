@@ -1,5 +1,6 @@
 package com.gcme.deeplife;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -18,9 +19,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Activities.AboutDeepLife;
+import com.gcme.deeplife.Activities.UserProfile.User_Profile;
 import com.gcme.deeplife.Alarm.AlarmReciever;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
-import com.gcme.deeplife.Fragments.DiscipleList;
 import com.gcme.deeplife.Fragments.Report_Page;
 
 import java.util.ArrayList;
@@ -33,28 +35,18 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    static ImageView image;
+    static ImageView image, btn_navigation_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-            /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        */
         AlarmReciever alarmReciever = new AlarmReciever();
         alarmReciever.setAlarm(this);
         Toast.makeText(this,"Alarm Set",Toast.LENGTH_LONG).show();
         image = (ImageView) findViewById(R.id.image);
+        btn_navigation_back = (ImageView) findViewById(R.id.image);
         image.setImageResource(R.drawable.splash);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -113,11 +105,6 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.menu_search) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -126,15 +113,19 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Intent intent;
         if (id == R.id.nav_disciples) {
-            // Handle the camera action
+            viewPager.setCurrentItem(0, true);
         } else if (id == R.id.nav_schedules) {
-
+            viewPager.setCurrentItem(1, true);
         } else if (id == R.id.nav_report) {
-
+            viewPager.setCurrentItem(3, true);
+        } else if (id == R.id.nav_learning) {
+            intent = new Intent(this, User_Profile.class);
+            startActivity(intent);
         } else if (id == R.id.nav_profile) {
-
+            intent = new Intent(this, User_Profile.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
 
         } else if (id == R.id.nav_share) {
@@ -143,6 +134,11 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_send) {
 
         }
+        else if (id == R.id.nav_about) {
+            intent = new Intent(this, AboutDeepLife.class);
+            startActivity(intent);
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

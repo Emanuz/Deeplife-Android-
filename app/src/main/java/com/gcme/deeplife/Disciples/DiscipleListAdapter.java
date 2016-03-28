@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.gcme.deeplife.Activities.Disciple_Profile;
 import com.gcme.deeplife.R;
+
 import java.util.ArrayList;
 
 /**
@@ -36,9 +39,8 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
         @Override
         public void onClick(View v) {
-            // myClickListener.onItemClick(getAdapterPosition(), v);
-           // Intent intent = new Intent(myContext,NewsFeed_Detail.class);
-           // myContext.startActivity(intent);
+            Intent intent = new Intent(myContext,Disciple_Profile.class);
+            myContext.startActivity(intent);
         }
 
     }
@@ -50,10 +52,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         this.myContext = context;
 
     }
+
     @Override
     public int getItemCount() {
         return DiscipleLists.size();
     }
+
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.disciple_list_item,parent,false);

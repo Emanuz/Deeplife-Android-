@@ -24,7 +24,6 @@
     <string name="add_schedule">ADD SCHEDULE</string>
     <string name="schedule_with">Schedule with</string>
     <string name="description">Description</string>
-
     <string name="register_a_disciple">Please add your disciple correctly</string>
 
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
@@ -32,7 +31,8 @@
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
     <string name="name">Fullname</string>
-    <string name="cancle">Cancel</string>
+    <string name="cancle">Cancel</string>    <string name="edit">Edit</string>
+
 
 
     <string name="menu_save">Save</string>

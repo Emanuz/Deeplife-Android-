@@ -15,14 +15,26 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Report" />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/nav_learning"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Profiile" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Log out" />
+            android:title="Learning Tools" />
+
     </group>
+
+
+
+    <item android:title="My Account">
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Profiile" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Log out" />
+        </menu>
+    </item>
 
     <item android:title="Communicate">
         <menu>
@@ -34,6 +46,10 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Facebook" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_send"
+                android:title="About" />
         </menu>
     </item>
 

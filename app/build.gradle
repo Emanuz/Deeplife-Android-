@@ -35,4 +35,8 @@ dependencies {
     compile 'me.tatarka.support:jobscheduler:0.1.1'
     compile 'com.github.kittinunf.fuel:fuel-android:1.1.2'
 
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+
+
 }
