@@ -110,11 +110,11 @@ public class SendActivity extends FragmentActivity {
 
 
         //set the max number of pages from db
-        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,SEND));
+       // NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,SEND));
         NUM_PAGES++;
 
 
-        questions = dbadapter.get_All_Questions(SEND);
+        //questions = dbadapter.get_All_Questions(SEND);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");

@@ -40,10 +40,10 @@ public class Report_Page extends Fragment {
         ListView ReportLists = (ListView) view.findViewById(R.id.report_items);
         myDatabase = new Database(getActivity());
         Reports = new ArrayList<ReportItem>();
-        for(int i=0;i< DeepLife.REPORTS_FIELDS.length;i++){
-            Reports.add(new ReportItem("","Exposing through mass means" +
-                    ""+i,i));
-        }
+//        for(int i=0;i< DeepLife.REPORTS_FIELDS.length;i++){
+//            Reports.add(new ReportItem("","Exposing through mass means" +
+//                    ""+i,i));
+//        }
         ReportLists.setAdapter(new ReportItems_Adapter(getActivity(), Reports));
         Button btn_Report = (Button) view.findViewById(R.id.btn_send_report);
         btn_Report.setOnClickListener(new View.OnClickListener() {
@@ -63,10 +63,10 @@ public class Report_Page extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String currentDate = sdf.format(new Date());
         ContentValues cv = new ContentValues();
-        cv.put(DeepLife.REPORTS_FIELDS[0], currentDate);
-        for(int i=0;i<DeepLife.REPORTS_FIELDS.length - 1;i++){
-            cv.put(DeepLife.REPORTS_FIELDS[i+1],Reports.get(i).getValue());
-        }
+//        cv.put(DeepLife.REPORTS_FIELDS[0], currentDate);
+//        for(int i=0;i<DeepLife.REPORTS_FIELDS.length - 1;i++){
+//            cv.put(DeepLife.REPORTS_FIELDS[i+1],Reports.get(i).getValue());
+//        }
         myDatabase.insert(DeepLife.Table_Reports,cv);
         ContentValues cv1 = new ContentValues();
         cv1.put(DeepLife.LOGS_FIELDS[0],"Send_Report");

@@ -114,12 +114,12 @@ public class WinActivity extends FragmentActivity {
 
 
         //set the max number of pages from db
-        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
+      //  NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
         NUM_PAGES++;
 
         Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
 
-        questions = dbadapter.get_All_Questions(WIN);
+       // questions = dbadapter.get_All_Questions(WIN);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");

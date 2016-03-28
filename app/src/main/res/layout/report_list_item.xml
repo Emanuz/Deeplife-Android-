@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:contentPadding="10dp">
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="35dp"
+            android:background="@color/bg_logins">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/bg_logins">
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="6"
+            android:padding="10sp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="2">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginTop="35dp"
+                    android:gravity="center_horizontal"
+                    android:text="Number of People that you tell about jessus christ"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:id="@+id/txt_question" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="4">
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_incrs"
+                    android:id="@+id/btn_inc" />
+                <FrameLayout
+                    android:layout_width="60dp"
+                    android:layout_height="60dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/txt_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:textSize="35sp"
+                        android:textColor="#000000"
+                        android:enabled="false"
+                        android:text="1"/>
+                </FrameLayout>
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_decrs"
+                    android:id="@+id/btn_dec" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

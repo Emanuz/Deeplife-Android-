@@ -24,6 +24,7 @@ import com.gcme.deeplife.Activities.UserProfile.User_Profile;
 import com.gcme.deeplife.Alarm.AlarmReciever;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
 import com.gcme.deeplife.Fragments.Report_Page;
+import com.gcme.deeplife.Reports.ReportListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DiscipleListFragment(), "Disciple List");
         adapter.addFragment(new Schedules(), "Schedules");
-        adapter.addFragment(new Report_Page(), "Report");
+        adapter.addFragment(new ReportListFragment(), "Report");
 
         viewPager.setAdapter(adapter);
     }
