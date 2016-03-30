@@ -1,18 +1,6 @@
 package com.gcme.deeplife.Database;
 
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.util.Log;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.util.Calendar;
 
 
 public class DeepLife extends Application {
@@ -31,7 +19,7 @@ public class DeepLife extends Application {
     public static final String[] DISCIPLES_FIELDS = {"Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
     public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
-    public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture" };
+    public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTIONS_FIELDS = {"Question_ID","Category","Question"};
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
@@ -42,9 +30,10 @@ public class DeepLife extends Application {
     public static final String[] REPORT_FORM_COLUMN = {"id","Report_ID","Category","Questions"};
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
-    public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture" };
+    public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTIONS_COLUMN = {"id","Question_ID","Category","Question"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
 
+    public static final String TAG = "Deep Life";
 
 }

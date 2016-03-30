@@ -9,13 +9,11 @@ import android.util.Log;
 
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
-import com.gcme.deeplife.Models.Question;
 import com.gcme.deeplife.Models.QuestionAnswer;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Database {
 
@@ -39,6 +37,7 @@ public class Database {
     public void dispose(){
         myDatabase.close();
     }
+
     public long insert(String DB_Table,ContentValues cv){
         long state = myDatabase.insert(DB_Table, null, cv);
         return state;
@@ -52,11 +51,13 @@ public class Database {
         long val = myDatabase.delete(DB_Table, "id = ?", args);
         return val;
     }
+
     public long update(String DB_Table,ContentValues cv,int id){
         String[] args = {""+id};
         long state = myDatabase.update(DB_Table, cv, "id = ?", args);
         return state;
     }
+
     public int count(String DB_Table){
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
         if(c != null){
@@ -158,6 +159,7 @@ public class Database {
 	}
     public ArrayList<Disciples> getDisciples(){
         String DB_Table = DeepLife.Table_DISCIPLES;
+
         ArrayList<Disciples> found = new ArrayList<Disciples>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
         if(c.getCount()>0){
@@ -220,6 +222,53 @@ public class Database {
         }
         return found;
     }
+
+    public Disciples getDiscipleProfile(String Dis_ID){
+
+        Disciples dis = new Disciples();
+        String DB_Table = DeepLife.Table_DISCIPLES;
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + Dis_ID, null);
+        c.moveToFirst();
+        if(c.getCount()>0){
+            dis.setId(Dis_ID);
+            dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+            dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
+            dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
+
+            return dis;
+        }
+
+        return null;
+    }
+
+
+    public User getUserProfile(String user_ID){
+
+        User dis = new User();
+        String DB_Table = DeepLife.Table_USER;
+        Cursor c = myDatabase.rawQuery("select * from "+DB_Table+" where id="+user_ID, null);
+        c.moveToFirst();
+        if(c.getCount()>0){
+            dis.setId(user_ID);
+            dis.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[1])));
+            dis.setUser_Email(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[2])));
+            dis.setUser_Phone(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
+            dis.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[4])));
+            dis.setUser_Country(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[5])));
+            dis.setUser_Picture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[6])));
+            dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[7])));
+
+            return dis;
+        }
+        return null;
+    }
+
+
+
     public ArrayList<QuestionAnswer> get_Answer(String Dis_ID, String phase){
         String DB_Table = DeepLife.Table_QUESTION_ANSWER;
         ArrayList<QuestionAnswer> found = new ArrayList<QuestionAnswer>();

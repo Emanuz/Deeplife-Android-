@@ -19,34 +19,60 @@ import java.util.concurrent.ExecutionException;
  */
 public class ImageProcessing {
 
-
-    public static String storageDir = Environment.getExternalStorageDirectory() + "/deeplifetest";
+    public String storageDir;
     public static String DEFAULT_PATH = "/storage/emulated/0/deeplifetest/myprofile/JPEG_20160327_193322_.jpg";
     public static Bitmap profilepic = null;
     private static String TAG = "Deep Life";
+    Context myContext;
 
-    public static File createImageFile(String task) {
+    public ImageProcessing(Context context){
+        if(isExternalStorageWritable()){
+            storageDir = Environment.getExternalStorageDirectory() + "/deeplifetest/";
+        }
+        else{
+            storageDir = myContext.getFilesDir() + "/deeplifetest/";
+        }
+    }
+    public File createImageFile(String task) {
         // Create an image file name
-
         try {
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = "JPEG_" + timeStamp + "_";
-            File dir = new File(storageDir +"/" + task);
+            File dir = new File(storageDir+task);
             if (!dir.exists()) {
                 if (dir.mkdir()) {
                     Log.i("Deep Life", "Directory created!");
                 }
             }
-            File image = new File(storageDir + "/" + task + "/" + imageFileName + ".jpg");
+            File image = new File(storageDir+"/"+task+"/"+imageFileName+".jpg");
 
-            // Save a file: path for use with ACTION_VIEW intents
-            //newCurrentPhotoPath = image.getAbsolutePath();
             return image;
         }catch(Exception e){
             e.getMessage();
         }
         return null;
     }
+
+
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
 
     public static Bitmap getProfileImage(final Context context, final String path, final int width, final int height) {
 

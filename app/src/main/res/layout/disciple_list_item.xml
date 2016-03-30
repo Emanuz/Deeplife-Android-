@@ -39,6 +39,7 @@
                             android:background="@drawable/icondisciple" />
 
                         <ImageView
+                            android:id="@+id/disciple_image_icon"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/back2" />
@@ -52,14 +53,20 @@
 
                     <TextView
                         android:id="@+id/txt_disciple_name"
-                        android:layout_width="match_parent"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:paddingLeft="10dp"
-                        android:textSize="25sp"
+                        android:textSize="22sp"
                         android:textColor="@color/bg_login"
                         android:textStyle="bold"
                         android:text="Disciple Full Name"/>
+                    <TextView
+                        android:id="@+id/disciple_hidden_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:visibility="invisible"/>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
@@ -85,19 +92,20 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="10dp"
                                 android:layout_weight="1">
-                                <android.support.design.widget.FloatingActionButton
-                                    android:id="@+id/fab"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:src="@android:drawable/stat_sys_phone_call" />
+                              <ImageView
+                                  android:layout_width="25dp"
+                                  android:layout_height="25dp"
+                                  android:id="@+id/disciple_list_phone_icon"
+                                  android:background="@drawable/iconecall"/>
+
                                 <TextView
-                                    android:id="@+id/userphone"
+                                    android:id="@+id/txt_disciple_phone"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical|center_horizontal"
                                     android:layout_marginLeft="5dp"
                                     android:text="0910015581"
-                                    android:textSize="20dp" />
+                                    android:textSize="18dp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

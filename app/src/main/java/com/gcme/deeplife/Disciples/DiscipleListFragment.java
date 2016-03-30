@@ -14,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gcme.deeplife.Activities.AddDisciple;
-import com.gcme.deeplife.Activities.Disciple_Profile;
+import com.gcme.deeplife.Database.Database;
+import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class DiscipleListFragment extends Fragment {
     private static Context myContext;
 
     FloatingActionButton add_disciple;
+    Database myDB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,10 @@ public class DiscipleListFragment extends Fragment {
         myRecyclerView.setLayoutManager(mLayoutManager);
         add_disciple = (FloatingActionButton) view.findViewById(R.id.disciple_list_add_disciple);
         myContext = getActivity();
+        myDB = new Database(getActivity());
 
-        ArrayList<DiscipleObject> items = new ArrayList<DiscipleObject>();
-        items.add(new DiscipleObject());
-        items.add(new DiscipleObject());
-        items.add(new DiscipleObject());
-        items.add(new DiscipleObject());
+        ArrayList<Disciples> items = myDB.getDisciples();
+
         mAdapter = new DiscipleListAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);
         myRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -60,8 +60,7 @@ public class DiscipleListFragment extends Fragment {
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                Intent intent = new Intent(getActivity(), Disciple_Profile.class);
-                startActivity(intent);
+
             }
 
             @Override
@@ -69,6 +68,7 @@ public class DiscipleListFragment extends Fragment {
 
             }
         });
+
 
         add_disciple.setOnClickListener(new View.OnClickListener() {
             @Override

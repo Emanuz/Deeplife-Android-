@@ -1,7 +1,6 @@
 package com.gcme.deeplife.Activities.UserProfile;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,42 +8,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
-import com.gcme.deeplife.ImageProcessing.ImageProcessing;
+import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
-
-import java.util.ArrayList;
 
 public class User_Profile extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     ImageView profile_image;
-    ListView lv_schedule;
-    TextView tv_build, tv_name, tv_phone, tv_gender,tv_email;
-    ImageButton imageButton;
-    ImageView profile_pic;
-    Button btn_complet;
-    String user_id;
-    ArrayList<String> schedule_list;
+    TextView tv_name,tv_email, tv_fav_scripture, tv_phone, tv_country;
 
-    private Bitmap theBitmap = null;
-
-    //Database
-    Database dbadapter;
-    DeepLife dbhelper;
-
-
-    private String mCurrentPhotoPath;
-    private String newCurrentPhotoPath;
-    public final static int CHANGE_PIC = 1;
-    private String TAG = "Deep Life";
-
+    Database myDB;
+    int user_id;
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -52,19 +31,40 @@ public class User_Profile extends AppCompatActivity {
         setContentView(R.layout.user_profile_page);
         setSupportActionBar((Toolbar) findViewById(R.id.user_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        myDB = new Database(this);
+        user_id = myDB.get_Top_ID(DeepLife.Table_USER);
+
+        init();
+
+    }
+    public void init(){
+        user = myDB.getUserProfile(user_id+"");
+
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.user_profile_collapsing_toolbar);
-        collapsingToolbarLayout.setTitle("Roger Mulugeta");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+        collapsingToolbarLayout.setTitle(user.getUser_Name());
 
         profile_image = (ImageView) findViewById(R.id.user_profile_image);
 
-        profile_image.setImageBitmap(BitmapFactory.decodeFile(ImageProcessing.DEFAULT_PATH));
+        tv_name = (TextView) findViewById(R.id.user_profile_username);
+        tv_email = (TextView) findViewById(R.id.user_profile_email);
+        tv_phone = (TextView) findViewById(R.id.user_profile_phone);
+        tv_country = (TextView) findViewById(R.id.user_profile_country);
+        tv_fav_scripture = (TextView) findViewById(R.id.user_profile_favorite_quote);
 
-//        profile_image.setImageBitmap(BitmapFactory.decodeFile(ImageProcessing.DEFAULT_PATH));
+        tv_name.setText(user.getUser_Name());
+        tv_email.setText(user.getUser_Email());
+        tv_phone.setText(user.getUser_Phone());
+        tv_country.setText(user.getUser_Country());
+        tv_fav_scripture.setText(user.getUser_Favorite_Scripture());
 
+        String image_location = user.getUser_Picture();
+        if(image_location!=null){
+            profile_image.setImageBitmap(BitmapFactory.decodeFile(image_location));
+        }
 
     }
-
 
 
     @Override

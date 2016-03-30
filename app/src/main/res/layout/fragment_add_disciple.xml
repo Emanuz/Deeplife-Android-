@@ -128,13 +128,11 @@
                 <EditText
                     android:id="@+id/add_disciple_phone_country_code"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_height="fill_parent"
                     android:background="@color/white"
                     android:hint="@string/hint_phone_code"
                     android:inputType="phone"
                     android:focusable="false"
-                    android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/input_login"
                     android:textColorHint="@color/input_login_hint" />
@@ -169,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:id="@+id/gender_spinner"
+                    android:id="@+id/add_disciple_gender_spinner"
                     android:entries="@array/gender"
                     >
 

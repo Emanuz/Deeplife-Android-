@@ -1,7 +1,9 @@
 package com.gcme.deeplife.Activities;
 
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Database.Database;
+import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
 
 
@@ -30,10 +36,11 @@ public class AddDisciple extends AppCompatActivity {
 	private Toolbar toolbar;
 	EditText ed_name, ed_email,ed_phone,ed_codes;
 	private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPhone;
-
-	Spinner sp_countries;
-
+	Spinner sp_countries, sp_gender;
 	Button addDisciple;
+
+	Database myDB;
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -44,19 +51,22 @@ public class AddDisciple extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Add your Disciple");
 
-
 		init();
 
 	}
 
 
 	public void init(){
+
+		myDB = new Database(this);
+
 		ed_name = (EditText) findViewById(R.id.adddisciple_name);
 		ed_email = (EditText) findViewById(R.id.add_discple_email);
 		ed_phone = (EditText) findViewById(R.id.add_disciple_phone);
 		ed_codes = (EditText) findViewById(R.id.add_disciple_phone_country_code);
 		addDisciple = (Button) findViewById(R.id.btn_add_disciple);
 		sp_countries = (Spinner) findViewById(R.id.add_disciple_countries_spinner);
+		sp_gender = (Spinner) findViewById(R.id.add_disciple_gender_spinner);
 
 		inputLayoutName = (TextInputLayout) findViewById(R.id.add_disciple_inputtxt_name);
 		inputLayoutEmail = (TextInputLayout) findViewById(R.id.add_disciple_inputtxt_email);
@@ -91,28 +101,36 @@ public class AddDisciple extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
                 submitForm();
-/*
 				String name = ed_name.getText().toString();
 				String email = ed_email.getText().toString();
 				String phone = ed_phone.getText().toString();
-				String country = ed_country.getText().toString();
+				String country = sp_countries.getSelectedItem().toString();
+				String gender = sp_gender.getSelectedItem().toString();
+				String code = ed_codes.getText().toString();
 
 				ContentValues values = new ContentValues();
-				values.put(dbhelper.DISCIPLES_FIELDS[0], name);
-				values.put(dbhelper.DISCIPLES_FIELDS[1], phone);
-				values.put(dbhelper.DISCIPLES_FIELDS[2],email);
-				values.put(dbhelper.DISCIPLES_FIELDS[3], "Added");
+				values.put(DeepLife.DISCIPLES_FIELDS[0], name);
+				values.put(DeepLife.DISCIPLES_FIELDS[1], email);
+				values.put(DeepLife.DISCIPLES_FIELDS[2],code+phone);
+				values.put(DeepLife.DISCIPLES_FIELDS[3], country);
+				values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
+				values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
 
-				long i = dbadapter.insert(dbhelper.Table_DISCIPLES, values);
-
+				long i = myDB.insert(DeepLife.Table_DISCIPLES, values);
 				if(i!=-1){
-					Log.i("EEEEEEEEEEEEEEE", values.toString());
-					Toast.makeText(getActivity(), "Successfully Added!!", Toast.LENGTH_SHORT).show();
-					Intent intent = new Intent(getActivity(),MainMenu.class);
-					startActivity(intent);
-					getActivity().finish();
+					Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
+					Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
+					ContentValues log = new ContentValues();
+					log.put(DeepLife.LOGS_FIELDS[0],"");
+					log.put(DeepLife.LOGS_FIELDS[1],"");
+					log.put(DeepLife.LOGS_FIELDS[2], "");
+					//myDB.insert(DeepLife.Table_LOGS,log);
 
-			}*/
+					Intent intent = new Intent(AddDisciple.this, MainActivity.class);
+					startActivity(intent);
+					AddDisciple.this.finish();
+
+			}
 			}
 		});
 
@@ -121,6 +139,7 @@ public class AddDisciple extends AppCompatActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		myDB.dispose();
 	}
 
 	public class MySpinnerAdapter extends ArrayAdapter<String> {
