@@ -79,7 +79,5 @@ public class DiscipleListFragment extends Fragment {
         });
         return view;
     }
-    public static void update_view(){
 
-    }
 }

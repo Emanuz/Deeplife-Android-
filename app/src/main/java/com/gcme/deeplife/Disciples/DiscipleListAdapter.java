@@ -1,5 +1,6 @@
 package com.gcme.deeplife.Disciples;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -89,19 +90,10 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                         long deleted = myDB.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
-        /*                    ContentValues values = new ContentValues();
-                            Cursor cursor = myDB.get_value_by_ID(DeepLife.Table_DISCIPLES, id + "");
-                            String piclocation = cursor.getString(cursor.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7]));
-                            if(piclocation.toString() !=null) {
-                                boolean delete = new File(piclocation).delete();
-                                if (delete) {
-                                    Log.i(DeepLife.TAG, "Profile Picture deletedFile deleted");
-                                    Toast.makeText(myContext, "Disciple deleted with profile picture", Toast.LENGTH_SHORT).show();
-                                }
-                            }*/
                             myDB.dispose();
                             Intent intent = new Intent(myContext,MainActivity.class);
                             myContext.startActivity(intent);
+                            ((Activity) myContext).finish();
                         }
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -158,4 +150,5 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
+
 }

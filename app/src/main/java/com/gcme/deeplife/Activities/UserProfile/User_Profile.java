@@ -91,4 +91,9 @@ public class User_Profile extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myDB.dispose();
+    }
 }

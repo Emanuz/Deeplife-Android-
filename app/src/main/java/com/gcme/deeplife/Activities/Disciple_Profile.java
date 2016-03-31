@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,7 +34,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
@@ -45,25 +43,13 @@ public class Disciple_Profile extends AppCompatActivity {
     ImageView profile_image;
     ListView lv_schedule;
     TextView tv_build, tv_name, tv_phone, tv_gender, tv_email;
-    ImageButton imageButton;
-    ImageView profile_pic;
-    Button btn_complet;
+
     ImageButton btn_changeImage;
-
-    ArrayList<String> schedule_list;
-    Database dbadapter;
-    DeepLife dbhelper;
-
-    private Bitmap theBitmap = null;
-
-    private String mCurrentPhotoPath;
-    private String newCurrentPhotoPath;
 
     String disciple_id;
     Bitmap imageFromCrop = null;
     Database myDB;
     Disciples disciple;
-
     Activity activity;
 
     @Override
@@ -121,7 +107,7 @@ public class Disciple_Profile extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.option_menu, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -131,6 +117,12 @@ public class Disciple_Profile extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(id==R.id.menu_about){
+            Intent intent = new Intent(this,AboutDeepLife.class);
+            startActivity(intent);
+            return true;
+        }
         //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
     }
@@ -155,7 +147,7 @@ public class Disciple_Profile extends AppCompatActivity {
     private void handleCrop(int resultCode, final Intent result) {
         if (resultCode == RESULT_OK) {
             ImageProcessing imageProcessing = new ImageProcessing(getApplicationContext());
-            final File file = imageProcessing.createImageFile("disciples");
+            final File file = imageProcessing.createImage("disciples");
 
             new AsyncTask<Void, Void, Void>() {
                 @Override
@@ -196,5 +188,12 @@ public class Disciple_Profile extends AppCompatActivity {
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myDB.dispose();
     }
 }

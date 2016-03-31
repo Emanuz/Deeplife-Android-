@@ -76,7 +76,6 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
 
-
                                             long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                                             if (check != -1)
                                                 cv.clear();
@@ -88,7 +87,6 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
-
 
                                             long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
                                             if (check != -1)

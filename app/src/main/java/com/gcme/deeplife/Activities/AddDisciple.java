@@ -95,46 +95,13 @@ public class AddDisciple extends AppCompatActivity {
 	}
 
 	public void addDiscipleHandler(){
+        addDisciple.setOnClickListener(new View.OnClickListener() {
 
-	addDisciple.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 submitForm();
-				String name = ed_name.getText().toString();
-				String email = ed_email.getText().toString();
-				String phone = ed_phone.getText().toString();
-				String country = sp_countries.getSelectedItem().toString();
-				String gender = sp_gender.getSelectedItem().toString();
-				String code = ed_codes.getText().toString();
-
-				ContentValues values = new ContentValues();
-				values.put(DeepLife.DISCIPLES_FIELDS[0], name);
-				values.put(DeepLife.DISCIPLES_FIELDS[1], email);
-				values.put(DeepLife.DISCIPLES_FIELDS[2],code+phone);
-				values.put(DeepLife.DISCIPLES_FIELDS[3], country);
-				values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
-				values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
-
-				long i = myDB.insert(DeepLife.Table_DISCIPLES, values);
-				if(i!=-1){
-					Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
-					Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
-					ContentValues log = new ContentValues();
-					log.put(DeepLife.LOGS_FIELDS[0],"");
-					log.put(DeepLife.LOGS_FIELDS[1],"");
-					log.put(DeepLife.LOGS_FIELDS[2], "");
-					//myDB.insert(DeepLife.Table_LOGS,log);
-
-					Intent intent = new Intent(AddDisciple.this, MainActivity.class);
-					startActivity(intent);
-					AddDisciple.this.finish();
-
-			}
-			}
-		});
-
-
+            }
+        });
 	}
 	@Override
 	protected void onDestroy() {
@@ -185,7 +152,37 @@ public class AddDisciple extends AppCompatActivity {
 			return;
 		}
 
-		Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+        String name = ed_name.getText().toString();
+        String email = ed_email.getText().toString();
+        String phone = ed_phone.getText().toString();
+        String country = sp_countries.getSelectedItem().toString();
+        String gender = sp_gender.getSelectedItem().toString();
+        String code = ed_codes.getText().toString();
+
+        ContentValues values = new ContentValues();
+        values.put(DeepLife.DISCIPLES_FIELDS[0], name);
+        values.put(DeepLife.DISCIPLES_FIELDS[1], email);
+        values.put(DeepLife.DISCIPLES_FIELDS[2], code + phone);
+        values.put(DeepLife.DISCIPLES_FIELDS[3], country);
+        values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
+        values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
+
+        long i = myDB.insert(DeepLife.Table_DISCIPLES, values);
+        if (i != -1) {
+            Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
+            Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
+            ContentValues log = new ContentValues();
+            log.put(DeepLife.LOGS_FIELDS[0], "");
+            log.put(DeepLife.LOGS_FIELDS[1], "");
+            log.put(DeepLife.LOGS_FIELDS[2], "");
+            //myDB.insert(DeepLife.Table_LOGS,log);
+
+            Intent intent = new Intent(AddDisciple.this, MainActivity.class);
+            startActivity(intent);
+            myDB.dispose();
+            AddDisciple.this.finish();
+
+        }
 	}
 
 	private boolean validateName() {

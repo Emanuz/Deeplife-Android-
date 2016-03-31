@@ -15,7 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
@@ -72,8 +71,7 @@ public class Login extends AppCompatActivity{
 			@Override
 			public void onClick(View v) {
                 submitForm();
-                Intent register = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(register);
+
             }
 
 
@@ -108,9 +106,8 @@ public class Login extends AppCompatActivity{
         if (!validatePassword()) {
             return;
         }
-
-        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
-    }
+        Intent register = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(register);    }
 
 
     private boolean validatePhone() {
