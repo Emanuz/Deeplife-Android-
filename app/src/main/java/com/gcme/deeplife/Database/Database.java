@@ -161,7 +161,8 @@ public class Database {
         String DB_Table = DeepLife.Table_DISCIPLES;
 
         ArrayList<Disciples> found = new ArrayList<Disciples>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null,null,DeepLife.DISCIPLES_COLUMN[0] + " DESC");
+
         if(c.getCount()>0){
             c.moveToFirst();
             for(int i=0;i<c.getCount();i++){
