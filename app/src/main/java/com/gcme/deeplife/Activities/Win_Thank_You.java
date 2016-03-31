@@ -32,6 +32,8 @@ public class Win_Thank_You extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
         db = new Database(getActivity());
         stage = getArguments().getString("stage");
     }
@@ -287,8 +289,11 @@ public class Win_Thank_You extends Fragment {
     }
 
     public void getNextActivity(){
+        db.dispose();
         Intent intent = new Intent(getActivity(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        getActivity().finishAffinity();
         getActivity().finish();
     }
     @Override

@@ -18,12 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.gcme.deeplife.Activities.AboutDeepLife;
 import com.gcme.deeplife.Activities.Under_Construction;
 import com.gcme.deeplife.Activities.UserProfile.User_Profile;
-import com.gcme.deeplife.Alarm.AlarmReciever;
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
@@ -48,10 +46,9 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         AlarmReciever alarmReciever = new AlarmReciever();
-        alarmReciever.setAlarm(this);
-        Toast.makeText(this,"Alarm Set",Toast.LENGTH_LONG).show();
+        alarmReciever.setAlarm(this);*/
         image = (ImageView) findViewById(R.id.image);
         btn_navigation_back = (ImageView) findViewById(R.id.image);
         image.setImageResource(R.drawable.splash);
@@ -67,7 +64,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);

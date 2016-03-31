@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 /**
  * Created by rog on 11/8/2015.
  */
+
 public class WinViewPager extends ViewPager {
 
     private boolean swipeable;

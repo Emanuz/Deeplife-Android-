@@ -23,7 +23,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
-<deeplife.gcme.com.deeplife.Activities.WinViewPager
+<com.gcme.deeplife.Activities.WinViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/win_viewpager"
     android:layout_width="fill_parent"
@@ -40,6 +40,5 @@
         android:paddingTop="4dp"
         android:textColor="#fff" />
 
-</deeplife.gcme.com.deeplife.Activities.WinViewPager>
-
+</com.gcme.deeplife.Activities.WinViewPager>
 </android.support.design.widget.CoordinatorLayout>

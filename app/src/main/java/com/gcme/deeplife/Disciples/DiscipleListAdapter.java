@@ -159,23 +159,19 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
             case "Added":
                 build_progress_percent = 0;
                 holder.build_phase.setBackgroundColor(Color.RED);
-                //holder.build_percent.setBackgroundColor(Color.RED);
                 holder.build_percent.setText("0%");
                 break;
             case "WIN":
                 build_progress_percent = 25;
                 holder.build_phase.setBackgroundColor(myContext.getResources().getColor(R.color.colorSecondary));
-                //holder.progress.setBackgroundColor(myContext.getResources().getColor(R.color.colorSecondary));
                 holder.build_percent.setText("25%");
                 break;
             case "BUILD":
-                //holder.progress.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimary));
                 build_progress_percent = 60;
                 holder.build_phase.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimary));
                 holder.build_percent.setText("60%");
                 break;
             case "SEND":
-                //holder.progress.setBackgroundColor(Color.GREEN);
                 build_progress_percent = 100;
                 holder.build_phase.setBackgroundColor(Color.GREEN);
                 holder.build_percent.setText("100%");

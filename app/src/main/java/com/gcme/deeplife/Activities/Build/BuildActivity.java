@@ -2,11 +2,11 @@ package com.gcme.deeplife.Activities.Build;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * Created by rog on 11/7/2015.
  */
 
-public class BuildActivity extends FragmentActivity {
+public class BuildActivity extends AppCompatActivity {
 
     public static WinViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -49,11 +49,16 @@ public class BuildActivity extends FragmentActivity {
     Database dbadapter;
     DeepLife dbhelper;
 
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winactivity);
+        toolbar = (Toolbar) findViewById(R.id.winactivity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Win Build Send");
 
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
         mPager.setSwipeable(true);
@@ -76,13 +81,6 @@ public class BuildActivity extends FragmentActivity {
         init();
 
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
-
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-        });
 
     }
 
@@ -111,14 +109,13 @@ public class BuildActivity extends FragmentActivity {
         dbadapter = new Database(this);
         dbhelper = new DeepLife();
 
-
         //set the max number of pages from db
-       // NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,BUILD));
+        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,BUILD));
         NUM_PAGES++;
 
         Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
 
-       // questions = dbadapter.get_All_Questions(BUILD);
+       questions = dbadapter.get_All_Questions(BUILD);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");

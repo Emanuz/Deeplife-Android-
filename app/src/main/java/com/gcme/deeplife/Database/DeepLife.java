@@ -11,7 +11,7 @@ public class DeepLife extends Application {
     public static final String Table_USER = "USER";
     public static final String Table_Reports = "Reports";
     public static final String Table_Report_Forms = "Report_Form";
-    public static final String Table_QUESTIONS = "QUESTIONS";
+    public static final String Table_QUESTION_LIST = "QUESTION_LIST";
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
     public static final String[] Sync_Tasks = {"Send_Log", "Send_Data"};
 
@@ -20,7 +20,7 @@ public class DeepLife extends Application {
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
     public static final String[] SCHEDULES_FIELDS = { "Dis_Phone", "Alarm_Time","Alarm_Repeat","Description" };
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
-    public static final String[] QUESTIONS_FIELDS = {"Question_ID","Category","Question"};
+    public static final String[] QUESTION_LIST_FIELDS = {"Category","Description", "Note","Mandatory"};
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
@@ -31,7 +31,7 @@ public class DeepLife extends Application {
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
-    public static final String[] QUESTIONS_COLUMN = {"id","Question_ID","Category","Question"};
+    public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
 
     public static final String TAG = "Deep Life";

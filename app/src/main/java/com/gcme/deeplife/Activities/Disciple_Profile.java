@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -22,6 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gcme.deeplife.Activities.Build.BuildActivity;
+import com.gcme.deeplife.Activities.Send.SendActivity;
+import com.gcme.deeplife.Activities.Win.WinActivity;
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
@@ -51,6 +55,7 @@ public class Disciple_Profile extends AppCompatActivity {
     Database myDB;
     Disciples disciple;
     Activity activity;
+    Button btn_complet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,12 +82,13 @@ public class Disciple_Profile extends AppCompatActivity {
 
         //get the views
         profile_image = (ImageView) findViewById(R.id.disciple_profile_image);
-
+        btn_complet = (Button) findViewById(R.id.btn_complete_build);
         tv_build = (TextView) findViewById(R.id.profile_build_stage);
         tv_phone = (TextView) findViewById(R.id.profile_phone);
         tv_email = (TextView) findViewById(R.id.profile_email);
         tv_gender = (TextView) findViewById(R.id.profile_gender);
         lv_schedule = (ListView) findViewById(R.id.profile_schedule_list);
+
 
         btn_changeImage = (ImageButton) findViewById(R.id.disciple_btn_edit_profile_cover);
         btn_changeImage.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +108,52 @@ public class Disciple_Profile extends AppCompatActivity {
         tv_phone.setText(disciple.getPhone());
         tv_email.setText(disciple.getEmail());
         tv_gender.setText(disciple.getGender());
+
+        setButtonListner();
+    }
+
+    public void setButtonListner(){
+        final String build = disciple.getBuild_Phase();
+        if(build.equals("SEND")){
+            btn_complet.setVisibility(View.INVISIBLE);
+        }
+        btn_complet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (build.endsWith("Added")) {
+                    Intent intent = new Intent(Disciple_Profile.this, WinActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (build.endsWith("WIN")) {
+                    Intent intent = new Intent(Disciple_Profile.this, BuildActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (build.endsWith("BUILD")) {
+                    Intent intent = new Intent(Disciple_Profile.this, SendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
