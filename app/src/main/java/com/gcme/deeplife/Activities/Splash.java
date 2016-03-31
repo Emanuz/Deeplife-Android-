@@ -11,7 +11,6 @@ import com.gcme.deeplife.R;
 
 public class Splash extends Activity {
 
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -19,7 +18,7 @@ public class Splash extends Activity {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        Thread splash = new Thread(){
+				Thread splash = new Thread(){
         	@Override
         	public void run() {
         		try {
@@ -36,7 +35,6 @@ public class Splash extends Activity {
 	}
 
 	public synchronized void getNextActivity() {
-
 
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);

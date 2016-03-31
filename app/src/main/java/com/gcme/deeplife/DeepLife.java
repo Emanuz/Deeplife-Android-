@@ -39,6 +39,13 @@ public class DeepLife extends Application {
             Toast.makeText(this,"Data Added to table",Toast.LENGTH_LONG).show();
         }
 
+        ContentValues questions = new ContentValues();
+        questions.put(Co)
+        if(myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_USER)<1){
+            myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER,cv);
+            Toast.makeText(this,"Data Added to table",Toast.LENGTH_LONG).show();
+        }
+
 
     }
     public void JobConstr(){
