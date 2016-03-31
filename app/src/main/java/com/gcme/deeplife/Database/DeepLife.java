@@ -13,7 +13,7 @@ public class DeepLife extends Application {
     public static final String Table_Report_Forms = "Report_Form";
     public static final String Table_QUESTIONS = "QUESTIONS";
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Data"};
+
 
 
     public static final String[] DISCIPLES_FIELDS = {"Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };

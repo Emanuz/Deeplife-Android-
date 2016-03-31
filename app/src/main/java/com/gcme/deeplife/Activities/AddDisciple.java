@@ -29,6 +29,7 @@ import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
+import com.gcme.deeplife.SyncService.SyncService;
 
 
 public class AddDisciple extends AppCompatActivity {
@@ -121,11 +122,10 @@ public class AddDisciple extends AppCompatActivity {
 					Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
 					Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
 					ContentValues log = new ContentValues();
-					log.put(DeepLife.LOGS_FIELDS[0],"");
-					log.put(DeepLife.LOGS_FIELDS[1],"");
-					log.put(DeepLife.LOGS_FIELDS[2], "");
-					//myDB.insert(DeepLife.Table_LOGS,log);
-
+					log.put(DeepLife.LOGS_FIELDS[0],"Disciple");
+					log.put(DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
+					log.put(DeepLife.LOGS_FIELDS[2], i);
+					myDB.insert(DeepLife.Table_LOGS, log);
 					Intent intent = new Intent(AddDisciple.this, MainActivity.class);
 					startActivity(intent);
 					AddDisciple.this.finish();

@@ -25,25 +25,31 @@ public class DeepLife extends Application {
         Intent intent = new Intent(this,SyncService.class);
         startService(intent);
         myDatabase = new Database(this);
-        myJobScheduler  = JobScheduler.getInstance(this);
-        JobConstr();
+
         ContentValues cv = new ContentValues();
-        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[1],"Roger Mulugeta");
-        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[2],"roger@gmail.com");
-        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[3],"0916");
-        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[4],"roger");
+        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[1],"Bengeos");
+        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[2],"ben@beng");
+        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[3],"090909");
+        cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[4],"ben");
         cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[5],"Ethiopia");
         cv.put(com.gcme.deeplife.Database.DeepLife.USER_COLUMN[7], "John 3:16");
         if(myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_USER)<1){
             myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER,cv);
             Toast.makeText(this,"Data Added to table",Toast.LENGTH_LONG).show();
         }
-
-
+        if(myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_LOGS)<3){
+            ContentValues cv1 = new ContentValues();
+            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
+            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1],SyncService.Sync_Tasks[0]);
+            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2],"1212");
+            myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,cv1);
+        }
+        myJobScheduler  = JobScheduler.getInstance(this);
+        JobConstr();
     }
     public void JobConstr(){
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this,SyncService.class));
-        builder.setPeriodic(10000);
+        builder.setPeriodic(3000);
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
         myJobScheduler.schedule(builder.build());
     }

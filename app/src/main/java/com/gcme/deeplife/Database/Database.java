@@ -12,6 +12,7 @@ import com.gcme.deeplife.Models.Logs;
 import com.gcme.deeplife.Models.QuestionAnswer;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
+import com.gcme.deeplife.SyncService.SyncService;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Database {
 	private SQLiteDatabase myDatabase;
 	private SQL_Helper mySQL;
 	private Context myContext;
+    private static final String TAG = "Database";
     public Database(Context context){
         myContext = context;
         mySQL = new SQL_Helper(myContext);
@@ -94,7 +96,7 @@ public class Database {
     }
 
     public Cursor get_value_by_ID (String DB_Table,String id){
-        Cursor cur = myDatabase.rawQuery("select * from "+DB_Table+" where id="+id, null);
+        Cursor cur = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + id, null);
         return cur;
     }
 
@@ -141,21 +143,40 @@ public class Database {
         }
         return found;
     }
-
-
     public String get_DiscipleName(String phone){
-		String Name = null;
-		String DB_Table = DeepLife.Table_DISCIPLES;
-		Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
-		c.moveToFirst();
-		for(int i=0;i<c.getCount();i++){
-			c.moveToPosition(i);
-			String str = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]));
-			if(str.equals(phone)){
-				Name = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1]));
-			}
-		}
-		return Name;
+        String Name = null;
+        String DB_Table = DeepLife.Table_DISCIPLES;
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        c.moveToFirst();
+        for(int i=0;i<c.getCount();i++){
+            c.moveToPosition(i);
+            String str = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3]));
+            if(str.equals(phone)){
+                Name = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1]));
+            }
+        }
+        return Name;
+    }
+    public int get_LogID(String Task,String Value){
+        Log.i(TAG, "Get LogID:->");
+		int id = 0;
+		String DB_Table = DeepLife.Table_LOGS;
+		Cursor c = myDatabase.query(DB_Table, DeepLife.LOGS_COLUMN, null, null, null, null, null);
+        if(c != null){
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String task = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+                String value = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
+                Log.i(TAG, "Get LogID: "+task+" --- "+value);
+                if(Task.equals(task) && Value.equals(value)){
+                    String _id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
+                    id = Integer.valueOf(_id);
+                }
+            }
+        }
+
+		return id;
 	}
     public ArrayList<Disciples> getDisciples(){
         String DB_Table = DeepLife.Table_DISCIPLES;
@@ -224,7 +245,6 @@ public class Database {
     }
 
     public Disciples getDiscipleProfile(String Dis_ID){
-
         Disciples dis = new Disciples();
         String DB_Table = DeepLife.Table_DISCIPLES;
         Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + Dis_ID, null);
@@ -272,7 +292,7 @@ public class Database {
     public ArrayList<QuestionAnswer> get_Answer(String Dis_ID, String phase){
         String DB_Table = DeepLife.Table_QUESTION_ANSWER;
         ArrayList<QuestionAnswer> found = new ArrayList<QuestionAnswer>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_ANSWER_FIELDS[0]+" = '"+Dis_ID+"' and "+DeepLife.QUESTION_ANSWER_FIELDS[3]+"= '"+phase+"'", null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_ANSWER_FIELDS[0] + " = '" + Dis_ID + "' and " + DeepLife.QUESTION_ANSWER_FIELDS[3] + "= '" + phase + "'", null, null, null, null);
         Log.i("Deep Life", "Answer from db count: " + c.getCount() + " data: " + c.toString());
         c.moveToFirst();
         for(int i=0;i<c.getCount();i++){
@@ -296,21 +316,23 @@ public class Database {
         if(c != null && c.getCount()>0){
             c.moveToFirst();
             newUser.setId(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[0])));
-            newUser.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[2])));
-            newUser.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
+            newUser.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
+            newUser.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[4])));
         }
         return newUser;
     }
     public ArrayList<Logs> getSendLogs(){
-        ArrayList<Logs> Found = new ArrayList<Logs>();
+        Log.i("Database", "SendLogs:\n");
+        ArrayList<Logs> Found = new ArrayList<>();
         Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
         if(c != null && c.getCount()>0){
             c.moveToFirst();
+            Log.i(TAG, "SendLogs:-> "+c.getCount());
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
-                Log.i("SyncService", "Database: \n" + str + " AND "+DeepLife.Sync_Tasks[0]);
-                if(DeepLife.Sync_Tasks[0].equals(str)){
+                Log.i("Database", "Get SendLogs To Send:-> \n" +"Compare" + str + " AND "+ SyncService.Sync_Tasks[0]+"\n ----------------------");
+                if(SyncService.Sync_Tasks[0].equals(str)){
                     Logs newLogs = new Logs();
                     newLogs.setId(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0])));
                     newLogs.setType(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[1])));
@@ -322,6 +344,29 @@ public class Database {
         }
         return Found;
     }
+    public ArrayList<Disciples> getSendDisciples(){
+        Log.i("Database", "SendDisciples:\n");
+        ArrayList<Disciples> Found = new ArrayList<>();
+        Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            Log.i("Database", "SendDisciples:-> " + c.getCount());
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+                String id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
+                Log.i("Database", "Get Disciple To Send:-> \n" + str + " AND "+ SyncService.Sync_Tasks[1]+"\n ----------------------");
+                if(SyncService.Sync_Tasks[1].equals(str)){
+                    Disciples newDisciples = getDiscipleProfile(id);
+                    if(newDisciples !=null){
+                        Found.add(newDisciples);
+                    }
+                }
+            }
+        }
+        return Found;
+    }
+
     private String[] getColumns(String DB_Table){
         String[] strs = null;
         if(DB_Table == DeepLife.Table_DISCIPLES){

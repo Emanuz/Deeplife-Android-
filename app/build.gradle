@@ -38,6 +38,7 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+    compile 'org.json:json:20141113'
 
 
 }

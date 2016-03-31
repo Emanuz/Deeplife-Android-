@@ -86,6 +86,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
+                        Toast.makeText(myContext,"delete: "+id,Toast.LENGTH_LONG).show();
                         long deleted = myDB.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();

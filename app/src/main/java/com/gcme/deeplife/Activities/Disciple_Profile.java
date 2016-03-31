@@ -183,6 +183,7 @@ public class Disciple_Profile extends AppCompatActivity {
                     if (imageFromCrop != null) {
                         ContentValues values = new ContentValues();
                         values.put(DeepLife.DISCIPLES_FIELDS[6], file.getAbsolutePath());
+
                         long check = myDB.update(DeepLife.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
                         if (check != -1) {
                             profile_image.setImageBitmap(imageFromCrop);
