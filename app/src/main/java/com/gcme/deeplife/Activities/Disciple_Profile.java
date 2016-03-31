@@ -23,6 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gcme.deeplife.Activities.Build.BuildActivity;
+import com.gcme.deeplife.Activities.Send.SendActivity;
+import com.gcme.deeplife.Activities.Win.WinActivity;
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
@@ -35,7 +38,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
@@ -45,26 +47,15 @@ public class Disciple_Profile extends AppCompatActivity {
     ImageView profile_image;
     ListView lv_schedule;
     TextView tv_build, tv_name, tv_phone, tv_gender, tv_email;
-    ImageButton imageButton;
-    ImageView profile_pic;
-    Button btn_complet;
+
     ImageButton btn_changeImage;
-
-    ArrayList<String> schedule_list;
-    Database dbadapter;
-    DeepLife dbhelper;
-
-    private Bitmap theBitmap = null;
-
-    private String mCurrentPhotoPath;
-    private String newCurrentPhotoPath;
 
     String disciple_id;
     Bitmap imageFromCrop = null;
     Database myDB;
     Disciples disciple;
-
     Activity activity;
+    Button btn_complet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +82,13 @@ public class Disciple_Profile extends AppCompatActivity {
 
         //get the views
         profile_image = (ImageView) findViewById(R.id.disciple_profile_image);
-
+        btn_complet = (Button) findViewById(R.id.btn_complete_build);
         tv_build = (TextView) findViewById(R.id.profile_build_stage);
         tv_phone = (TextView) findViewById(R.id.profile_phone);
         tv_email = (TextView) findViewById(R.id.profile_email);
         tv_gender = (TextView) findViewById(R.id.profile_gender);
         lv_schedule = (ListView) findViewById(R.id.profile_schedule_list);
+
 
         btn_changeImage = (ImageButton) findViewById(R.id.disciple_btn_edit_profile_cover);
         btn_changeImage.setOnClickListener(new View.OnClickListener() {
@@ -116,12 +108,58 @@ public class Disciple_Profile extends AppCompatActivity {
         tv_phone.setText(disciple.getPhone());
         tv_email.setText(disciple.getEmail());
         tv_gender.setText(disciple.getGender());
+
+        setButtonListner();
+    }
+
+    public void setButtonListner(){
+        final String build = disciple.getBuild_Phase();
+        if(build.equals("SEND")){
+            btn_complet.setVisibility(View.INVISIBLE);
+        }
+        btn_complet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (build.endsWith("Added")) {
+                    Intent intent = new Intent(Disciple_Profile.this, WinActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (build.endsWith("WIN")) {
+                    Intent intent = new Intent(Disciple_Profile.this, BuildActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else if (build.endsWith("BUILD")) {
+                    Intent intent = new Intent(Disciple_Profile.this, SendActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("disciple_id", disciple_id);
+
+                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
+                        bundle.putString("answer", "yes");
+                    }
+
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.option_menu, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -131,6 +169,12 @@ public class Disciple_Profile extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(id==R.id.menu_about){
+            Intent intent = new Intent(this,AboutDeepLife.class);
+            startActivity(intent);
+            return true;
+        }
         //noinspection SimplifiableIfStatement
         return super.onOptionsItemSelected(item);
     }
@@ -155,7 +199,7 @@ public class Disciple_Profile extends AppCompatActivity {
     private void handleCrop(int resultCode, final Intent result) {
         if (resultCode == RESULT_OK) {
             ImageProcessing imageProcessing = new ImageProcessing(getApplicationContext());
-            final File file = imageProcessing.createImageFile("disciples");
+            final File file = imageProcessing.createImage("disciples");
 
             new AsyncTask<Void, Void, Void>() {
                 @Override
@@ -197,5 +241,12 @@ public class Disciple_Profile extends AppCompatActivity {
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myDB.dispose();
     }
 }

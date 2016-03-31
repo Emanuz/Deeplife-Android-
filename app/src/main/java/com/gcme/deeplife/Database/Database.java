@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
+import com.gcme.deeplife.Models.Question;
 import com.gcme.deeplife.Models.QuestionAnswer;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
@@ -30,7 +31,7 @@ public class Database {
         mySQL.createTables(DeepLife.Table_LOGS, DeepLife.LOGS_FIELDS);
         mySQL.createTables(DeepLife.Table_USER, DeepLife.USER_FIELDS);
         mySQL.createTables(DeepLife.Table_SCHEDULES, DeepLife.SCHEDULES_FIELDS);
-        mySQL.createTables(DeepLife.Table_QUESTIONS,DeepLife.QUESTIONS_FIELDS);
+        mySQL.createTables(DeepLife.Table_QUESTION_LIST,DeepLife.QUESTION_LIST_FIELDS);
         mySQL.createTables(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS);
         mySQL.createTables(DeepLife.Table_Reports, DeepLife.REPORT_FIELDS);
         mySQL.createTables(DeepLife.Table_Report_Forms, DeepLife.REPORT_FORM_FIELDS);
@@ -130,6 +131,28 @@ public class Database {
         pos = Integer.valueOf(c.getString(c.getColumnIndex("id")));
         return pos;
     }
+
+
+    public ArrayList<Question> get_All_Questions(String Category){
+        String DB_Table = DeepLife.Table_QUESTION_LIST;
+        ArrayList<Question> found = new ArrayList<Question>();
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
+        c.moveToFirst();
+
+        for(int i=0;i<c.getCount();i++){
+            c.moveToPosition(i);
+            Question dis = new Question();
+            dis.setId(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[0])));
+            dis.setCategory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[1])));
+            dis.setDescription(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[2])));
+            dis.setNote(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[3])));
+            dis.setMandatory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[4])));
+            found.add(dis);
+        }
+        return found;
+    }
+
+
     public ArrayList<String> get_all_in_column(String DB_Table,String atColumn){
         ArrayList<String> found = new ArrayList<String>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -182,7 +205,8 @@ public class Database {
         String DB_Table = DeepLife.Table_DISCIPLES;
 
         ArrayList<Disciples> found = new ArrayList<Disciples>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null,null,DeepLife.DISCIPLES_COLUMN[0] + " DESC");
+
         if(c.getCount()>0){
             c.moveToFirst();
             for(int i=0;i<c.getCount();i++){
@@ -228,7 +252,7 @@ public class Database {
         ArrayList<Schedule> found = new ArrayList<Schedule>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
         c.moveToFirst();
-        for(int i=0;i<c.getCount();i++){
+        for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             Schedule dis = new Schedule();
             String id = c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0]));
@@ -288,6 +312,16 @@ public class Database {
     }
 
 
+    public long checkExistence(String Db_Table,String column,String id, String build){
+
+        Cursor cursor = myDatabase.query(Db_Table, getColumns(Db_Table),column+" = '"+id+"' and "+DeepLife.QUESTION_ANSWER_FIELDS[3]+" = '"+ build+"'",null,null,null,null);
+        return cursor.getCount();
+
+    }
+    public int count_Questions(String DB_Table, String Category){
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
+        return c.getCount();
+    }
 
     public ArrayList<QuestionAnswer> get_Answer(String Dis_ID, String phase){
         String DB_Table = DeepLife.Table_QUESTION_ANSWER;
@@ -377,8 +411,8 @@ public class Database {
             strs = DeepLife.USER_COLUMN;
         }else if(DB_Table == DeepLife.Table_SCHEDULES){
             strs = DeepLife.SCHEDULES_COLUMN;
-        } else if(DB_Table == DeepLife.Table_QUESTIONS){
-            strs = DeepLife.QUESTIONS_COLUMN;
+        } else if(DB_Table == DeepLife.Table_QUESTION_LIST){
+            strs = DeepLife.QUESTION_LIST_COLUMN;
         } else if(DB_Table == DeepLife.Table_QUESTION_ANSWER){
             strs = DeepLife.QUESTION_ANSWER_COLUMN;
         } else if(DB_Table == DeepLife.Table_Reports){

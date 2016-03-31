@@ -47,7 +47,6 @@ public class DiscipleListFragment extends Fragment {
         add_disciple = (FloatingActionButton) view.findViewById(R.id.disciple_list_add_disciple);
         myContext = getActivity();
         myDB = new Database(getActivity());
-
         ArrayList<Disciples> items = myDB.getDisciples();
 
         mAdapter = new DiscipleListAdapter(getActivity(),items);
@@ -79,7 +78,5 @@ public class DiscipleListFragment extends Fragment {
         });
         return view;
     }
-    public static void update_view(){
 
-    }
 }

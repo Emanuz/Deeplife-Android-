@@ -2,11 +2,11 @@ package com.gcme.deeplife.Activities.Win;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 /**
  * Created by rog on 11/7/2015.
  */
-public class WinActivity extends FragmentActivity {
+public class WinActivity extends AppCompatActivity {
 
     public static WinViewPager mPager;
     private PagerAdapter mPagerAdapter;
@@ -47,12 +47,17 @@ public class WinActivity extends FragmentActivity {
 
     Database dbadapter;
     DeepLife dbhelper;
+    Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.winactivity);
+        toolbar = (Toolbar) findViewById(R.id.winactivity_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Win Build Send");
 
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
         mPager.setSwipeable(true);
@@ -78,12 +83,6 @@ public class WinActivity extends FragmentActivity {
 
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
 
-        mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-        });
 
     }
 
@@ -110,16 +109,14 @@ public class WinActivity extends FragmentActivity {
     public void init(){
         //initialize database files
         dbadapter = new Database(this);
-        dbhelper = new DeepLife();
-
 
         //set the max number of pages from db
-      //  NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
+        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
         NUM_PAGES++;
 
         Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
 
-       // questions = dbadapter.get_All_Questions(WIN);
+       questions = dbadapter.get_All_Questions(WIN);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
@@ -150,49 +147,13 @@ public class WinActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-
-        /*
-        getMenuInflater().inflate(R.menu.activity_screen_slide, menu);
-
-        menu.findItem(R.id.action_previous).setEnabled(mPager.getCurrentItem() > 0);
-
-        // Add either a "next" or "finish" button to the action bar, depending on which page
-        // is currently selected.
-        MenuItem item = menu.add(Menu.NONE, R.id.action_next, Menu.NONE,
-                (mPager.getCurrentItem() == mPagerAdapter.getCount() - 1)
-                        ? R.string.action_finish
-                        : R.string.action_next);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-        return true;
-        */
-
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
+        inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Navigate "up" the demo structure to the launchpad activity.
-                //NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-                return true;
-
-            case R.id.action_previous:
-                // Go to the previous step in the wizard. If there is no previous step,
-                // setCurrentItem will do nothing.
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-                return true;
-
-            case R.id.action_next:
-                // Advance to the next step in the wizard. If there is no next step, setCurrentItem
-                // will do nothing.
-                mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-                return true;
-        }
-        */
 
         return super.onOptionsItemSelected(item);
     }
@@ -215,8 +176,7 @@ public class WinActivity extends FragmentActivity {
                 win.setArguments(b);
                 return win;
 
-               // return new Win_Thank_You();
-            }
+           }
 
             return WinFragment.create(position);
 

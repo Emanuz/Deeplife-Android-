@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    >
 
   <android.support.v7.widget.CardView
       android:id="@+id/card_view"
       android:layout_gravity="center"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="3dp"
       card_view:cardCornerRadius="5dp"
-      card_view:contentPadding="10dp">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+      card_view:cardElevation="3dp"
+     >
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="5dp"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center_horizontal|center_vertical">
                     <FrameLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp">
+                        android:layout_width="90dp"
+                        android:layout_height="90dp">
 
                         <ImageView
                             android:id="@+id/list_profile_pic"
@@ -43,6 +45,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/back2" />
+
                     </FrameLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -50,16 +53,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:orientation="vertical">
-
-                    <TextView
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
                         android:id="@+id/txt_disciple_name"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:paddingLeft="10dp"
-                        android:textSize="22sp"
-                        android:textColor="@color/bg_login"
-                        android:textStyle="bold"
+                        android:textSize="20sp"
                         android:text="Disciple Full Name"/>
                     <TextView
                         android:id="@+id/disciple_hidden_id"
@@ -67,36 +71,76 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:visibility="invisible"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/bg_login">
                     </LinearLayout>
 
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        >
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_marginLeft="10dp"
                         >
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="40dp"
+                            android:layout_gravity="center_vertical|center_horizontal"
+                            >
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="false"
+                            android:layout_marginRight="50dp"
+                            android:max="100"
+                            />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            >
+                            <TextView
+                                android:id="@+id/disciple_progress_percent"
+                                android:layout_width="35dp"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:text="20%"/>
+                            <TextView
+                                android:id="@+id/disciple_build"
+                                android:layout_width="70dp"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:gravity="center_horizontal|center_vertical"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="10dp"
+                                android:text="BUILD"/>
+                        </LinearLayout>
+                    </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="4"
                             >
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:layout_weight="1">
-                              <ImageView
-                                  android:layout_width="25dp"
-                                  android:layout_height="25dp"
-                                  android:id="@+id/disciple_list_phone_icon"
-                                  android:background="@drawable/iconecall"/>
+                                android:paddingBottom="5dp"
+                                >
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:id="@+id/disciple_list_phone_icon"
+                                    android:background="@drawable/iconecall"/>
 
                                 <TextView
                                     android:id="@+id/txt_disciple_phone"
@@ -112,34 +156,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_gravity="right"
-                android:paddingLeft="10dp"
-                android:layout_height="match_parent">
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    card_view:cardCornerRadius="5dp"
-                    card_view:cardElevation="3dp"
-                    card_view:cardBackgroundColor="@android:color/background_light"
-                    >
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
         </FrameLayout>
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal">
-
-
-      </LinearLayout>
-
-
-    </LinearLayout>
-
 
   </android.support.v7.widget.CardView>
 

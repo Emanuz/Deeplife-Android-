@@ -11,7 +11,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.gcme.deeplife.Activities.Win.WinActivity;
 import com.gcme.deeplife.R;
 
 /**
@@ -39,7 +38,6 @@ public class SendFragment extends Fragment {
         return fragment;
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +47,6 @@ public class SendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout containing a title and body text.
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.winfragment, container, false);
 
@@ -61,8 +58,7 @@ public class SendFragment extends Fragment {
 
         iv_build_image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.sendicon));
 
-
-       if(getPageNumber()<SendActivity.questions.size()) {
+        if(getPageNumber()<SendActivity.questions.size()) {
             tv_qdisc.setText(SendActivity.questions.get(getPageNumber()).getDescription());
             tv_note.setText(SendActivity.questions.get(getPageNumber()).getNote());
 
@@ -78,11 +74,9 @@ public class SendFragment extends Fragment {
                 SendActivity.mPager.setSwipeable(true);
 
             }
-
             else{
-                WinActivity.mPager.setSwipeable(false);
+                SendActivity.mPager.setSwipeable(false);
             }
-
         }
 
 

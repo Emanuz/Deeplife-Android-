@@ -19,13 +19,15 @@ android:fitsSystemWindows="true">
     android:layout_height="match_parent"
     android:scrollbars="vertical"/>
 
-<android.support.design.widget.FloatingActionButton
-    android:id="@+id/disciple_list_add_disciple"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|end"
-    android:layout_margin="@dimen/fab_margin"
-    app:backgroundTint="@color/colorPrimary"
-    android:src="@android:drawable/ic_input_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/disciple_list_add_disciple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        android:src="@android:drawable/ic_input_add" />
+
 
 </android.support.design.widget.CoordinatorLayout>

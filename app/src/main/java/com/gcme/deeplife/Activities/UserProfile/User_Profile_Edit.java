@@ -57,7 +57,7 @@ public class User_Profile_Edit extends AppCompatActivity {
     ImageButton btn_image_pciker;
 
 
-    public String newImage;
+    public String newImage = "";
     Bitmap imageFromCrop = null;
     Database myDB;
     int user_id;
@@ -165,12 +165,18 @@ public class User_Profile_Edit extends AppCompatActivity {
                 values.put(DeepLife.USER_FIELDS[1], email);
                 values.put(DeepLife.USER_FIELDS[2], phone);
                 values.put(DeepLife.USER_FIELDS[4], country);
-                values.put(DeepLife.USER_FIELDS[5], newImage);
+                if (!newImage.equals("")) {
+                    values.put(DeepLife.USER_FIELDS[5], newImage);
+                }
                 values.put(DeepLife.USER_FIELDS[6], fav_scripture);
 
                 long check = myDB.update(DeepLife.Table_USER, values, user_id);
                 if (check != -1) {
                     Toast.makeText(User_Profile_Edit.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(User_Profile_Edit.this,User_Profile.class);
+                    myDB.dispose();
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -193,7 +199,7 @@ public class User_Profile_Edit extends AppCompatActivity {
     private void handleCrop(int resultCode, final Intent result) {
         if (resultCode == RESULT_OK) {
             ImageProcessing imageProcessing = new ImageProcessing(getApplicationContext());
-            final File file = imageProcessing.createImageFile("myprofile");
+            final File file = imageProcessing.createImage("myprofile");
             new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
@@ -281,7 +287,11 @@ public class User_Profile_Edit extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myDB.dispose();
+    }
 
 
 }

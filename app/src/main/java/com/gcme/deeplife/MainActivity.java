@@ -17,13 +17,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.gcme.deeplife.Activities.AboutDeepLife;
+import com.gcme.deeplife.Activities.Under_Construction;
 import com.gcme.deeplife.Activities.UserProfile.User_Profile;
-import com.gcme.deeplife.Alarm.AlarmReciever;
+import com.gcme.deeplife.Database.Database;
+import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
-import com.gcme.deeplife.Fragments.Report_Page;
+import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.Reports.ReportListFragment;
 
 import java.util.ArrayList;
@@ -37,15 +39,16 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     CollapsingToolbarLayout collapsingToolbarLayout;
     static ImageView image, btn_navigation_back;
+    LinearLayout nav_header;
 
+    public static Database myDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+/*
         AlarmReciever alarmReciever = new AlarmReciever();
-        alarmReciever.setAlarm(this);
-        Toast.makeText(this,"Alarm Set",Toast.LENGTH_LONG).show();
+        alarmReciever.setAlarm(this);*/
         image = (ImageView) findViewById(R.id.image);
         btn_navigation_back = (ImageView) findViewById(R.id.image);
         image.setImageResource(R.drawable.splash);
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -71,6 +73,12 @@ public class MainActivity extends AppCompatActivity
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("DEEP LIFE");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
+
+        myDB = new Database(this);
+        nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
+
+        int user_id = myDB.get_Top_ID(DeepLife.Table_USER);
+        User user = myDB.getUserProfile(user_id+"");
     }
 
     @Override
@@ -88,7 +96,6 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new DiscipleListFragment(), "Disciple List");
         adapter.addFragment(new Schedules(), "Schedules");
         adapter.addFragment(new ReportListFragment(), "Report");
-
         viewPager.setAdapter(adapter);
     }
 
@@ -105,7 +112,10 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if(id==R.id.menu_about){
+            Intent intent = new Intent(this, AboutDeepLife.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -122,7 +132,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_report) {
             viewPager.setCurrentItem(3, true);
         } else if (id == R.id.nav_learning) {
-            intent = new Intent(this, User_Profile.class);
+            intent = new Intent(this, Under_Construction.class);
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
             intent = new Intent(this, User_Profile.class);
@@ -139,7 +149,6 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, AboutDeepLife.class);
             startActivity(intent);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -174,5 +183,11 @@ public class MainActivity extends AppCompatActivity
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myDB.dispose();
     }
 }

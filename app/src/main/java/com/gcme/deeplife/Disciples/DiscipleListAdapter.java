@@ -1,17 +1,21 @@
 package com.gcme.deeplife.Disciples;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,21 +37,29 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     private static MyClickListener myClickListener;
     private static Context myContext;
     private static Database myDB;
+    int build_progress_percent; //for  assigning maximum percent for the progress bar
+    boolean checked = false; //for checking whether the progress thread is called. It must be called only once.
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView FullName,Phone;
         TextView Email;
         TextView id;
+        TextView build_percent;
+        TextView build_phase;
         ImageView discipleImage;
         ImageView phoneIcon;
-
+        ProgressBar progress;
         public DataObjectHolder(View itemView) {
             super(itemView);
             FullName = (TextView) itemView.findViewById(R.id.txt_disciple_name);
             Phone = (TextView) itemView.findViewById(R.id.txt_disciple_phone);
+            build_percent = (TextView) itemView.findViewById(R.id.disciple_progress_percent);
+            build_phase = (TextView) itemView.findViewById(R.id.disciple_build);
             id = (TextView) itemView.findViewById(R.id.disciple_hidden_id);
-            discipleImage = (ImageView) itemView.findViewById(R.id.disciple_image_icon);
+            discipleImage = (ImageView) itemView.findViewById(R.id.list_profile_pic);
             phoneIcon = (ImageView) itemView.findViewById(R.id.disciple_list_phone_icon);
+
+            progress = (ProgressBar) itemView.findViewById(R.id.progressBar);
 
             phoneIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,19 +102,10 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                         long deleted = myDB.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
-        /*                    ContentValues values = new ContentValues();
-                            Cursor cursor = myDB.get_value_by_ID(DeepLife.Table_DISCIPLES, id + "");
-                            String piclocation = cursor.getString(cursor.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7]));
-                            if(piclocation.toString() !=null) {
-                                boolean delete = new File(piclocation).delete();
-                                if (delete) {
-                                    Log.i(DeepLife.TAG, "Profile Picture deletedFile deleted");
-                                    Toast.makeText(myContext, "Disciple deleted with profile picture", Toast.LENGTH_SHORT).show();
-                                }
-                            }*/
                             myDB.dispose();
                             Intent intent = new Intent(myContext,MainActivity.class);
                             myContext.startActivity(intent);
+                            ((Activity) myContext).finish();
                         }
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -137,26 +140,56 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.disciple_list_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.disciple_list_item, parent, false);
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
     }
     @Override
-    public void onBindViewHolder(DataObjectHolder holder, int position) {
-
+    public void onBindViewHolder(final DataObjectHolder holder, int position) {
+        String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
+        Log.i(DeepLife.TAG, disciple_phase);
         holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
         holder.Phone.setText(DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());
-
         if(DiscipleLists.get(position).getPicture() !=null) {
             holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(DiscipleLists.get(position).getPicture()));
         }
+        holder.build_phase.setText(disciple_phase);
 
+        switch (disciple_phase){
+            case "Added":
+                build_progress_percent = 0;
+                holder.build_phase.setBackgroundColor(Color.RED);
+                holder.build_percent.setText("0%");
+                break;
+            case "WIN":
+                build_progress_percent = 25;
+                holder.build_phase.setBackgroundColor(myContext.getResources().getColor(R.color.colorSecondary));
+                holder.build_percent.setText("25%");
+                break;
+            case "BUILD":
+                build_progress_percent = 60;
+                holder.build_phase.setBackgroundColor(myContext.getResources().getColor(R.color.colorPrimary));
+                holder.build_percent.setText("60%");
+                break;
+            case "SEND":
+                build_progress_percent = 100;
+                holder.build_phase.setBackgroundColor(Color.GREEN);
+                holder.build_percent.setText("100%");
+                break;
+            default:
+                build_progress_percent = 0;
+                holder.build_percent.setText("0%");
+                break;
+        }
+        holder.progress.setProgress(build_progress_percent);
     }
+
     public void addItem(Disciples news){
         DiscipleLists.add(news);
     }
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
+
 }

@@ -32,6 +32,8 @@ public class Win_Thank_You extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
         db = new Database(getActivity());
         stage = getArguments().getString("stage");
     }
@@ -76,7 +78,6 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
 
-
                                             long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                                             if (check != -1)
                                                 cv.clear();
@@ -88,7 +89,6 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], j);
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
-
 
                                             long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
                                             if (check != -1)
@@ -289,8 +289,11 @@ public class Win_Thank_You extends Fragment {
     }
 
     public void getNextActivity(){
+        db.dispose();
         Intent intent = new Intent(getActivity(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+        getActivity().finishAffinity();
         getActivity().finish();
     }
     @Override

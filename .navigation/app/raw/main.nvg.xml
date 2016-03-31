@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.tools.idea.editors.navigation.model.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.Login"/>
+      <point      
+        x = "152"      
+        y = "-176"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.Register"/>
+      <point      
+        x = "-48"      
+        y = "548"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.AboutDeepLife"/>
+      <point      
+        x = "2516"      
+        y = "1320"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.MainActivity"/>
+      <point      
+        x = "2548"      
+        y = "-220"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.Splash"/>
+      <point      
+        x = "80"      
+        y = "1096"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.UserProfile.User_Profile_Edit"/>
+      <point      
+        x = "3196"      
+        y = "468"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.AddDisciple"/>
+      <point      
+        x = "1044"      
+        y = "1180"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.Disciple_Profile"/>
+      <point      
+        x = "1636"      
+        y = "1284"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.gcme.deeplife.Activities.UserProfile.User_Profile"/>
+      <point      
+        x = "1784"      
+        y = "428"/>
+    </statePointEntry>
+    <statePointEntry>
+      <state      
+        class = "com.android.tools.idea.editors.navigation.model.ActivityState"      
+        className = "com.soundcloud.android.crop.CropImageActivity"/>
+      <point      
+        x = "808"      
+        y = "-464"/>
+    </statePointEntry>
+  </locations>
+</navigationModel>
