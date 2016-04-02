@@ -127,10 +127,13 @@ public class SyncService extends JobService {
 
     public String getService(){
         if(DeepLife.myDatabase.getSendLogs().size()>0){
+            Log.i(TAG,"Found SendLogs Service -> "+DeepLife.myDatabase.getSendLogs().size());
             return "Send_Log";
         }else if(DeepLife.myDatabase.getSendDisciples().size()>0){
+            Log.i(TAG,"Found SendDisciple Service -> "+DeepLife.myDatabase.getSendDisciples().size());
             return "AddNew_Disciples";
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
+            Log.i(TAG,"Found UpdateDisciples Service -> "+DeepLife.myDatabase.getUpdateDisciples().size());
             return "Update_Disciples";
         }else{
             return "Error";
