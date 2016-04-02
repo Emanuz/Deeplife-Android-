@@ -25,6 +25,7 @@ import com.gcme.deeplife.Activities.UserProfile.User_Profile;
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
+import com.gcme.deeplife.Fragments.Schedules;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.Reports.ReportListFragment;
 

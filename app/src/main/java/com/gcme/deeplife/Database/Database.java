@@ -191,7 +191,7 @@ public class Database {
                 c.moveToPosition(i);
                 String task = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
                 String value = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
-                Log.i(TAG, "Get LogID: "+task+" --- "+value);
+                Log.i(TAG, "Get LogID: " + task + " --- " + value);
                 if(Task.equals(task) && Value.equals(value)){
                     String _id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
                     id = Integer.valueOf(_id);
@@ -237,17 +237,18 @@ public class Database {
                  c.moveToPosition(i);
                  Schedule dis = new Schedule();
                  dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-                 dis.setDis_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
-                 dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
-                 dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
-                 dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+                 dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+                 dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
+                 dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
+                 dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+                 dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[5])));
                  found.add(dis);
              }
          }
         return found;
     }
 
-    public ArrayList<Schedule> get_Schedule(String Dis_ID){
+    public ArrayList<Schedule> get_Schedule_With_User(String Dis_ID){
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -255,17 +256,39 @@ public class Database {
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             Schedule dis = new Schedule();
-            String id = c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0]));
+            String id = c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1]));
             if(Dis_ID.equals(id)){
                 dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-                dis.setDis_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
-                dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
-                dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
-                dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+                dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+                dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
+                dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
+                dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+                dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[5])));
                 found.add(dis);
             }
         }
         return found;
+    }
+
+
+
+    public Schedule getScheduleWithId(String id){
+
+        Schedule dis = new Schedule();
+        String DB_Table = DeepLife.Table_SCHEDULES;
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + id, null);
+        c.moveToFirst();
+        if(c.getCount()>0){
+            dis.setID(id);
+            dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+            dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
+            dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
+            dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
+            dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
+            dis.setDescription(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[5])));
+            return dis;
+        }
+        return null;
     }
 
     public Disciples getDiscipleProfile(String Dis_ID){
@@ -294,7 +317,7 @@ public class Database {
 
         User dis = new User();
         String DB_Table = DeepLife.Table_USER;
-        Cursor c = myDatabase.rawQuery("select * from "+DB_Table+" where id="+user_ID, null);
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + user_ID, null);
         c.moveToFirst();
         if(c.getCount()>0){
             dis.setId(user_ID);
@@ -361,7 +384,7 @@ public class Database {
         Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
         if(c != null && c.getCount()>0){
             c.moveToFirst();
-            Log.i(TAG, "SendLogs:-> "+c.getCount());
+            Log.i(TAG, "SendLogs:-> " + c.getCount());
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
@@ -400,6 +423,9 @@ public class Database {
         }
         return Found;
     }
+
+
+
 
     private String[] getColumns(String DB_Table){
         String[] strs = null;
