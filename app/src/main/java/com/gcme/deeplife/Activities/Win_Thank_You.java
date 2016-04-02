@@ -124,7 +124,7 @@ public class Win_Thank_You extends Fragment {
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 
-                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!: id="+WinActivity.DISCIPLE_ID, Toast.LENGTH_LONG).show();
                         WinActivity.answers.clear();
                         WinActivity.answer_index = 0;
                         WinActivity.answerchoices.clear();
@@ -204,7 +204,7 @@ public class Win_Thank_You extends Fragment {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
-                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], WinActivity.DISCIPLE_ID);
+                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], BuildActivity.DISCIPLE_ID);
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 
@@ -291,7 +291,7 @@ public class Win_Thank_You extends Fragment {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
-                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], WinActivity.DISCIPLE_ID);
+                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], SendActivity.DISCIPLE_ID);
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 

@@ -10,6 +10,7 @@ import android.view.Window;
 
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
 
 
@@ -95,10 +96,17 @@ public class Splash extends Activity {
             Log.i(DeepLife.TAG, "Questions not added");
             myDatabase.dispose();
         }
+		int Count = com.gcme.deeplife.DeepLife.myDatabase.count(DeepLife.Table_USER);
+		if(Count ==1){
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		}else{
+			Intent intent = new Intent(this, Login.class);
+			startActivity(intent);
+			finish();
+		}
 
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-        finish();
 
 	}
 

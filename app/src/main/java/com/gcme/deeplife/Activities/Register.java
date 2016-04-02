@@ -2,13 +2,18 @@ package com.gcme.deeplife.Activities;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +27,27 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.DeepLife;
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.CountryDetails;
+import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
+import com.gcme.deeplife.SyncService.SyncService;
+import com.github.kittinunf.fuel.Fuel;
+import com.github.kittinunf.fuel.core.FuelError;
+import com.github.kittinunf.fuel.core.Handler;
+import com.github.kittinunf.fuel.core.Request;
+import com.github.kittinunf.fuel.core.Response;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.Pair;
 
 
 public class Register extends AppCompatActivity{
@@ -34,11 +58,13 @@ public class Register extends AppCompatActivity{
     */
 
 	private Context myContext;
-
+    private static final String TAG = "Register";
 	private Button  Register;
 	private EditText Full_Name,Email,Phone,Country,Pass,Ed_Codes;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword;
-
+    private  AlertDialog.Builder builder;
+    private User New_User;
+    private Gson myParser;
     private Spinner sp_countries, sp_gender;
 	private ProgressDialog pDialog;
 	public static String[] list =  CountryDetails.country;
@@ -49,9 +75,8 @@ public class Register extends AppCompatActivity{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
-
+        myParser = new Gson();
 		myContext = this;
-
         Init();
 
 	}
@@ -76,6 +101,9 @@ public class Register extends AppCompatActivity{
         Full_Name.addTextChangedListener(new MyTextWatcher(Full_Name));
         Email.addTextChangedListener(new MyTextWatcher(Email));
         Pass.addTextChangedListener(new MyTextWatcher(Pass));
+
+
+
 
         /*
             Fill the spinners with data from Country name and code pair.
@@ -185,10 +213,92 @@ public class Register extends AppCompatActivity{
         if (!validatePassword()) {
             return;
         }
+        New_User = new User();
+        New_User.setUser_Name(Full_Name.getText().toString());
+        New_User.setUser_Pass(Pass.getText().toString());
+        New_User.setUser_Country(sp_countries.getSelectedItem().toString());
+        New_User.setUser_Phone(Phone.getText().toString());
+        New_User.setUser_Email(Email.getText().toString());
+        New_User.setUser_Gender(sp_gender.getSelectedItem().toString());
+
+
+        final ProgressDialog myDialog = new ProgressDialog(this);
+        myDialog.setTitle(R.string.app_name);
+        myDialog.setMessage("Authenticating the Account ....");
+        myDialog.show();
+        ArrayList<User> user = new ArrayList<>();
+        user.add(New_User);
+        List<Pair<String, String>> Send_Param;
+        Send_Param = new ArrayList<Pair<String, String>>();
+        Send_Param.add(new kotlin.Pair<String, String>("User_Name", Phone.getText().toString()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", Pass.getText().toString()));
+        Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
+        Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
+        Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+            @Override
+            public void success(Request request, Response response, String s) {
+                myDialog.cancel();
+                try {
+                    Log.i(TAG, "Server Request -> \n" + request.toString());
+                    Log.i(TAG, "Server Response -> \n" + s);
+                    JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
+
+                    if (!myObject.isNull("Response")) {
+
+                        DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_DISCIPLES);
+                        DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_SCHEDULES);
+                        DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_LOGS);
+                        DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_USER);
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[0],New_User.getUser_Name());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[1],New_User.getUser_Email());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[2],New_User.getUser_Phone());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[3],New_User.getUser_Pass());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[4], New_User.getUser_Country());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[5],"");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[6],"");
+                        long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER, cv);
+                        Log.i(TAG, "Main User Adding-> " + x);
+
+                        Intent register = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(register);
+                    } else {
+                        ShowDialog("Invalid user account! use a valid account please");
+                    }
+                } catch (Exception e) {
+                    ShowDialog("Something went wrong! Please try again \n"+e.toString());
+                    Log.i(TAG, "Error Occurred-> \n" + e.toString());
+                }
+
+            }
+
+            @Override
+            public void failure(Request request, Response response, FuelError fuelError) {
+                Log.i(TAG, "Server Response -> \n" + response.toString());
+                myDialog.cancel();
+                ShowDialog("Authentication has failed! Please try again");
+            }
+        });
 
         Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
     }
-
+    public void ShowDialog(String message) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Yes button clicked
+                        break;
+                }
+            }
+        };
+        builder = new AlertDialog.Builder(myContext);
+        builder.setTitle(R.string.app_name)
+                .setMessage(message)
+                .setPositiveButton("Ok", dialogClickListener).show();
+    }
     private boolean validateName() {
         if (Full_Name.getText().toString().trim().isEmpty()) {
             inputLayoutName.setError(getString(R.string.err_msg_name));

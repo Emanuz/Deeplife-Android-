@@ -18,8 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 
 import com.gcme.deeplife.Activities.AboutDeepLife;
+import com.gcme.deeplife.Activities.Login;
+import com.gcme.deeplife.Activities.Splash;
 import com.gcme.deeplife.Activities.Under_Construction;
 import com.gcme.deeplife.Activities.UserProfile.User_Profile;
 import com.gcme.deeplife.Database.Database;
@@ -138,7 +141,11 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, User_Profile.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-
+            com.gcme.deeplife.DeepLife.myDatabase.Delete_All(DeepLife.Table_USER);
+            intent = new Intent(this, Splash.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_share) {
 
         }

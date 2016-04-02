@@ -279,23 +279,30 @@ public class Database {
     }
 
     public Disciples getDiscipleProfile(String Dis_ID){
+        Log.i(TAG, "GetDiscipleProfile");
         Disciples dis = new Disciples();
         String DB_Table = DeepLife.Table_DISCIPLES;
-        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + Dis_ID, null);
-        c.moveToFirst();
-        if(c.getCount()>0){
-            dis.setId(Dis_ID);
-            dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
-            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
-            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
-            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
-            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
-            dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
-            dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
-
-            return dis;
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        if(c != null){
+            c.moveToFirst();
+            for(int i=0; i<c.getCount();i++){
+                c.moveToPosition(i);
+                String ID = c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0]));
+                Log.i(TAG, "GetDiscipleProfile Comparing: "+ID+" | "+Dis_ID);
+                if(ID.equals(Dis_ID)){
+                    dis.setId(Dis_ID);
+                    dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+                    dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+                    dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+                    dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+                    dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+                    dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
+                    dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
+                    Log.i(TAG, "Found DiscipleProfile:-> " + dis.toString());
+                    return dis;
+                }
+            }
         }
-
         return null;
     }
 
@@ -371,12 +378,12 @@ public class Database {
         Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
         if(c != null && c.getCount()>0){
             c.moveToFirst();
-            Log.i(TAG, "SendLogs Count:-> " + c.getCount());
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
                 Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[0] + " | "+str);
                 if(SyncService.Sync_Tasks[0].equals(str)){
+                    Log.i(TAG, "SendLogs Count:-> " + c.getCount());
                     Logs newLogs = new Logs();
                     newLogs.setId(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0])));
                     newLogs.setType(c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[1])));
@@ -395,7 +402,6 @@ public class Database {
         Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
         if(c != null && c.getCount()>0){
             c.moveToFirst();
-            Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
@@ -403,6 +409,7 @@ public class Database {
                 String ID = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
                 Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[1] + " | "+str);
                 if(SyncService.Sync_Tasks[1].equals(str)){
+                    Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
                     Disciples newDisciples = getDiscipleProfile(id);
                     if(newDisciples !=null){
                         newDisciples.setId(ID);
@@ -431,7 +438,6 @@ public class Database {
                     Disciples newDisciples = getDiscipleProfile(id);
                     if(newDisciples !=null){
                         newDisciples.setId(ID);
-                        Log.i(TAG, "Found for Update:-> \n" + newDisciples.toString());
                         Found.add(newDisciples);
                     }
                 }
