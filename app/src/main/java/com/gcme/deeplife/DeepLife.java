@@ -38,13 +38,6 @@ public class DeepLife extends Application {
             myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER,cv);
             Toast.makeText(this,"Data Added to table",Toast.LENGTH_LONG).show();
         }
-        if(myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_LOGS)<3){
-            ContentValues cv1 = new ContentValues();
-            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
-            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1],SyncService.Sync_Tasks[0]);
-            cv1.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2],"1212");
-            myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,cv1);
-        }
         myJobScheduler  = JobScheduler.getInstance(this);
         JobConstr();
     }
