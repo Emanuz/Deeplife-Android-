@@ -24,6 +24,7 @@
     <string name="add_schedule">ADD SCHEDULE</string>
     <string name="schedule_with">Schedule with</string>
     <string name="description">Description</string>
+    <string name="title">Title</string>
     <string name="register_a_disciple">Please add your disciple correctly</string>
 
     <string name="btn_link_to_register">Not a member? Sign up now.</string>

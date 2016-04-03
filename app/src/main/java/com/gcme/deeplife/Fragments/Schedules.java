@@ -3,6 +3,7 @@ package com.gcme.deeplife.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Activities.AddSchedule;
 import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Models.Disciples;
@@ -70,16 +72,11 @@ public class Schedules extends Fragment {
 
         addSchedule = (Button) view.findViewById(R.id.bt_add_schedule);
         addSchedule.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-               // addScheduleDialog();
-                try {
-                    //showAlert();
-                }catch (Exception e){
-
-                }
+                Intent intent = new Intent(getActivity(), AddSchedule.class);
+                startActivity(intent);
             }
 		});
 

@@ -2,6 +2,7 @@ package com.gcme.deeplife.Disciples;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
+import com.gcme.deeplife.SyncService.SyncService;
 
 import java.util.ArrayList;
 
@@ -85,12 +87,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         @Override
         public boolean onLongClick(View v) {
            Toast.makeText(myContext, "Long click on id= "+id.getText().toString(), Toast.LENGTH_SHORT).show();
-            DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()),FullName.getText().toString());
+            DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()),FullName.getText().toString(),Phone.getText().toString());
             return true;
         }
     }
 
-    public static void delete_Dialog(final int id,final String name) {
+    public static void delete_Dialog(final int id,final String name, final String phone) {
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -101,9 +103,16 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                         Toast.makeText(myContext,"delete: "+id,Toast.LENGTH_LONG).show();
                         long deleted = myDB.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
-                            Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
+                            Log.i("SyncService", "Adding Delete Log -> \n");
+                            ContentValues log = new ContentValues();
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0], SyncService.Sync_Tasks[2]);
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], phone);
+                            long val = com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,log);
+                            Toast.makeText(myContext,"Successfully Deleted: "+val,Toast.LENGTH_SHORT).show();
                             myDB.dispose();
                             Intent intent = new Intent(myContext,MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             myContext.startActivity(intent);
                             ((Activity) myContext).finish();
                         }
