@@ -38,11 +38,11 @@ public class SyncService extends JobService {
     public SyncService(){
         Param = new ArrayList<Object>();
         myParser = new Gson();
-        user = DeepLife.myDatabase.getUser();
     }
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.i("JobService", "The Job scheduler started");
+        user = DeepLife.myDatabase.getUser();
         Param.add(DeepLife.myDatabase.getUser());
         Send_Param = new ArrayList<kotlin.Pair<String,String>>();
         Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
@@ -50,8 +50,7 @@ public class SyncService extends JobService {
         Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
         Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
 
-
-        Fuel.post("http://192.168.0.24/SyncSMS/public/deep_api", Send_Param).responseString(new Handler<String>() {
+        Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
                 Log.i(TAG, "Request: \n" + request);
@@ -119,11 +118,18 @@ public class SyncService extends JobService {
     }
 
     public String getService(){
+        Log.i(TAG,"Found SendLogs -> "+DeepLife.myDatabase.getSendLogs().size());
+        Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
+        Log.i(TAG,"Found UpdateDisciples -> "+DeepLife.myDatabase.getUpdateDisciples().size());
+
         if(DeepLife.myDatabase.getSendLogs().size()>0){
+            Log.i(TAG,"Found SendLogs Service -> "+DeepLife.myDatabase.getSendLogs().size());
             return "Send_Log";
         }else if(DeepLife.myDatabase.getSendDisciples().size()>0){
+            Log.i(TAG,"Found SendDisciple Service -> "+DeepLife.myDatabase.getSendDisciples().size());
             return "AddNew_Disciples";
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
+            Log.i(TAG,"Found UpdateDisciples Service -> "+DeepLife.myDatabase.getUpdateDisciples().size());
             return "Update_Disciples";
         }else{
             return "Error";

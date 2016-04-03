@@ -2,6 +2,7 @@ package com.gcme.deeplife.Activities;
 
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -123,28 +124,43 @@ public class Login extends AppCompatActivity{
         if (!validatePassword()) {
             return;
         }
-        List<Pair<String, String>> Send_Param;
+
         final ProgressDialog myDialog = new ProgressDialog(this);
         myDialog.setTitle(R.string.app_name);
         myDialog.setMessage("Authenticating the Account ....");
         myDialog.show();
+        List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
         Send_Param.add(new kotlin.Pair<String, String>("User_Name", ed_phoneNumber.getText().toString()));
         Send_Param.add(new kotlin.Pair<String, String>("User_Pass", ed_password.getText().toString()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Log_In"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
-        Fuel.post("http://192.168.0.24/SyncSMS/public/deep_api", Send_Param).responseString(new Handler<String>() {
+
+        Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
                 myDialog.cancel();
                 try {
+                    Log.i(TAG, "Server Request -> \n" + request.toString());
+                    Log.i(TAG, "Server Response -> \n" + s);
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    Log.i(TAG, "Server Response -> \n" + myObject.toString());
                     if (!myObject.isNull("Response")) {
 
                         DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_DISCIPLES);
                         DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_SCHEDULES);
                         DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_LOGS);
+                        DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_USER);
+
+                        ContentValues cv = new ContentValues();
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[0],"");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[1],"");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[2],ed_phoneNumber.getText().toString());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[3],ed_password.getText().toString());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[4], "");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[5], "");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[6], "");
+                        long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER, cv);
+                        Log.i(TAG, "Main User Adding-> " + x);
 
                         JSONObject json_response = myObject.getJSONObject("Response");
                         if(!json_response.isNull("Disciples")){
