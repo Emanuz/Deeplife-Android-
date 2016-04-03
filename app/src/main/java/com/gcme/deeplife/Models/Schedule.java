@@ -1,7 +1,7 @@
 package com.gcme.deeplife.Models;
 
 public class Schedule {
-	private String ID,Disciple_Phone,Alarm_Time,Alarm_Repeat,Description, Title;
+	private String ID, Disciple_Phone, Alarm_Time, Alarm_Repeat, Description, Title;
 
 	public Schedule() {
 		super();
@@ -55,5 +55,5 @@ public class Schedule {
 		Description = description;
 	}
 
-	
+
 }

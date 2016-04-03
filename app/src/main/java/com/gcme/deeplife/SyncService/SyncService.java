@@ -56,9 +56,8 @@ public class SyncService extends JobService {
             @Override
             public void success(Request request, Response response, String s) {
                 Log.i(TAG, "Request: \n" + request);
-                Gson myGson = new Gson();
                 Log.i(TAG, "Response: \n" + s);
-
+                Gson myGson = new Gson();
                 try {
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
                     Log.i(TAG,"Server Response -> \n"+myObject.toString());
@@ -76,6 +75,10 @@ public class SyncService extends JobService {
                         if(!json_response.isNull("Questions")){
                             JSONArray json_questions = json_response.getJSONArray("Questions");
                             Add_Qustions(json_questions);
+                        }
+                        if(!json_response.isNull("Reports")){
+                            JSONArray json_questions = json_response.getJSONArray("Reports");
+                            Add_Report_Forms(json_questions);
                         }
                         if(!json_response.isNull("Log_Response")){
                             JSONArray json_logs = json_response.getJSONArray("Log_Response");
@@ -127,6 +130,7 @@ public class SyncService extends JobService {
         Log.i(TAG,"Found SendLogs -> "+DeepLife.myDatabase.getSendLogs().size());
         Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
         Log.i(TAG,"Found UpdateDisciples -> "+DeepLife.myDatabase.getUpdateDisciples().size());
+        Log.i(TAG,"Found SendSchedule -> "+DeepLife.myDatabase.getSendSchedules().size());
 
         if(DeepLife.myDatabase.getSendLogs().size()>0){
             Log.i(TAG,"Found SendLogs Service -> "+DeepLife.myDatabase.getSendLogs().size());
@@ -138,10 +142,10 @@ public class SyncService extends JobService {
             Log.i(TAG,"Found UpdateDisciples Service -> "+DeepLife.myDatabase.getUpdateDisciples().size());
             return "Update_Disciples";
         }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
-            Log.i(TAG,"Found SendDisciple Service -> "+DeepLife.myDatabase.getSendSchedules().size());
+            Log.i(TAG,"Found SendSchedule Service -> "+DeepLife.myDatabase.getSendSchedules().size());
             return "AddNew_Schedules";
         }else{
-            return "Error";
+            return "Update";
         }
     }
     public ArrayList<Object> getParam(){
@@ -164,7 +168,7 @@ public class SyncService extends JobService {
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
-        }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
+        }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO Send -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDatabase.getSendSchedules();
             for(int i=0;i<foundData.size();i++){
@@ -211,9 +215,11 @@ public class SyncService extends JobService {
                     JSONObject obj = json_schedules.getJSONObject(i);
                     ContentValues cv = new ContentValues();
                     cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[0], obj.getString("disciple_phone"));
-                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[1], obj.getString("time"));
-                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[2], obj.getString("type"));
-                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[3], obj.getString("description"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[1], obj.getString("name"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[2], obj.getString("time"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[3], obj.getString("type"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.SCHEDULES_FIELDS[4], obj.getString("description"));
+
                     long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_SCHEDULES,cv);
                     if(x>0){
                         Log.i(TAG,"Adding Schedule Log -> \n");
@@ -243,6 +249,25 @@ public class SyncService extends JobService {
                     cv.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
                     long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,cv);
                     Log.i(TAG,"Adding Qustions -> "+obj.getString("id")+" : "+x);
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+    public static void Add_Report_Forms(JSONArray json_questions){
+        try{
+            if(json_questions.length()>0){
+                Log.i(TAG,"Adding New Reports -> \n"+json_questions.toString());
+                DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_Report_Forms);
+                for(int i=0;i<json_questions.length();i++){
+                    JSONObject obj = json_questions.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(com.gcme.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[0], obj.getString("id"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[1], obj.getString("category"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[2], obj.getString("question"));
+                    long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_Report_Forms,cv);
+                    Log.i(TAG,"Adding Report -> "+obj.getString("id")+" : "+x);
                 }
             }
         }catch (Exception e){

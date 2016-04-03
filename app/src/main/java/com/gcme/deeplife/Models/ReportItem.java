@@ -4,41 +4,37 @@ package com.gcme.deeplife.Models;
  * Created by BENGEOS on 2/19/16.
  */
 public class ReportItem {
-    private String reportID,Text;
-    private int Value;
+    private String id,Report_ID,Category,Question;
 
-    public ReportItem(String reportID, String text, int value) {
-        this.reportID = reportID;
-        Text = text;
-        Value = value;
+    public String getId() {
+        return id;
     }
 
-    public ReportItem(String reportID) {
-        this.reportID = reportID;
-        Value = 0;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public int getValue() {
-        return Value;
+    public String getReport_ID() {
+        return Report_ID;
     }
 
-    public String getReportID() {
-        return reportID;
+    public void setReport_ID(String report_ID) {
+        Report_ID = report_ID;
     }
 
-    public String getText() {
-        return Text;
+    public String getCategory() {
+        return Category;
     }
 
-    public void setReportID(String reportID) {
-        this.reportID = reportID;
+    public void setCategory(String category) {
+        Category = category;
     }
 
-    public void setText(String text) {
-        Text = text;
+    public String getQuestion() {
+        return Question;
     }
 
-    public void setValue(int value) {
-        Value = value;
+    public void setQuestion(String question) {
+        Question = question;
     }
 }

@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gcme.deeplife.DeepLife;
+import com.gcme.deeplife.Models.ReportItem;
 import com.gcme.deeplife.R;
 
 import java.util.ArrayList;
@@ -34,11 +36,7 @@ public class ReportListFragment extends Fragment {
         myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<ReportObject> items = new ArrayList<ReportObject>();
-        items.add(new ReportObject());
-        items.add(new ReportObject());
-        items.add(new ReportObject());
-        items.add(new ReportObject());
+        ArrayList<ReportItem> items = DeepLife.myDatabase.get_All_Report();
         mAdapter = new ReportListAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);
         myContext = getActivity();

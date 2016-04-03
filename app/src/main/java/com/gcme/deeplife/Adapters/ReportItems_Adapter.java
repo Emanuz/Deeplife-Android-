@@ -45,7 +45,7 @@ public class ReportItems_Adapter extends BaseAdapter {
         Button btn_Up,btn_Down;
         final TextView value,title;
         value = (TextView) view.findViewById(R.id.txt_value);
-        value.setText(""+Reports.get(i).getValue());
+        value.setText(""+Reports.get(i).getCategory());
         btn_Up = (Button) view.findViewById(R.id.btn_inc);
         btn_Up.setOnClickListener(new View.OnClickListener() {
             @Override
