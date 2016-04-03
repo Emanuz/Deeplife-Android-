@@ -269,7 +269,7 @@ public class Schedules extends Fragment {
 
 
             //final String name = schedule.get(position).ge;
-            final String user_id = schedule.get(position).getUser_Id();
+            final String user_id = schedule.get(position).getDisciple_Phone();
             final String time = schedule.get(position).getAlarm_Time();
             final String title = schedule.get(position).getTitle();
             final String discription = schedule.get(position).getDescription();
