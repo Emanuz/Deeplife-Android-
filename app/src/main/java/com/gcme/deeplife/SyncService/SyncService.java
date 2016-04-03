@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
+import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
@@ -30,7 +31,7 @@ import me.tatarka.support.job.JobService;
  */
 public class SyncService extends JobService {
     private static final String TAG = "SyncService";
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple"};
+    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule"};
     private List<Object> Param;
     private Gson myParser;
     private List<kotlin.Pair<String,String>> Send_Param;
@@ -136,6 +137,9 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
             Log.i(TAG,"Found UpdateDisciples Service -> "+DeepLife.myDatabase.getUpdateDisciples().size());
             return "Update_Disciples";
+        }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
+            Log.i(TAG,"Found SendDisciple Service -> "+DeepLife.myDatabase.getSendSchedules().size());
+            return "AddNew_Schedules";
         }else{
             return "Error";
         }
@@ -157,6 +161,12 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO UPDATE -> \n");
             ArrayList<Disciples> foundData = DeepLife.myDatabase.getUpdateDisciples();
+            for(int i=0;i<foundData.size();i++){
+                Found.add(foundData.get(i));
+            }
+        }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
+            Log.i(TAG,"GET Schedules TO Send -> \n");
+            ArrayList<Schedule> foundData = DeepLife.myDatabase.getSendSchedules();
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
