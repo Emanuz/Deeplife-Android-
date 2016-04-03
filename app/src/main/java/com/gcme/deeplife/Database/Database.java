@@ -143,7 +143,7 @@ public class Database {
     public ArrayList<Question> get_All_Questions(String Category){
         String DB_Table = DeepLife.Table_QUESTION_LIST;
         ArrayList<Question> found = new ArrayList<Question>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0] + " = '" + Category + "'", null, null, null, null);
         c.moveToFirst();
 
         for(int i=0;i<c.getCount();i++){
@@ -235,6 +235,7 @@ public class Database {
         return found;
     }
 
+
      public ArrayList<Schedule> get_All_Schedule(){
          Log.i(TAG, "GetAll Schedule:\n");
         String DB_Table = DeepLife.Table_SCHEDULES;
@@ -280,7 +281,6 @@ public class Database {
         }
         return found;
     }
-
 
 
     public Schedule getScheduleWithId(String id){
@@ -330,6 +330,28 @@ public class Database {
         return null;
     }
 
+
+    public Disciples getDiscipleProfileFromPhone(String Dis_Phone){
+        Log.i(TAG, "GetDiscipleProfile");
+        Disciples dis = new Disciples();
+        String DB_Table = DeepLife.Table_DISCIPLES;
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where "+DeepLife.DISCIPLES_COLUMN[3] +"= '" + Dis_Phone+"'", null);
+        if(c.getCount()>0){
+            c.moveToFirst();
+            dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
+            dis.setFull_Name(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[1])));
+            dis.setEmail(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[2])));
+            dis.setPhone(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[3])));
+            dis.setCountry(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[4])));
+            dis.setBuild_Phase(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[5])));
+            dis.setGender(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[6])));
+            dis.setPicture(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[7])));
+            Log.i(TAG, "Found DiscipleProfile:-> " + dis.toString());
+            return dis;
+        }
+
+        return null;
+    }
 
     public User getUserProfile(String user_ID){
 

@@ -53,8 +53,7 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 	}
 
     public void notify(Context context) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.jadhiel);
-        mediaPlayer.start();
+
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override

@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.gcme.deeplife.Activities.Send.SendActivity;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.Disciples;
@@ -49,7 +48,7 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 
 	Button btn_addSchedule, btn_date, btn_time;
 	ArrayList<Disciples> list_names;
-	String scheduled_disciple_id;
+	String scheduled_disciple_id, disciple_phone;
 	private TextInputLayout inputLayoutTitle, inputLayoutDesc;
 
 	private Calendar mCalendar;
@@ -92,12 +91,14 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int i = sp_name.getSelectedItemPosition();
                 scheduled_disciple_id = list_names.get(i).getId().toString();
+				disciple_phone = list_names.get(i).getPhone().toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 scheduled_disciple_id = list_names.get(0).getId().toString();
-            }
+				disciple_phone = list_names.get(0).getPhone().toString();
+			}
         });
 		addScheduleHandler();
 	}
@@ -229,15 +230,11 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 		String reminderDateTime = dateTimeFormat.format(mCalendar.getTime());
 
 		ContentValues values = new ContentValues();
-		values.put(DeepLife.SCHEDULES_FIELDS[0], scheduled_disciple_id);
+		values.put(DeepLife.SCHEDULES_FIELDS[0], disciple_phone);
 		values.put(DeepLife.SCHEDULES_FIELDS[1], ed_title.getText().toString());
 		values.put(DeepLife.SCHEDULES_FIELDS[2], reminderDateTime);
-<<<<<<< HEAD
 		values.put(DeepLife.SCHEDULES_FIELDS[3],0);
 		values.put(DeepLife.SCHEDULES_FIELDS[4], ed_descr.getText().toString());
-=======
-		values.put(DeepLife.SCHEDULES_FIELDS[3], ed_descr.getText().toString());
->>>>>>> d6fc35415fc7dc72888f7d2ab4922564e60b1ded
 
 		long i = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_SCHEDULES,values);
 		if(i!=-1){
@@ -248,19 +245,14 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 			log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
 			log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], i);
 			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
-
-<<<<<<< HEAD
-			}*/
+			}
             Toast.makeText(getApplicationContext(),"Alarm Successfully Set!",Toast.LENGTH_SHORT).show();
-=======
-			Toast.makeText(getApplicationContext(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
->>>>>>> d6fc35415fc7dc72888f7d2ab4922564e60b1ded
 			Intent intent = new Intent(AddSchedule.this,MainActivity.class);
 			startActivity(intent);
             finish();
 		}
 
-	}
+
 
 	private boolean validateTitle() {
 		if (ed_title.getText().toString().trim().isEmpty()) {

@@ -85,7 +85,6 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
         @Override
         public boolean onLongClick(View v) {
-           Toast.makeText(myContext, "Long click on id= "+id.getText().toString(), Toast.LENGTH_SHORT).show();
             DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()),FullName.getText().toString(),Phone.getText().toString());
             return true;
         }
@@ -109,13 +108,15 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], phone);
                             long val = com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,log);
 
-                            ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_Schedule_With_User(id+"");
-                            for(int i=0;i>schedules.size();i++){
-                                long result = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,i);
+                            ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_Schedule_With_User(phone);
+
+                            for(int i=0;i<schedules.size();i++){
+                                int schedule_id = Integer.parseInt(schedules.get(i).getID());
+                                long result = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,schedule_id);
                                 if(result!=-1)
                                         Log.i(DeepLife.TAG,"Schedule with id " + result +" removed");
                             }
-                            Toast.makeText(myContext,"Diciple Deleted eith all the schedules ",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(myContext,"Disciple Deleted all the schedules ",Toast.LENGTH_SHORT).show();
 
                             Intent intent = new Intent(myContext,MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

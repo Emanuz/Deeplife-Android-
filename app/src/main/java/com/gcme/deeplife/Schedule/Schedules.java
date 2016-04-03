@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -190,25 +191,23 @@ public class Schedules extends Fragment {
 
 
             TextView tv_name=(TextView)convertView.findViewById(R.id.schedule_with_name);
-            TextView tv_phone=(TextView)convertView.findViewById(R.id.schedulephone);
             TextView tv_disc=(TextView)convertView.findViewById(R.id.scheduledisciption);
             TextView tv_time=(TextView)convertView.findViewById(R.id.scheduletime);
             TextView tv_title=(TextView)convertView.findViewById(R.id.schedule_title);
 
 
             //final String name = schedule.get(position).ge;
-            final String user_id = schedule.get(position).getDisciple_Phone();
+            final String user_phone = schedule.get(position).getDisciple_Phone();
             final String time = schedule.get(position).getAlarm_Time();
             final String title = schedule.get(position).getTitle();
             final String discription = schedule.get(position).getDescription();
             final int id = Integer.parseInt(schedule.get(position).getID());
 
-            Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfile(user_id);
-
+            Log.i(DeepLife.TAG,"Disciple phone " + user_phone);
+            Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfileFromPhone(user_phone);
 
             //set the values
             tv_name.setText(disciple.getFull_Name());
-            tv_phone.setText(disciple.getPhone());
             tv_time.setText(time);
             tv_disc.setText(discription);
             tv_title.setText(title);
