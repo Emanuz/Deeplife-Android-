@@ -82,12 +82,12 @@ public class Splash extends Activity {
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[3], "Have you stated that the dgsdgasdgas asdg");
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[4], "0");
 
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions2);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions3);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions4);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions5);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,questions6);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions2);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions3);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions4);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions5);
+//			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,questions6);
 
             Log.i(DeepLife.TAG, "Questions added");
             myDatabase.dispose();

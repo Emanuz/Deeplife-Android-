@@ -61,7 +61,7 @@ public class Register extends AppCompatActivity{
     private static final String TAG = "Register";
 	private Button  Register;
 	private EditText Full_Name,Email,Phone,Country,Pass,Ed_Codes;
-    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword;
+    private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword,inputLayoutPhone;
     private  AlertDialog.Builder builder;
     private User New_User;
     private Gson myParser;
@@ -97,6 +97,7 @@ public class Register extends AppCompatActivity{
         inputLayoutName = (TextInputLayout) findViewById(R.id.signup_txtinput_firstname);
         inputLayoutEmail = (TextInputLayout) findViewById(R.id.signup_txtinput_email);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.signup_txtinput_password);
+        inputLayoutPhone = (TextInputLayout) findViewById(R.id.signup_txtinput_phone);
 
         Full_Name.addTextChangedListener(new MyTextWatcher(Full_Name));
         Email.addTextChangedListener(new MyTextWatcher(Email));
@@ -213,11 +214,14 @@ public class Register extends AppCompatActivity{
         if (!validatePassword()) {
             return;
         }
+        if (!validatePhone()) {
+            return;
+        }
         New_User = new User();
         New_User.setUser_Name(Full_Name.getText().toString());
         New_User.setUser_Pass(Pass.getText().toString());
         New_User.setUser_Country(sp_countries.getSelectedItem().toString());
-        New_User.setUser_Phone(Phone.getText().toString());
+        New_User.setUser_Phone(Ed_Codes.getText().toString()+Phone.getText().toString());
         New_User.setUser_Email(Email.getText().toString());
         New_User.setUser_Gender(sp_gender.getSelectedItem().toString());
 
@@ -230,8 +234,8 @@ public class Register extends AppCompatActivity{
         user.add(New_User);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", Phone.getText().toString()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", Pass.getText().toString()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Name", New_User.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", New_User.getUser_Pass()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
@@ -322,6 +326,17 @@ public class Register extends AppCompatActivity{
             inputLayoutEmail.setErrorEnabled(false);
         }
 
+        return true;
+    }
+    private boolean validatePhone() {
+        String phone = Phone.getText().toString().trim();
+        if (phone.isEmpty() || phone.length()>10 || phone.length()<8) {
+            inputLayoutPhone.setError(getString(R.string.err_msg_phone));
+            requestFocus(Phone);
+            return false;
+        } else {
+            inputLayoutPhone.setErrorEnabled(false);
+        }
         return true;
     }
 

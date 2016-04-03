@@ -91,9 +91,9 @@ public class AddDisciple extends AppCompatActivity {
 	public void addDiscipleHandler(){
         addDisciple.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                submitForm();
+			@Override
+			public void onClick(View v) {
+				submitForm();
 //				String name = ed_name.getText().toString();
 //				String email = ed_email.getText().toString();
 //				String phone = ed_phone.getText().toString();
@@ -183,7 +183,7 @@ public class AddDisciple extends AppCompatActivity {
 		ContentValues values = new ContentValues();
 		values.put(DeepLife.DISCIPLES_FIELDS[0], name);
 		values.put(DeepLife.DISCIPLES_FIELDS[1], email);
-		values.put(DeepLife.DISCIPLES_FIELDS[2],code+phone);
+		values.put(DeepLife.DISCIPLES_FIELDS[2], code+phone);
 		values.put(DeepLife.DISCIPLES_FIELDS[3], country);
 		values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
 		values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
@@ -216,20 +216,23 @@ public class AddDisciple extends AppCompatActivity {
 
 	private boolean validateEmail() {
 		String email = ed_email.getText().toString().trim();
-
-		if (email.isEmpty() || !isValidEmail(email)) {
-			inputLayoutEmail.setError(getString(R.string.err_msg_email));
-			requestFocus(ed_email);
-			return false;
-		} else {
-			inputLayoutEmail.setErrorEnabled(false);
+		if(email != null){
+			if (email.isEmpty() || !isValidEmail(email)) {
+				inputLayoutEmail.setError(getString(R.string.err_msg_email));
+				requestFocus(ed_email);
+				return false;
+			} else {
+				inputLayoutEmail.setErrorEnabled(false);
+			}
+		}else{
+			ed_email.setText("");
 		}
-
 		return true;
 	}
 
 	private boolean validatePhone() {
-		if (ed_phone.getText().toString().trim().isEmpty()) {
+		String phone = ed_phone.getText().toString();
+		if (phone.trim().isEmpty() || phone.length() > 10 || phone.length()<8) {
 			inputLayoutPhone.setError(getString(R.string.err_msg_phone));
 			requestFocus(ed_phone);
 			return false;
