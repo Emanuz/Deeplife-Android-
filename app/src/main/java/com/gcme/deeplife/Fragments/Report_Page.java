@@ -60,7 +60,7 @@ public class Report_Page extends Fragment {
     }
 
     public static void Update_Report_Value(int pos,int value){
-        Reports.get(pos).setValue(value);
+        Reports.get(pos).setReport_ID(""+value);
     }
     public void Save_Report(){
         com.gcme.deeplife.DeepLife.myDatabase.Delete_All(DeepLife.Table_Reports);

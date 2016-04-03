@@ -1,6 +1,7 @@
 package com.gcme.deeplife.Schedule;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,10 +23,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Activities.Send.SendActivity;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.R;
+import com.gcme.deeplife.SyncService.SyncService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +41,7 @@ import java.util.Calendar;
 public class Schedules extends Fragment {
 
 	
-	public ListView lv_schedule;
+	public static ListView lv_schedule;
 	Button addSchedule;
 
 	ArrayList<Schedule> schedules;
@@ -52,6 +55,7 @@ public class Schedules extends Fragment {
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "kk:mm";
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
+    private static Context myContext;
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,7 +67,8 @@ public class Schedules extends Fragment {
                 false);
 
         lv_schedule = (ListView) view.findViewById(R.id.ls_schedule);
-        populateList(getActivity());
+        myContext = getActivity();
+        populateList();
 
         addSchedule = (Button) view.findViewById(R.id.bt_add_schedule);
         addSchedule.setOnClickListener(new OnClickListener() {
@@ -80,9 +85,9 @@ public class Schedules extends Fragment {
 		
 	}
 
-    public void populateList(Context context){
+    public static void populateList(){
         ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_All_Schedule();
-        lv_schedule.setAdapter(new MyDiscipleListAdapter(context,schedules));
+        lv_schedule.setAdapter(new MyDiscipleListAdapter(myContext,schedules));
     }
 
 
@@ -127,7 +132,7 @@ public class Schedules extends Fragment {
 	}
 
 
-    public void delete_Dialog(final int id) {
+    public static void delete_Dialog(final int id,final String phone) {
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -136,8 +141,14 @@ public class Schedules extends Fragment {
                     case DialogInterface.BUTTON_POSITIVE:
                         long deleted = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,id);
                         if(deleted!=-1){
-                            Toast.makeText(getActivity(),"Successfully Deleted",Toast.LENGTH_SHORT).show();
-                            //reload();
+                            Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
+
+                            ContentValues log = new ContentValues();
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Schedule");
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
+                            log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], SendActivity.DISCIPLE_ID);
+                            com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
+                            populateList();
                         }
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -148,7 +159,7 @@ public class Schedules extends Fragment {
         };
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
         builder.setTitle("Remove Schedule ").setMessage("Are You sure you want to remove this schedule" )
                 .setPositiveButton("Yes ", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)
@@ -228,7 +239,7 @@ public class Schedules extends Fragment {
 
 
 
-    public class MyDiscipleListAdapter extends BaseAdapter
+    public static class MyDiscipleListAdapter extends BaseAdapter
     {
         Context context;
         ArrayList<Schedule> schedule;
@@ -257,7 +268,7 @@ public class Schedules extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            LayoutInflater inflate = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflate = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflate.inflate(R.layout.schedule_item,null);
 
 
@@ -269,25 +280,26 @@ public class Schedules extends Fragment {
 
 
             //final String name = schedule.get(position).ge;
-            final String user_id = schedule.get(position).getDisciple_Phone();
+            final String Dis_id = schedule.get(position).getID();
+            final String phone = schedule.get(position).getDisciple_Phone();
             final String time = schedule.get(position).getAlarm_Time();
             final String title = schedule.get(position).getTitle();
             final String discription = schedule.get(position).getDescription();
             final int id = Integer.parseInt(schedule.get(position).getID());
 
-            Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfile(user_id);
-
-            //set the values
-            tv_name.setText(disciple.getFull_Name());
-            tv_phone.setText(disciple.getPhone());
-            tv_time.setText(time);
-            tv_disc.setText(discription);
-            tv_title.setText(title);
-
+            Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfile(Dis_id);
+            if(disciple != null){
+                //set the values
+                tv_name.setText(disciple.getFull_Name());
+                tv_phone.setText(disciple.getPhone());
+                tv_time.setText(time);
+                tv_disc.setText(discription);
+                tv_title.setText(title);
+            }
             convertView.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    delete_Dialog(id);
+                    delete_Dialog(id,phone);
                     return true;
                 }
             });

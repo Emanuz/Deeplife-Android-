@@ -232,7 +232,8 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 		values.put(DeepLife.SCHEDULES_FIELDS[0], scheduled_disciple_id);
 		values.put(DeepLife.SCHEDULES_FIELDS[1], ed_title.getText().toString());
 		values.put(DeepLife.SCHEDULES_FIELDS[2], reminderDateTime);
-		values.put(DeepLife.SCHEDULES_FIELDS[3], ed_descr.getText().toString());
+		values.put(DeepLife.SCHEDULES_FIELDS[3], "Normal");
+		values.put(DeepLife.SCHEDULES_FIELDS[4], ed_descr.getText().toString());
 
 		Toast.makeText(getApplicationContext(),"Alarm Set",Toast.LENGTH_LONG).show();
 		long i = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_SCHEDULES,values);

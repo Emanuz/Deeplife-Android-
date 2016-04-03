@@ -11,6 +11,7 @@ import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
 import com.gcme.deeplife.Models.Question;
 import com.gcme.deeplife.Models.QuestionAnswer;
+import com.gcme.deeplife.Models.ReportItem;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.SyncService.SyncService;
@@ -145,7 +146,6 @@ public class Database {
         ArrayList<Question> found = new ArrayList<Question>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), DeepLife.QUESTION_LIST_FIELDS[0]+" = '"+Category+"'", null, null, null, null);
         c.moveToFirst();
-
         for(int i=0;i<c.getCount();i++){
             c.moveToPosition(i);
             Question dis = new Question();
@@ -154,6 +154,22 @@ public class Database {
             dis.setDescription(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[2])));
             dis.setNote(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[3])));
             dis.setMandatory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[4])));
+            found.add(dis);
+        }
+        return found;
+    }
+    public ArrayList<ReportItem> get_All_Report(){
+        String DB_Table = DeepLife.Table_Report_Forms;
+        ArrayList<ReportItem> found = new ArrayList<ReportItem>();
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        c.moveToFirst();
+        for(int i=0;i<c.getCount();i++){
+            c.moveToPosition(i);
+            ReportItem dis = new ReportItem();
+            dis.setId(c.getString(c.getColumnIndex(DeepLife.REPORT_FORM_COLUMN[0])));
+            dis.setReport_ID(c.getString(c.getColumnIndex(DeepLife.REPORT_FORM_COLUMN[1])));
+            dis.setCategory(c.getString(c.getColumnIndex(DeepLife.REPORT_FORM_COLUMN[2])));
+            dis.setQuestion(c.getString(c.getColumnIndex(DeepLife.REPORT_FORM_COLUMN[3])));
             found.add(dis);
         }
         return found;
@@ -290,9 +306,8 @@ public class Database {
         Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + id, null);
         c.moveToFirst();
         if(c.getCount()>0){
-            dis.setID(id);
+            dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
             dis.setDisciple_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
-            dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
             dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
             dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
             dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
@@ -457,13 +472,13 @@ public class Database {
                 String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
                 String id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
                 String ID = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
-                Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[4] + " | "+str);
-                if(SyncService.Sync_Tasks[1].equals(str)){
+                Log.i(TAG, "SendSchedule Comparing-> \n" + SyncService.Sync_Tasks[4] + " | "+str);
+                if(SyncService.Sync_Tasks[4].equals(str)){
                     Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
                     Schedule newSchedule = getScheduleWithId(id);
                     if(newSchedule !=null){
                         newSchedule.setID(ID);
-                        Log.i(TAG, "Found for Send:-> \n" + newSchedule.toString());
+                        Log.i(TAG, "Found for SendSchedules:-> \n" + newSchedule.toString());
                         Found.add(newSchedule);
                     }
                 }
@@ -477,7 +492,6 @@ public class Database {
         Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
         if(c != null && c.getCount()>0){
             c.moveToFirst();
-            Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
             for(int i=0;i<c.getCount();i++){
                 c.moveToPosition(i);
                 String ID = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
@@ -485,6 +499,7 @@ public class Database {
                 String id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
                 Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+str);
                 if(SyncService.Sync_Tasks[3].equals(str)){
+                    Log.i(TAG, "UpdateDisciples Count:-> " + c.getCount());
                     Disciples newDisciples = getDiscipleProfile(id);
                     if(newDisciples !=null){
                         newDisciples.setId(ID);
