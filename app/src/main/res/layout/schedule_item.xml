@@ -47,8 +47,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="USER NAME"
+                            android:text="Title"
                             android:id="@+id/schedule_title"
                             android:gravity="center_horizontal"
                             android:textColor="#3eb1c8"
@@ -74,7 +73,8 @@
                             android:textColor="#3eb1c8"
                             android:textSize="15dp" />
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_marginLeft="3dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="USER NAME"
                             android:id="@+id/schedule_with_name"
@@ -88,19 +88,14 @@
                         android:layout_height="wrap_content"
                         >
 
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="30dp"
-                            android:id="@+id/phoneimage"
-                            android:src="@drawable/phone"
-                             />
-                        <TextView
+                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:text="Discription"
                             android:id="@+id/scheduledisciption"
-                            android:layout_marginLeft="2dp"
+                             android:layout_marginTop = "6dp"
+                            android:layout_marginLeft="25dp"
                             android:textSize="15dp"
                             />
 
@@ -146,13 +141,14 @@
                             android:id="@+id/schedule_disc_image"
                             android:src="@drawable/phone"
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|center_horizontal"
                             android:text="0910015581"
                             android:id="@+id/schedulephone"
-                            android:layout_marginLeft="2dp"
+                            android:layout_marginLeft="4dp"
                             android:textSize="15dp"
                             />
 

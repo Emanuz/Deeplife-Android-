@@ -231,9 +231,8 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 		values.put(DeepLife.SCHEDULES_FIELDS[1], ed_title.getText().toString());
 		values.put(DeepLife.SCHEDULES_FIELDS[2], reminderDateTime);
 		values.put(DeepLife.SCHEDULES_FIELDS[3],0);
-		values.put(DeepLife.SCHEDULES_FIELDS[3], ed_descr.getText().toString());
+		values.put(DeepLife.SCHEDULES_FIELDS[4], ed_descr.getText().toString());
 
-		Toast.makeText(getApplicationContext(),"Alarm Set",Toast.LENGTH_LONG).show();
 		long i = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_SCHEDULES,values);
 		if(i!=-1){
 			new ReminderManager(this).setReminder(i, mCalendar);
@@ -245,9 +244,10 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 			if(myBD.insert(DeepLife.Table_LOGS, cv1)!=-1){
 
 			}*/
-			Toast.makeText(getApplicationContext(),"Alarm Successfully Added!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Alarm Successfully Set!",Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent(AddSchedule.this,MainActivity.class);
 			startActivity(intent);
+            finish();
 		}
 
 	}

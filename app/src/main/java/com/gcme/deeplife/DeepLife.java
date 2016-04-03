@@ -18,6 +18,7 @@ public class DeepLife extends Application {
     private static final int JOB_ID = 100;
     private JobScheduler myJobScheduler;
     public static Database myDatabase;
+
     @Override
     public void onCreate() {
         super.onCreate();

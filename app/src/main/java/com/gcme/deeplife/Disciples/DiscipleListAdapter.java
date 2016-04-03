@@ -24,6 +24,7 @@ import com.gcme.deeplife.Activities.Disciple_Profile;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.Disciples;
+import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.R;
 import com.gcme.deeplife.SyncService.SyncService;
 
@@ -107,8 +108,15 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], phone);
                             long val = com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,log);
-                            Toast.makeText(myContext,"Successfully Deleted: "+val,Toast.LENGTH_SHORT).show();
-                            com.gcme.deeplife.DeepLife.myDatabase.dispose();
+
+                            ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_Schedule_With_User(id+"");
+                            for(int i=0;i>schedules.size();i++){
+                                long result = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,i);
+                                if(result!=-1)
+                                        Log.i(DeepLife.TAG,"Schedule with id " + result +" removed");
+                            }
+                            Toast.makeText(myContext,"Diciple Deleted eith all the schedules ",Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(myContext,MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             myContext.startActivity(intent);
