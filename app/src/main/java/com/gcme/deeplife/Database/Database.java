@@ -47,7 +47,7 @@ public class Database {
         Log.i(TAG, "Inserting New Data on: "+DB_Table);
         long state = myDatabase.insert(DB_Table, null, cv);
         Log.i(TAG, "Inserting->: "+cv.toString());
-        Log.i(TAG, "Inserting Completed->: "+state+"\n");
+        Log.i(TAG, "Inserting Completed->: " + state + "\n");
         return state;
     }
     public long Delete_All(String DB_Table){
@@ -246,7 +246,7 @@ public class Database {
                  c.moveToPosition(i);
                  Schedule dis = new Schedule();
                  dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-                 dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+                 dis.setDisciple_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
                  dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
                  dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
                  dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
@@ -258,7 +258,7 @@ public class Database {
         return found;
     }
 
-    public ArrayList<Schedule> get_Schedule_With_User(String Dis_ID){
+    public ArrayList<Schedule> get_Schedule_With_User(String Dis_Phone){
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
         Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -266,10 +266,10 @@ public class Database {
         for (int i = 0; i < c.getCount(); i++){
             c.moveToPosition(i);
             Schedule dis = new Schedule();
-            String id = c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1]));
-            if(Dis_ID.equals(id)){
+            String phone = c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1]));
+            if(Dis_Phone.equals(phone)){
                 dis.setID(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[0])));
-                dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+                dis.setDisciple_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
                 dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
                 dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
                 dis.setAlarm_Repeat(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[4])));
@@ -291,7 +291,7 @@ public class Database {
         c.moveToFirst();
         if(c.getCount()>0){
             dis.setID(id);
-            dis.setUser_Id(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
+            dis.setDisciple_Phone(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[1])));
             dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
             dis.setTitle(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[2])));
             dis.setAlarm_Time(c.getString(c.getColumnIndex(DeepLife.SCHEDULES_COLUMN[3])));
@@ -440,6 +440,31 @@ public class Database {
                         newDisciples.setId(ID);
                         Log.i(TAG, "Found for Send:-> \n" + newDisciples.toString());
                         Found.add(newDisciples);
+                    }
+                }
+            }
+        }
+        return Found;
+    }
+    public ArrayList<Schedule> getSendSchedules(){
+        Log.i(TAG, "SendSchedules:\n");
+        ArrayList<Schedule> Found = new ArrayList<>();
+        Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+                String id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
+                String ID = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
+                Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[4] + " | "+str);
+                if(SyncService.Sync_Tasks[1].equals(str)){
+                    Log.i(TAG, "SendSchedule Count:-> " + c.getCount());
+                    Schedule newSchedule = getScheduleWithId(id);
+                    if(newSchedule !=null){
+                        newSchedule.setID(ID);
+                        Log.i(TAG, "Found for Send:-> \n" + newSchedule.toString());
+                        Found.add(newSchedule);
                     }
                 }
             }

@@ -1,7 +1,7 @@
 package com.gcme.deeplife.Models;
 
 public class Schedule {
-	private String ID,User_Id,Alarm_Time,Alarm_Repeat,Description, Title;
+	private String ID,Disciple_Phone,Alarm_Time,Alarm_Repeat,Description, Title;
 
 	public Schedule() {
 		super();
@@ -23,12 +23,12 @@ public class Schedule {
 		ID = iD;
 	}
 
-	public String getUser_Id() {
-		return User_Id;
+	public String getDisciple_Phone() {
+		return Disciple_Phone;
 	}
 
-	public void setUser_Id(String user_Id) {
-		User_Id = user_Id;
+	public void setDisciple_Phone(String disciple_Phone) {
+		Disciple_Phone = disciple_Phone;
 	}
 
 	public String getAlarm_Time() {
