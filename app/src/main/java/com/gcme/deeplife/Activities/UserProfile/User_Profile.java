@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
@@ -21,7 +20,6 @@ public class User_Profile extends AppCompatActivity {
     ImageView profile_image;
     TextView tv_name,tv_email, tv_fav_scripture, tv_phone, tv_country;
 
-    Database myDB;
     int user_id;
     User user;
     @Override
@@ -32,14 +30,13 @@ public class User_Profile extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.user_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myDB = new Database(this);
-        user_id = myDB.get_Top_ID(DeepLife.Table_USER);
+        user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
 
         init();
 
     }
     public void init(){
-        user = myDB.getUserProfile(user_id+"");
+        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.user_profile_collapsing_toolbar);
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
@@ -94,6 +91,5 @@ public class User_Profile extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myDB.dispose();
     }
 }

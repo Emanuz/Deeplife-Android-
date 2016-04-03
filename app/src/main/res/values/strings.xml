@@ -27,6 +27,9 @@
     <string name="title">Title</string>
     <string name="register_a_disciple">Please add your disciple correctly</string>
 
+    <string name="notify_new_task_message">A task needs to be reviewed!</string>
+    <string name="notify_new_task_title">Task Reminder!</string>
+
     <string name="btn_link_to_register">Not a member? Sign up now.</string>
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="welcome">Welcome</string>

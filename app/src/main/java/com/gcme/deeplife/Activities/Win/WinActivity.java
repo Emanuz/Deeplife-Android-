@@ -14,7 +14,6 @@ import android.view.MenuItem;
 
 import com.gcme.deeplife.Activities.WinViewPager;
 import com.gcme.deeplife.Activities.Win_Thank_You;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Models.Question;
 import com.gcme.deeplife.Models.QuestionAnswer;
@@ -45,8 +44,6 @@ public class WinActivity extends AppCompatActivity {
     public static int DISCIPLE_ID;
 
 
-    Database dbadapter;
-    DeepLife dbhelper;
     Toolbar toolbar;
 
 
@@ -98,7 +95,6 @@ public class WinActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbadapter.dispose();
     }
 
     @Override
@@ -107,16 +103,14 @@ public class WinActivity extends AppCompatActivity {
     }
 
     public void init(){
-        //initialize database files
-        dbadapter = new Database(this);
 
         //set the max number of pages from db
-        NUM_PAGES = (dbadapter.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
+        NUM_PAGES = (com.gcme.deeplife.DeepLife.myDatabase.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));
         NUM_PAGES++;
 
         Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
 
-       questions = dbadapter.get_All_Questions(WIN);
+       questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(WIN);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
@@ -126,7 +120,7 @@ public class WinActivity extends AppCompatActivity {
 
         //if answer in database
         if(answered_state){
-            answered_from_db = dbadapter.get_Answer(DISCIPLE_ID+"",WIN);
+            answered_from_db = com.gcme.deeplife.DeepLife.myDatabase.get_Answer(DISCIPLE_ID+"",WIN);
             answer_from_db_id = new ArrayList<Integer>();
 
             for(int i=0; i<NUM_PAGES-1;i++){

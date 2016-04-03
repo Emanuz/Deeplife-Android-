@@ -28,62 +28,26 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            >
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <LinearLayout
-                style="@style/Widget.CardContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                >
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:gravity="center"
-                    android:textSize="20dp"
-                    android:text="Please fill the data carefully"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="25dp"
             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                >
 
-        <LinearLayout
-            style="@style/Widget.CardContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-                <TextView
-                    android:id="@+id/tv_thanks"
-                    android:layout_width="fill_parent"
-                    android:layout_height="20dp"
-                    android:layout_marginTop="10dip"
-                    android:gravity="center_horizontal"
-                    android:text="@string/register_a_disciple"
-                    android:textColor="@color/btn_login"
-                    android:layout_marginBottom="25dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
                 <TextView
                     android:id="@+id/schedule_disciple_id"
@@ -91,7 +55,12 @@
                     android:layout_height="wrap_content"
                     android:visibility="invisible" />
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
                     <Spinner
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -99,8 +68,12 @@
                     android:background="@color/white"
                     android:layout_marginBottom="10dp"
                     />
+</LinearLayout>
 
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/add_schedule_inputtxt_title"
                 android:layout_width="match_parent"
@@ -119,7 +92,12 @@
                         android:textColor="@color/input_login"
                         android:textColorHint="@color/input_login_hint" />
                 </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/add_schedule_inputtxt_desc"
                 android:layout_width="match_parent"
@@ -137,23 +115,76 @@
                     android:textColor="@color/input_login"
                     android:textColorHint="@color/input_login_hint" />
             </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <DatePicker
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/schedule_add_date"
-                android:layout_marginBottom="10dp"
-                />
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:text="Date"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/schedule_txt_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="Mar 12 2016"/>
+                    <Button
+                        android:id="@+id/schedule_btn_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:text="Change"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorSecondary"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:padding="10dp"
+                    android:text="Time"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/schedule_txt_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:text="12:2"/>
+                    <Button
+                        android:id="@+id/schedule_btn_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="Change"/>
+                </LinearLayout>
 
-            <TimePicker
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/schedule_add_time_picker"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal" />
-                <!-- Add Button -->
-
-
+                >
 
                 <Button
                     android:id="@+id/btn_add_schedule"
@@ -166,8 +197,8 @@
 
 
             </LinearLayout>
+      </LinearLayout>
 </android.support.v7.widget.CardView>
-</LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+ </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

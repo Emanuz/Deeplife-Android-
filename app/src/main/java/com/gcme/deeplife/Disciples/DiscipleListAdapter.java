@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gcme.deeplife.Activities.Disciple_Profile;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.Disciples;
@@ -38,7 +37,6 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     private ArrayList<Disciples> DiscipleLists;
     private static MyClickListener myClickListener;
     private static Context myContext;
-    private static Database myDB;
     int build_progress_percent; //for  assigning maximum percent for the progress bar
     boolean checked = false; //for checking whether the progress thread is called. It must be called only once.
 
@@ -101,7 +99,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         Toast.makeText(myContext,"delete: "+id,Toast.LENGTH_LONG).show();
-                        long deleted = myDB.remove(DeepLife.Table_DISCIPLES,id);
+                        long deleted = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Log.i("SyncService", "Adding Delete Log -> \n");
                             ContentValues log = new ContentValues();
@@ -110,7 +108,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], phone);
                             long val = com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS,log);
                             Toast.makeText(myContext,"Successfully Deleted: "+val,Toast.LENGTH_SHORT).show();
-                            myDB.dispose();
+                            com.gcme.deeplife.DeepLife.myDatabase.dispose();
                             Intent intent = new Intent(myContext,MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             myContext.startActivity(intent);
@@ -138,7 +136,6 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
     public DiscipleListAdapter(Context context, ArrayList<Disciples> discipleLists){
         this.DiscipleLists = discipleLists;
         this.myContext = context;
-        myDB = new Database(myContext);
 
     }
 

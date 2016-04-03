@@ -45,18 +45,11 @@
                         android:layout_height="fill_parent"
                         android:orientation="horizontal">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/schedule_with"
-                            android:gravity="center_horizontal"
-                            android:textColor="#3eb1c8"
-                            android:textSize="16dp" />
-                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="USER NAME"
-                            android:id="@+id/schedulename"
+                            android:id="@+id/schedule_title"
                             android:gravity="center_horizontal"
                             android:textColor="#3eb1c8"
                             android:textSize="20dp" />
@@ -69,6 +62,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/schedule_with"
+                            android:gravity="center_horizontal"
+                            android:textColor="#3eb1c8"
+                            android:textSize="15dp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="USER NAME"
+                            android:id="@+id/schedule_with_name"
+                            android:gravity="center_horizontal"
+                            android:textColor="#3eb1c8"
+                            android:textSize="17dp" />
+                    </LinearLayout>
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"

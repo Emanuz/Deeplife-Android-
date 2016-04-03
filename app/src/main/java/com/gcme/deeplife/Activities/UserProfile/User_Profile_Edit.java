@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
 import com.gcme.deeplife.Models.CountryDetails;
@@ -59,7 +58,6 @@ public class User_Profile_Edit extends AppCompatActivity {
 
     public String newImage = "";
     Bitmap imageFromCrop = null;
-    Database myDB;
     int user_id;
     Activity activity;
     User user;
@@ -72,8 +70,7 @@ public class User_Profile_Edit extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.user_profile_edit_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myDB = new Database(this);
-        user_id = myDB.get_Top_ID(DeepLife.Table_USER);
+        user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.user_profile_edit_collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Edit Profile");
@@ -84,7 +81,7 @@ public class User_Profile_Edit extends AppCompatActivity {
     }
 
     public void init(){
-        user = myDB.getUserProfile(user_id+"");
+        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
 
         activity = this;
 
@@ -170,11 +167,11 @@ public class User_Profile_Edit extends AppCompatActivity {
                 }
                 values.put(DeepLife.USER_FIELDS[6], fav_scripture);
 
-                long check = myDB.update(DeepLife.Table_USER, values, user_id);
+                long check = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_USER, values, user_id);
                 if (check != -1) {
                     Toast.makeText(User_Profile_Edit.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(User_Profile_Edit.this,User_Profile.class);
-                    myDB.dispose();
+                    com.gcme.deeplife.DeepLife.myDatabase.dispose();
                     startActivity(intent);
                     finish();
                 }
@@ -290,7 +287,7 @@ public class User_Profile_Edit extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myDB.dispose();
+        com.gcme.deeplife.DeepLife.myDatabase.dispose();
     }
 
 

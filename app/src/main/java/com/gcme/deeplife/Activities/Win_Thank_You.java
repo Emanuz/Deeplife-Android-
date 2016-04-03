@@ -13,10 +13,8 @@ import android.widget.Toast;
 import com.gcme.deeplife.Activities.Build.BuildActivity;
 import com.gcme.deeplife.Activities.Send.SendActivity;
 import com.gcme.deeplife.Activities.Win.WinActivity;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
-import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
 import com.gcme.deeplife.SyncService.SyncService;
 
@@ -28,7 +26,6 @@ public class Win_Thank_You extends Fragment {
 
     String stage;
     Button finish;
-    Database db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +33,6 @@ public class Win_Thank_You extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-        db = new Database(getActivity());
         stage = getArguments().getString("stage");
     }
 
@@ -80,7 +76,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
 
-                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                                             if (check != -1)
                                                 cv.clear();
                                         }
@@ -92,7 +88,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(j));
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "Added");
 
-                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_QUESTION_ANSWER, cv, WinActivity.answer_from_db_id.get(j));
                                             if (check != -1)
                                                 cv.clear();
                                         }
@@ -110,12 +106,12 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], WinActivity.answers.get(i));
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
-                        long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                        long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                     }
 
                     ContentValues cv_build = new ContentValues();
                     cv_build.put(DeepLife.DISCIPLES_FIELDS[4], "WIN");
-                    long update_state = db.update(DeepLife.Table_DISCIPLES, cv_build, WinActivity.DISCIPLE_ID);
+                    long update_state = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, cv_build, WinActivity.DISCIPLE_ID);
                     if (update_state != -1) {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
@@ -124,7 +120,7 @@ public class Win_Thank_You extends Fragment {
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 
-                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Successfully Finished Win Stage!: id="+WinActivity.DISCIPLE_ID, Toast.LENGTH_LONG).show();
                         WinActivity.answers.clear();
                         WinActivity.answer_index = 0;
                         WinActivity.answerchoices.clear();
@@ -164,7 +160,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
 
-                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
                                             cv.clear();
                                         }
 
@@ -176,7 +172,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "WIN");
 
 
-                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, BuildActivity.answer_from_db_id.get(j));
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_QUESTION_ANSWER, cv, BuildActivity.answer_from_db_id.get(j));
                                             cv.clear();
                                         }
                                     }
@@ -193,18 +189,18 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[1], i);
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], BuildActivity.answers.get(i));
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "BUILD");
-                        long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                        long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
 
                     }
 
                     ContentValues cv_build = new ContentValues();
                     cv_build.put(DeepLife.DISCIPLES_FIELDS[4], "BUILD");
-                    long update_state = db.update(DeepLife.Table_DISCIPLES, cv_build, BuildActivity.DISCIPLE_ID);
+                    long update_state = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, cv_build, BuildActivity.DISCIPLE_ID);
                     if (update_state != -1) {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
-                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], WinActivity.DISCIPLE_ID);
+                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], BuildActivity.DISCIPLE_ID);
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 
@@ -248,7 +244,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "BUILD");
 
 
-                                            long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
 
                                             cv.clear();
                                         }
@@ -261,7 +257,7 @@ public class Win_Thank_You extends Fragment {
                                             cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "BUILD");
 
 
-                                            long check = db.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
+                                            long check = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_QUESTION_ANSWER, cv, SendActivity.answer_from_db_id.get(j));
 
                                             cv.clear();
                                         }
@@ -280,18 +276,18 @@ public class Win_Thank_You extends Fragment {
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[2], SendActivity.answers.get(i));
                         cv.put(DeepLife.QUESTION_ANSWER_FIELDS[3], "SEND");
 
-                        long check = db.insert(DeepLife.Table_QUESTION_ANSWER, cv);
+                        long check = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_QUESTION_ANSWER, cv);
 
                     }
 
                     ContentValues cv_build = new ContentValues();
                     cv_build.put(DeepLife.DISCIPLES_FIELDS[4], "SEND");
-                    long update_state = db.update(DeepLife.Table_DISCIPLES, cv_build, SendActivity.DISCIPLE_ID);
+                    long update_state = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, cv_build, SendActivity.DISCIPLE_ID);
                     if (update_state != -1) {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
-                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], WinActivity.DISCIPLE_ID);
+                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], SendActivity.DISCIPLE_ID);
                         com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
 
 
@@ -315,7 +311,6 @@ public class Win_Thank_You extends Fragment {
     }
 
     public void getNextActivity(){
-        db.dispose();
         Intent intent = new Intent(getActivity(),MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -325,6 +320,5 @@ public class Win_Thank_You extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        db.dispose();
     }
 }

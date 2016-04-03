@@ -4,7 +4,7 @@ package com.gcme.deeplife.Models;
  * Created by Roger on 3/27/16.
  */
 public class User {
-    private String id,User_Name,User_Pass, User_Email,User_Phone,User_Country,User_Picture, User_Favorite_Scripture;
+    private String id,User_Name,User_Pass, User_Email,User_Phone,User_Country,User_Picture,User_Gender,User_Favorite_Scripture;
 
     public String getId() {
         return id;
@@ -64,6 +64,14 @@ public class User {
 
     public String getUser_Favorite_Scripture() {
         return User_Favorite_Scripture;
+    }
+
+    public String getUser_Gender() {
+        return User_Gender;
+    }
+
+    public void setUser_Gender(String user_Gender) {
+        User_Gender = user_Gender;
     }
 
     public void setUser_Favorite_Scripture(String user_Favorite_Scripture) {

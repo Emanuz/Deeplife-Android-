@@ -20,14 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gcme.deeplife.Activities.AboutDeepLife;
+import com.gcme.deeplife.Activities.Splash;
 import com.gcme.deeplife.Activities.Under_Construction;
 import com.gcme.deeplife.Activities.UserProfile.User_Profile;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.Disciples.DiscipleListFragment;
-import com.gcme.deeplife.Fragments.Schedules;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.Reports.ReportListFragment;
+import com.gcme.deeplife.Schedule.Schedules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity
     static ImageView image, btn_navigation_back;
     LinearLayout nav_header;
 
-    public static Database myDB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +74,10 @@ public class MainActivity extends AppCompatActivity
         collapsingToolbarLayout.setTitle("DEEP LIFE");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
-        myDB = new Database(this);
         nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
 
-        int user_id = myDB.get_Top_ID(DeepLife.Table_USER);
-        User user = myDB.getUserProfile(user_id+"");
+        int user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
+        User user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
     }
 
     @Override
@@ -139,7 +137,11 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, User_Profile.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-
+            com.gcme.deeplife.DeepLife.myDatabase.Delete_All(DeepLife.Table_USER);
+            intent = new Intent(this, Splash.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_share) {
 
         }
@@ -189,6 +191,5 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myDB.dispose();
     }
 }

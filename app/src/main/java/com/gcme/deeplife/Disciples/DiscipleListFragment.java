@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gcme.deeplife.Activities.AddDisciple;
-import com.gcme.deeplife.Database.Database;
+import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
 
@@ -30,7 +30,6 @@ public class DiscipleListFragment extends Fragment {
     private static Context myContext;
 
     FloatingActionButton add_disciple;
-    Database myDB;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +45,7 @@ public class DiscipleListFragment extends Fragment {
         myRecyclerView.setLayoutManager(mLayoutManager);
         add_disciple = (FloatingActionButton) view.findViewById(R.id.disciple_list_add_disciple);
         myContext = getActivity();
-        myDB = new Database(getActivity());
-        ArrayList<Disciples> items = myDB.getDisciples();
+        ArrayList<Disciples> items = DeepLife.myDatabase.getDisciples();
 
         mAdapter = new DiscipleListAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);

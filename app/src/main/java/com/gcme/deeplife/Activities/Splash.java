@@ -8,21 +8,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
 
 
 public class Splash extends Activity {
 
-	Database myDatabase;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-		myDatabase = new Database(this);
 
 				Thread splash = new Thread(){
         	@Override
@@ -42,7 +40,7 @@ public class Splash extends Activity {
 
 	public synchronized void getNextActivity() {
 
-        int dbcount = myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST);
+        int dbcount = com.gcme.deeplife.DeepLife.myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST);
 		if(dbcount<1){
 			ContentValues questions1 = new ContentValues();
 			questions1.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[1], "WIN");
@@ -81,24 +79,29 @@ public class Splash extends Activity {
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[3], "Have you stated that the dgsdgasdgas asdg");
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[4], "0");
 
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions2);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions3);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions4);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions5);
-			myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,questions6);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions2);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions3);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions4);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions5);
+			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions6);
 
             Log.i(DeepLife.TAG, "Questions added");
-            myDatabase.dispose();
 		}
         else{
             Log.i(DeepLife.TAG, "Questions not added");
-            myDatabase.dispose();
         }
+		int Count = com.gcme.deeplife.DeepLife.myDatabase.count(DeepLife.Table_USER);
+		if(Count ==1){
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+			finish();
+		}else{
+			Intent intent = new Intent(this, Login.class);
+			startActivity(intent);
+			finish();
+		}
 
-        Intent intent = new Intent(this, Login.class);
-        startActivity(intent);
-        finish();
 
 	}
 

@@ -26,7 +26,6 @@ import com.bumptech.glide.Glide;
 import com.gcme.deeplife.Activities.Build.BuildActivity;
 import com.gcme.deeplife.Activities.Send.SendActivity;
 import com.gcme.deeplife.Activities.Win.WinActivity;
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
 import com.gcme.deeplife.Models.Disciples;
@@ -52,7 +51,6 @@ public class Disciple_Profile extends AppCompatActivity {
 
     String disciple_id;
     Bitmap imageFromCrop = null;
-    Database myDB;
     Disciples disciple;
     Activity activity;
     Button btn_complet;
@@ -65,7 +63,6 @@ public class Disciple_Profile extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.disciple_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        myDB = new Database(this);
         disciple_id = getIntent().getExtras().getString("id");
         init(disciple_id);
 
@@ -73,7 +70,7 @@ public class Disciple_Profile extends AppCompatActivity {
 
     public void init(String disciple_id) {
         activity = this;
-        disciple = myDB.getDiscipleProfile(disciple_id);
+        disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfile(disciple_id);
 
         //collapsing toolbar
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.disciple_profile_collapsing_toolbar);
@@ -125,7 +122,7 @@ public class Disciple_Profile extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
 
-                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
+                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
                         bundle.putString("answer", "yes");
                     }
 
@@ -135,7 +132,7 @@ public class Disciple_Profile extends AppCompatActivity {
                     Intent intent = new Intent(Disciple_Profile.this, BuildActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
-                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
+                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
                         bundle.putString("answer", "yes");
                     }
                     intent.putExtras(bundle);
@@ -145,7 +142,7 @@ public class Disciple_Profile extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
 
-                    if (myDB.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
+                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
                         bundle.putString("answer", "yes");
                     }
 
@@ -228,7 +225,7 @@ public class Disciple_Profile extends AppCompatActivity {
                         ContentValues values = new ContentValues();
                         values.put(DeepLife.DISCIPLES_FIELDS[6], file.getAbsolutePath());
 
-                        long check = myDB.update(DeepLife.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
+                        long check = com.gcme.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
                         if (check != -1) {
                             profile_image.setImageBitmap(imageFromCrop);
                             Log.i(DeepLife.TAG, "Image successfully changed \n New Image location: " + disciple.getPicture());
@@ -245,6 +242,5 @@ public class Disciple_Profile extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myDB.dispose();
     }
 }

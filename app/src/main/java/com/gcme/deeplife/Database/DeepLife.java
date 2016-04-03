@@ -1,9 +1,6 @@
 package com.gcme.deeplife.Database;
 
-import android.app.Application;
-
-
-public class DeepLife extends Application {
+public class DeepLife {
 
     public static final String Table_DISCIPLES = "DISCIPLES";
     public static final String Table_SCHEDULES = "SCHEDULES";
