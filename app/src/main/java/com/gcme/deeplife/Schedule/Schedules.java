@@ -16,7 +16,6 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,13 +24,13 @@ import android.widget.Toast;
 
 import com.gcme.deeplife.Activities.Send.SendActivity;
 import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.R;
 import com.gcme.deeplife.SyncService.SyncService;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 /**
@@ -43,11 +42,6 @@ public class Schedules extends Fragment {
 	
 	public static ListView lv_schedule;
 	Button addSchedule;
-
-	ArrayList<Schedule> schedules;
-
-    static String scheduled_disciple_id_phone;
-    private Calendar cal;
 
     //
     // Date Format
@@ -65,7 +59,6 @@ public class Schedules extends Fragment {
 		// Inflate the layout for this fragment
 		View view = inflater.inflate(R.layout.schedule_list, container,
                 false);
-
         lv_schedule = (ListView) view.findViewById(R.id.ls_schedule);
         myContext = getActivity();
         populateList();
@@ -142,7 +135,6 @@ public class Schedules extends Fragment {
                         long deleted = com.gcme.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,id);
                         if(deleted!=-1){
                             Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
-
                             ContentValues log = new ContentValues();
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Schedule");
                             log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
@@ -158,7 +150,6 @@ public class Schedules extends Fragment {
             }
         };
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
         builder.setTitle("Remove Schedule ").setMessage("Are You sure you want to remove this schedule" )
                 .setPositiveButton("Yes ", dialogClickListener)
@@ -167,76 +158,11 @@ public class Schedules extends Fragment {
     }
 
 
-    /*public void reload(){
-        dbadapter.dispose();
-        Intent intent = new Intent(this.getActivity(),MainMenu.class);
-
+    public void reload(){
+        Intent intent = new Intent(this.getActivity(),MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
-*/
-
-
-
-
-    public class MySpinnerAdapter extends ArrayAdapter<String> {
-
-        ArrayList<String> object;
-        public MySpinnerAdapter(Context ctx, int txtViewResourceId, ArrayList<String> objects) {
-            super(ctx, txtViewResourceId, objects);
-            this.object = objects;
-        }
-
-        @Override
-        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
-            return getCustomView(position, cnvtView, prnt);
-        }
-        @Override
-        public View getView(int pos, View cnvtView, ViewGroup prnt) {
-            return getCustomView(pos, cnvtView, prnt);
-        }
-        public View getCustomView(int position, View convertView,
-                                  ViewGroup parent) {
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
-                     false);
-            TextView main_text = (TextView) mySpinner
-                    .findViewById(R.id.spinner_text);
-            main_text.setText(object.get(position));
-
-            return mySpinner;
-        }
-    }
-
-
-    public class NameSpinnerAdapter extends ArrayAdapter<Disciples> {
-
-        ArrayList<Disciples> object;
-        public NameSpinnerAdapter(Context ctx, int txtViewResourceId, ArrayList<Disciples> objects) {
-            super(ctx, txtViewResourceId, objects);
-            this.object = objects;
-        }
-
-        @Override
-        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
-            return getCustomView(position, cnvtView, prnt);
-        }
-        @Override
-        public View getView(int pos, View cnvtView, ViewGroup prnt) {
-            return getCustomView(pos, cnvtView, prnt);
-        }
-        public View getCustomView(int position, View convertView,
-                                  ViewGroup parent) {
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            View mySpinner = inflater.inflate(R.layout.countries_spinner, parent,
-                    false);
-            TextView main_text = (TextView) mySpinner
-                    .findViewById(R.id.spinner_text);
-            main_text.setText(object.get(position).getFull_Name().toString());
-
-            return mySpinner;
-        }
-    }
-
 
 
     public static class MyDiscipleListAdapter extends BaseAdapter
@@ -286,7 +212,6 @@ public class Schedules extends Fragment {
             final String title = schedule.get(position).getTitle();
             final String discription = schedule.get(position).getDescription();
             final int id = Integer.parseInt(schedule.get(position).getID());
-
             Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfile(Dis_id);
             if(disciple != null){
                 //set the values
