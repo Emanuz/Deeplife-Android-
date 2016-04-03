@@ -79,7 +79,7 @@ public class Splash extends Activity {
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[3], "Have you stated that the dgsdgasdgas asdg");
 			questions6.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_COLUMN[4], "0");
 
-			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
+            com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions1);
 			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions2);
 			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions3);
 			com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST, questions4);

@@ -171,7 +171,10 @@ public class Login extends AppCompatActivity{
                             JSONArray json_schedules = json_response.getJSONArray("Schedules");
                             SyncService.Add_Schedule(json_schedules);
                         }
-
+                        if(!json_response.isNull("Questions")){
+                            JSONArray json_questions = json_response.getJSONArray("Questions");
+                            SyncService.Add_Qustions(json_questions);
+                        }
                         Intent register = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(register);
                     } else {
@@ -209,16 +212,14 @@ public class Login extends AppCompatActivity{
                 .setPositiveButton("Ok", dialogClickListener).show();
     }
     private boolean validatePhone() {
-        if (ed_phoneNumber.getText().toString().trim().isEmpty()) {
+        if (ed_phoneNumber.getText().toString().trim().isEmpty() || ed_phoneNumber.getText().toString().length()>14 || ed_phoneNumber.getText().toString().length()<10) {
             inputLayoutPhone.setError(getString(R.string.err_msg_phone));
             requestFocus(ed_phoneNumber);
-
             return false;
         }
         else {
             inputLayoutPhone.setErrorEnabled(false);
         }
-
         return true;
     }
     private boolean validatePassword() {

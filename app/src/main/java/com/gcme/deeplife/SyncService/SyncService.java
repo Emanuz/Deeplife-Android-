@@ -45,11 +45,12 @@ public class SyncService extends JobService {
         user = DeepLife.myDatabase.getUser();
         Param.add(DeepLife.myDatabase.getUser());
         Send_Param = new ArrayList<kotlin.Pair<String,String>>();
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
-        Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
-        Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
-
+        if(user != null ){
+            Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
+            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
+            Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
+            Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
+        }
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -70,6 +71,10 @@ public class SyncService extends JobService {
                         if(!json_response.isNull("Schedules")){
                             JSONArray json_schedules = json_response.getJSONArray("Schedules");
                             Add_Schedule(json_schedules);
+                        }
+                        if(!json_response.isNull("Questions")){
+                            JSONArray json_questions = json_response.getJSONArray("Questions");
+                            Add_Qustions(json_questions);
                         }
                         if(!json_response.isNull("Log_Response")){
                             JSONArray json_logs = json_response.getJSONArray("Log_Response");
@@ -208,6 +213,26 @@ public class SyncService extends JobService {
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2],obj.getString("id"));
                         DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
                     }
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+    public static void Add_Qustions(JSONArray json_questions){
+        try{
+            if(json_questions.length()>0){
+                Log.i(TAG,"Adding New Qustions -> \n"+json_questions.toString());
+                DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST);
+                for(int i=0;i<json_questions.length();i++){
+                    JSONObject obj = json_questions.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[0], obj.getString("category"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[1], obj.getString("question"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[2], obj.getString("description"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
+                    long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,cv);
+                    Log.i(TAG,"Adding Qustions -> "+obj.getString("id")+" : "+x);
                 }
             }
         }catch (Exception e){

@@ -385,14 +385,15 @@ public class Database {
         return found;
     }
     public User getUser(){
-        int pos = -1;
         Cursor c = myDatabase.query(DeepLife.Table_USER, DeepLife.USER_COLUMN, null, null, null, null, null);
         User newUser = new User();
-        if(c != null && c.getCount()>0){
+        if(c != null && c.getCount() == 1){
             c.moveToFirst();
             newUser.setId(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[0])));
             newUser.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
             newUser.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[4])));
+        }else{
+            newUser = null;
         }
         return newUser;
     }
