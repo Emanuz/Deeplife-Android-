@@ -321,7 +321,7 @@ public class Database {
         Log.i(TAG, "GetDiscipleProfile");
         Disciples dis = new Disciples();
         String DB_Table = DeepLife.Table_DISCIPLES;
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, DeepLife.SCHEDULES_COLUMN[0] + " DESC");
         if(c != null){
             c.moveToFirst();
             for(int i=0; i<c.getCount();i++){

@@ -25,7 +25,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gcme.deeplife.Database.Database;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
@@ -94,33 +93,6 @@ public class AddDisciple extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				submitForm();
-//				String name = ed_name.getText().toString();
-//				String email = ed_email.getText().toString();
-//				String phone = ed_phone.getText().toString();
-//				String country = sp_countries.getSelectedItem().toString();
-//				String gender = sp_gender.getSelectedItem().toString();
-//				String code = ed_codes.getText().toString();
-//
-//				ContentValues values = new ContentValues();
-//				values.put(DeepLife.DISCIPLES_FIELDS[0], name);
-//				values.put(DeepLife.DISCIPLES_FIELDS[1], email);
-//				values.put(DeepLife.DISCIPLES_FIELDS[2],code+phone);
-//				values.put(DeepLife.DISCIPLES_FIELDS[3], country);
-//				values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
-//				values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
-//				long i = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_DISCIPLES, values);
-//				if(i!=-1){
-//					Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
-//					Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
-//					ContentValues log = new ContentValues();
-//					log.put(DeepLife.LOGS_FIELDS[0],"Disciple");
-//					log.put(DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
-//					log.put(DeepLife.LOGS_FIELDS[2], i);
-//					com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
-//					Intent intent = new Intent(AddDisciple.this, MainActivity.class);
-//					startActivity(intent);
-//					AddDisciple.this.finish();
-//				}
 			}
 		});
 
@@ -198,7 +170,7 @@ public class AddDisciple extends AppCompatActivity {
 			com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
 			Intent intent = new Intent(AddDisciple.this, MainActivity.class);
 			startActivity(intent);
-			AddDisciple.this.finish();
+			finish();
 		}
 	}
 

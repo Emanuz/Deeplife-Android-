@@ -2,14 +2,18 @@ package com.gcme.deeplife.Schedule;
 
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.R;
 
 public class OnAlarmReceiver extends BroadcastReceiver {
 
@@ -23,8 +27,10 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 		long rowid = intent.getExtras().getLong(DeepLife.SCHEDULES_COLUMN[0]);
 		
 		WakeReminderIntentService.acquireStaticLock(context);
-		
-		Intent i = new Intent(context, ReminderService.class);
+
+        notify(context);
+
+        Intent i = new Intent(context, ReminderService.class);
 		i.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowid);
 		context.startService(i);
 		 
@@ -45,4 +51,28 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(sender);
 	}
+
+    public void notify(Context context) {
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.jadhiel);
+        mediaPlayer.start();
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("DeepLife Schedule ").setMessage("You have a schedule with ?")
+                .setPositiveButton("OK ", dialogClickListener)
+                .show();
+    }
+
 }

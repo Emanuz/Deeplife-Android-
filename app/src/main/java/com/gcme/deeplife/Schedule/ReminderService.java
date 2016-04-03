@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
 
 import com.gcme.deeplife.Database.DeepLife;
@@ -40,15 +39,15 @@ public class ReminderService extends WakeReminderIntentService {
 				.setAutoCancel(true)
 				.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE)
 				.setWhen(System.currentTimeMillis());
+
 		try{
-			Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.jadhiel);
+			Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ringtone);
 			builder.setSound(uri);
 		}catch (Exception e){
 
 		}
-		if(Build.VERSION.SDK_INT >Build.VERSION_CODES.LOLLIPOP){
-			builder.setSmallIcon(R.drawable.logoicon_ldpi);
-		}
+		builder.setSmallIcon(R.drawable.logoicon_ldpi);
+
 		Notification note = builder.build();
 
 		// An issue could occur if user ever enters over 2,147,483,647 tasks. (Max int value).
