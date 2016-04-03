@@ -226,7 +226,6 @@ public class Schedules extends Fragment {
                 }
             });
 
-
             return convertView;
         }
     }
