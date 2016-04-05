@@ -38,6 +38,7 @@ public class Database {
         mySQL.createTables(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS);
         mySQL.createTables(DeepLife.Table_Reports, DeepLife.REPORT_FIELDS);
         mySQL.createTables(DeepLife.Table_Report_Forms, DeepLife.REPORT_FORM_FIELDS);
+        mySQL.createTables(DeepLife.Table_COUNTRY, DeepLife.COUNTRY_FIELDS);
     }
 
     public void dispose(){
@@ -554,6 +555,8 @@ public class Database {
             strs = DeepLife.REPORT_COLUMN;
         }else if(DB_Table == DeepLife.Table_Report_Forms){
             strs = DeepLife.REPORT_FORM_COLUMN;
+        }else if(DB_Table == DeepLife.Table_COUNTRY){
+            strs = DeepLife.COUNTRY_COLUMN;
         }
         return strs;
     }

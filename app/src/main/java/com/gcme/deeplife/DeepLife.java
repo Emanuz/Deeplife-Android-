@@ -14,7 +14,9 @@ import me.tatarka.support.job.JobScheduler;
  * Created by BENGEOS on 3/27/16.
  */
 public class DeepLife extends Application {
-    public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
+//    public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
+
+    public static final String API_URL  = "http://192.168.0.68/SyncSMS/public/deep_api";
     private static final int JOB_ID = 100;
     private JobScheduler myJobScheduler;
     public static Database myDatabase;
