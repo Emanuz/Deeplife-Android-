@@ -30,7 +30,7 @@ public class ReminderService extends WakeReminderIntentService {
 		
 		PendingIntent pi = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
-		Schedule schedule = com.gcme.deeplife.DeepLife.myDatabase.getScheduleWithId(rowId+"");
+		Schedule schedule = com.gcme.deeplife.DeepLife.myDatabase.getScheduleWithId(rowId + "");
 
 		Notification.Builder builder = new Notification.Builder(getApplicationContext())
 				.setContentTitle(schedule.getTitle())
@@ -50,10 +50,13 @@ public class ReminderService extends WakeReminderIntentService {
 
 		Notification note = builder.build();
 
-		// An issue could occur if user ever enters over 2,147,483,647 tasks. (Max int value).
-		// I highly doubt this will ever happen. But is good to note. 
 		int id = (int)((long)rowId);
 		mgr.notify(id, note);
 
+/*
+		Intent intent2 = new Intent(this, Music_Play.class);
+		intent2.putExtra(DeepLife.SCHEDULES_COLUMN[0],rowId);
+
+		startActivity(intent2);*/
 	}
 }

@@ -3,6 +3,7 @@ package com.gcme.deeplife.Activities;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -48,7 +49,7 @@ public class Disciple_Profile extends AppCompatActivity {
     TextView tv_build, tv_name, tv_phone, tv_gender, tv_email;
 
     ImageButton btn_changeImage;
-
+    ImageView iv_call, iv_email;
     String disciple_id;
     Bitmap imageFromCrop = null;
     Disciples disciple;
@@ -85,6 +86,8 @@ public class Disciple_Profile extends AppCompatActivity {
         tv_email = (TextView) findViewById(R.id.profile_email);
         tv_gender = (TextView) findViewById(R.id.profile_gender);
         lv_schedule = (ListView) findViewById(R.id.profile_schedule_list);
+        iv_call = (ImageView) findViewById(R.id.profile_call_icon);
+        iv_email = (ImageView) findViewById(R.id.profile_email_icon);
 
 
         btn_changeImage = (ImageButton) findViewById(R.id.disciple_btn_edit_profile_cover);
@@ -98,6 +101,13 @@ public class Disciple_Profile extends AppCompatActivity {
         setData();
     }
 
+    private boolean checkWriteExternalPermission()
+    {
+
+        String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
+        int res = this.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
+    }
     public void setData() {
         if (disciple.getPicture() != null) {
             profile_image.setImageBitmap(BitmapFactory.decodeFile(disciple.getPicture()));
@@ -110,6 +120,30 @@ public class Disciple_Profile extends AppCompatActivity {
     }
 
     public void setButtonListner(){
+
+
+        iv_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String number = "tel:" + tv_phone.getText().toString().trim();
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                if(checkWriteExternalPermission()) {
+                    startActivity(callIntent);
+                }
+            }
+        });
+
+        iv_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { tv_email.getText().toString() });
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Deep Life");
+                startActivity(Intent.createChooser(intent, "Send Email"));
+            }
+        });
+
         final String build = disciple.getBuild_Phase();
         if(build.equals("SEND")){
             btn_complet.setVisibility(View.INVISIBLE);

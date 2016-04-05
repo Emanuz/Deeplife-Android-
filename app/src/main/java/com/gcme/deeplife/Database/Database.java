@@ -256,7 +256,7 @@ public class Database {
          Log.i(TAG, "GetAll Schedule:\n");
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
-        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, DeepLife.SCHEDULES_COLUMN[0] + " DESC");
          if (c.getCount() > 0) {
              c.moveToFirst();
              for(int i=0;i<c.getCount();i++){
@@ -372,10 +372,10 @@ public class Database {
 
         User dis = new User();
         String DB_Table = DeepLife.Table_USER;
-        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + user_ID, null);
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table, null);
         c.moveToFirst();
         if(c.getCount()>0){
-            dis.setId(user_ID);
+            dis.setId(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[0])));
             dis.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[1])));
             dis.setUser_Email(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[2])));
             dis.setUser_Phone(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
@@ -383,7 +383,8 @@ public class Database {
             dis.setUser_Country(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[5])));
             dis.setUser_Picture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[6])));
             dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[7])));
-
+            Log.i(DeepLife.TAG,"Found user!!!! " + dis.getUser_Name());
+            Log.i(DeepLife.TAG,"Cursor count!!!! " +c.getCount()+ " \n Index name "+ c.getString(2));
             return dis;
         }
         return null;
