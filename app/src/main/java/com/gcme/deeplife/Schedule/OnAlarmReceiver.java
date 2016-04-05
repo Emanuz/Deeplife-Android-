@@ -2,18 +2,14 @@ package com.gcme.deeplife.Schedule;
 
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ComponentInfo;
-import android.media.MediaPlayer;
 import android.util.Log;
 
 import com.gcme.deeplife.Database.DeepLife;
-import com.gcme.deeplife.R;
 
 public class OnAlarmReceiver extends BroadcastReceiver {
 
@@ -28,9 +24,14 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 		
 		WakeReminderIntentService.acquireStaticLock(context);
 
-        notify(context);
+		Intent intent2 = new Intent();
+		intent2.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowid);
+		intent2.setClass(context,Music_Play.class);
+		intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent2);
 
-        Intent i = new Intent(context, ReminderService.class);
+
+		Intent i = new Intent(context, ReminderService.class);
 		i.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowid);
 		context.startService(i);
 		 
@@ -52,26 +53,5 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 		alarmManager.cancel(sender);
 	}
 
-    public void notify(Context context) {
-
-
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which){
-                    case DialogInterface.BUTTON_POSITIVE:
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        //No button clicked
-                        break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("DeepLife Schedule ").setMessage("You have a schedule with ?")
-                .setPositiveButton("OK ", dialogClickListener)
-                .show();
-    }
 
 }

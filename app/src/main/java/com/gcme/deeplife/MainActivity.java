@@ -1,6 +1,7 @@
 package com.gcme.deeplife;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
@@ -14,10 +15,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gcme.deeplife.Activities.AboutDeepLife;
 import com.gcme.deeplife.Activities.Splash;
@@ -40,8 +44,9 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     CollapsingToolbarLayout collapsingToolbarLayout;
     static ImageView image, btn_navigation_back;
+    TextView navigation_name;
     LinearLayout nav_header;
-
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,11 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        int user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
+        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
+        Log.i(DeepLife.TAG, "User  = " + user_id);
+        Log.i(DeepLife.TAG, "User name = " + user.getUser_Name());
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -63,6 +73,11 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        navigation_name = (TextView)header.findViewById(R.id.drawer_textView_name);
+        navigation_name.setText(user.getUser_Name());
+        Log.i(DeepLife.TAG, "Nav name = " + user.getUser_Name());
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -76,8 +91,7 @@ public class MainActivity extends AppCompatActivity
 
         nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
 
-        int user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
-        User user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
+
     }
 
     @Override
@@ -142,11 +156,11 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_share) {
-
         }
         else if (id == R.id.nav_send) {
-
+            Uri uri = Uri.parse("http://www.facebook.com"); // missing 'http://' will cause crashed
+            intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
         else if (id == R.id.nav_about) {
             intent = new Intent(this, AboutDeepLife.class);

@@ -78,8 +78,10 @@ public class Schedules extends Fragment {
 	}
 
     public static void populateList(){
-        ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_All_Schedule();
-        lv_schedule.setAdapter(new MyDiscipleListAdapter(myContext,schedules));
+        if(com.gcme.deeplife.DeepLife.myDatabase.count(DeepLife.Table_SCHEDULES) > 0) {
+            ArrayList<Schedule> schedules = com.gcme.deeplife.DeepLife.myDatabase.get_All_Schedule();
+            lv_schedule.setAdapter(new MyDiscipleListAdapter(myContext, schedules));
+        }
     }
 
 

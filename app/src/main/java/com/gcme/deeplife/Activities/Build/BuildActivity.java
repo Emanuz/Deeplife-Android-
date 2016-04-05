@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -103,9 +102,7 @@ public class BuildActivity extends AppCompatActivity {
         NUM_PAGES = (com.gcme.deeplife.DeepLife.myDatabase.count_Questions(DeepLife.Table_QUESTION_LIST,BUILD));
         NUM_PAGES++;
 
-        Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
-
-       questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(BUILD);
+        questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(BUILD);
 
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
