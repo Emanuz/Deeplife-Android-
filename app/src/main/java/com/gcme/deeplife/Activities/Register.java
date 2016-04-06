@@ -1,6 +1,5 @@
 package com.gcme.deeplife.Activities;
 
-
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,8 +26,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Adapters.Countries_Adapter;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.MainActivity;
+import com.gcme.deeplife.Models.Country;
 import com.gcme.deeplife.Models.CountryDetails;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
@@ -69,6 +70,8 @@ public class Register extends AppCompatActivity{
 	private ProgressDialog pDialog;
 	public static String[] list =  CountryDetails.country;
 	public static String[] codes = CountryDetails.code;
+    private ArrayList<com.gcme.deeplife.Models.Country> Countries;
+    private int Pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class Register extends AppCompatActivity{
 		setContentView(R.layout.register);
         myParser = new Gson();
 		myContext = this;
+        Countries = DeepLife.myDatabase.get_All_Country();
         Init();
 
 	}
@@ -115,17 +119,16 @@ public class Register extends AppCompatActivity{
     }
 
     public void spinnerInit() {
-        sp_countries.setAdapter(new MySpinnerAdapter(this, R.layout.countries_spinner, list));
+        sp_countries.setAdapter(new Countries_Adapter(this, R.layout.countries_spinner, Countries));
         sp_countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int i = sp_countries.getSelectedItemPosition();
-                Ed_Codes.setText(codes[i]);
+                Pos = position;
+                Ed_Codes.setText(Countries.get(position).getCode());
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Ed_Codes.setText(codes[0]);
+                Ed_Codes.setText(Countries.get(0).getCode());
             }
         });
 
@@ -220,8 +223,8 @@ public class Register extends AppCompatActivity{
         New_User = new User();
         New_User.setUser_Name(Full_Name.getText().toString());
         New_User.setUser_Pass(Pass.getText().toString());
-        New_User.setUser_Country(sp_countries.getSelectedItem().toString());
-        New_User.setUser_Phone(Ed_Codes.getText().toString()+Phone.getText().toString());
+        New_User.setUser_Country(Countries.get(Pos).getCountry_id());
+        New_User.setUser_Phone(Phone.getText().toString());
         New_User.setUser_Email(Email.getText().toString());
         New_User.setUser_Gender(sp_gender.getSelectedItem().toString());
 
@@ -236,6 +239,7 @@ public class Register extends AppCompatActivity{
         Send_Param = new ArrayList<Pair<String, String>>();
         Send_Param.add(new kotlin.Pair<String, String>("User_Name", New_User.getUser_Phone()));
         Send_Param.add(new kotlin.Pair<String, String>("User_Pass", New_User.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>("Country", New_User.getUser_Country()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Sign_Up"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", myParser.toJson(user)));
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
@@ -276,7 +280,6 @@ public class Register extends AppCompatActivity{
                 }
 
             }
-
             @Override
             public void failure(Request request, Response response, FuelError fuelError) {
                 Log.i(TAG, "Server Response -> \n" + response.toString());

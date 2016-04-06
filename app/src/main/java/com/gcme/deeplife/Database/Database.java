@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.gcme.deeplife.Models.Country;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
 import com.gcme.deeplife.Models.Question;
@@ -159,6 +160,23 @@ public class Database {
         }
         return found;
     }
+    public ArrayList<Question> get_All_Questions(){
+        String DB_Table = DeepLife.Table_QUESTION_LIST;
+        ArrayList<Question> found = new ArrayList<Question>();
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        c.moveToFirst();
+        for(int i=0;i<c.getCount();i++){
+            c.moveToPosition(i);
+            Question dis = new Question();
+            dis.setId(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[0])));
+            dis.setCategory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[1])));
+            dis.setDescription(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[2])));
+            dis.setNote(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[3])));
+            dis.setMandatory(c.getString(c.getColumnIndex(DeepLife.QUESTION_LIST_COLUMN[4])));
+            found.add(dis);
+        }
+        return found;
+    }
     public ArrayList<ReportItem> get_All_Report(){
         String DB_Table = DeepLife.Table_Report_Forms;
         ArrayList<ReportItem> found = new ArrayList<ReportItem>();
@@ -175,7 +193,25 @@ public class Database {
         }
         return found;
     }
-
+    public ReportItem get_Report(String Report_ID){
+        String DB_Table = DeepLife.Table_Reports;
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        c.moveToFirst();
+        for(int i=0;i<c.getCount();i++){
+            c.moveToPosition(i);
+            String rep_id  = c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[1]));
+            if(rep_id.equals(Report_ID)){
+                ReportItem dis = new ReportItem();
+                dis.setId(c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[0])));
+                dis.setReport_ID(c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[1])));
+                dis.setValue(c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[2])));
+                dis.setQuestion(c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[1])));
+                dis.setCategory(c.getString(c.getColumnIndex(DeepLife.REPORT_COLUMN[1])));
+                return dis;
+            }
+        }
+        return null;
+    }
 
     public ArrayList<String> get_all_in_column(String DB_Table,String atColumn){
         ArrayList<String> found = new ArrayList<String>();
@@ -275,7 +311,51 @@ public class Database {
          }
         return found;
     }
+    public ArrayList<Country> get_All_Country(){
+        Log.i(TAG, "GetAll Countries:\n");
+        String DB_Table = DeepLife.Table_COUNTRY;
+        ArrayList<Country> found = new ArrayList<Country>();
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                Country dis = new Country();
+                dis.setId(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[0])));
+                dis.setCountry_id(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[1])));
+                dis.setIso3(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[2])));
+                dis.setName(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[3])));
+                dis.setCode(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[4])));
+                Log.i(TAG, "Found Countries:-> "+dis.toString());
+                found.add(dis);
+            }
+        }
+        return found;
+    }
+    public Country get_Country_by_CountryID(String CountryID){
+        Log.i(TAG, "GetAll Country by CountryID:\n");
+        String DB_Table = DeepLife.Table_COUNTRY;
+        Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String id = c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[1]));
+                if(id.equals(CountryID)){
+                    Country dis = new Country();
+                    dis.setId(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[0])));
+                    dis.setCountry_id(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[1])));
+                    dis.setIso3(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[2])));
+                    dis.setName(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[3])));
+                    dis.setCode(c.getString(c.getColumnIndex(DeepLife.COUNTRY_COLUMN[4])));
+                    Log.i(TAG, "Found Country:-> "+dis.toString());
+                    return dis;
+                }
 
+            }
+        }
+        return null;
+    }
     public ArrayList<Schedule> get_Schedule_With_User(String Dis_Phone){
         String DB_Table = DeepLife.Table_SCHEDULES;
         ArrayList<Schedule> found = new ArrayList<Schedule>();
@@ -351,7 +431,7 @@ public class Database {
         Log.i(TAG, "GetDiscipleProfile");
         Disciples dis = new Disciples();
         String DB_Table = DeepLife.Table_DISCIPLES;
-        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where "+DeepLife.DISCIPLES_COLUMN[3] +"= '" + Dis_Phone+"'", null);
+        Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where " + DeepLife.DISCIPLES_COLUMN[3] + "= '" + Dis_Phone + "'", null);
         if(c.getCount()>0){
             c.moveToFirst();
             dis.setId(c.getString(c.getColumnIndex(DeepLife.DISCIPLES_COLUMN[0])));
@@ -384,7 +464,7 @@ public class Database {
             dis.setUser_Country(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[5])));
             dis.setUser_Picture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[6])));
             dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[7])));
-            Log.i(DeepLife.TAG,"Found user!!!! " + dis.getUser_Name());
+            Log.i(DeepLife.TAG, "Found user!!!! " + dis.getUser_Name());
             Log.i(DeepLife.TAG,"Cursor count!!!! " +c.getCount()+ " \n Index name "+ c.getString(2));
             return dis;
         }
@@ -431,6 +511,7 @@ public class Database {
             newUser.setId(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[0])));
             newUser.setUser_Name(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[3])));
             newUser.setUser_Pass(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[4])));
+            newUser.setUser_Country(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[5])));
         }else{
             newUser = null;
         }
@@ -504,6 +585,31 @@ public class Database {
                         newSchedule.setID(ID);
                         Log.i(TAG, "Found for SendSchedules:-> \n" + newSchedule.toString());
                         Found.add(newSchedule);
+                    }
+                }
+            }
+        }
+        return Found;
+    }
+    public ArrayList<ReportItem> getSendReports(){
+        Log.i(TAG, "SendReports:\n");
+        ArrayList<ReportItem> Found = new ArrayList<>();
+        Cursor c = myDatabase.query(DeepLife.Table_LOGS, DeepLife.LOGS_COLUMN, null, null, null, null, null);
+        if(c != null && c.getCount()>0){
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String str = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[2]));
+                String id = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[3]));
+                String ID = c.getString(c.getColumnIndex(DeepLife.LOGS_COLUMN[0]));
+                Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[1] + " | "+str);
+                if(SyncService.Sync_Tasks[5].equals(str)){
+                    Log.i(TAG, "SendDisciples Count:-> " + c.getCount());
+                    ReportItem newReport = get_Report(id);
+                    if(newReport !=null){
+                        newReport.setId(ID);
+                        Log.i(TAG, "Found for Send:-> \n" + newReport.toString());
+                        Found.add(newReport);
                     }
                 }
             }

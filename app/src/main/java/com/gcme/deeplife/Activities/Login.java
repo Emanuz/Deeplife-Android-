@@ -17,11 +17,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
+import com.gcme.deeplife.Adapters.Countries_Adapter;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.MainActivity;
+import com.gcme.deeplife.Models.Country;
+import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
 import com.gcme.deeplife.SyncService.SyncService;
 import com.github.kittinunf.fuel.Fuel;
@@ -44,13 +49,16 @@ public class Login extends AppCompatActivity{
 
     private static final String TAG = "Log_In";
     private  AlertDialog.Builder builder;
-
+    private Spinner sp_countries;
 	private ProgressDialog pDialog;
 	private Context myContext;
+    private ArrayList<Country> Countries;
+    private int pos;
 
-	EditText ed_phoneNumber, ed_password;
+	EditText ed_phoneNumber, ed_password,Ed_Codes;
 	Button bt_login, btn_register;
 	private TextInputLayout inputLayoutPhone, inputLayoutPassword;
+    private User Main_User;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,28 +66,44 @@ public class Login extends AppCompatActivity{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-
 		init();
 
 	}
 
 	public void init(){
-
 		myContext = this;
+        Countries = DeepLife.myDatabase.get_All_Country();
 		ed_phoneNumber = (EditText) findViewById(R.id.login_phone);
 		ed_password = (EditText) findViewById(R.id.login_password);
 		bt_login = (Button) findViewById(R.id.btnLogin);
+        Ed_Codes = (EditText) findViewById(R.id.login_code);
 		btn_register = (Button) findViewById(R.id.btnLinkToRegisterScreen);
-
-        inputLayoutPhone = (TextInputLayout) findViewById(R.id.login_inputtxt_phone);
+        sp_countries = (Spinner) findViewById(R.id.login_countries_spinner);
+        init_CountryList();
+        inputLayoutPhone = (TextInputLayout) findViewById(R.id.login_txtinput_phone);
 		inputLayoutPassword = (TextInputLayout) findViewById(R.id.login_inputtxt_password);
 
 		ed_phoneNumber.addTextChangedListener(new MyTextWatcher(ed_phoneNumber));
 		ed_password.addTextChangedListener(new MyTextWatcher(ed_phoneNumber));
-
+        Countries = DeepLife.myDatabase.get_All_Country();
+        Main_User = new User();
 		setButtonActions();
 	}
+    public void init_CountryList(){
+        sp_countries.setAdapter(new Countries_Adapter(this, R.layout.countries_spinner, Countries));
+        sp_countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+                Ed_Codes.setText(Countries.get(position).getCode());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Ed_Codes.setText(Countries.get(0).getCode());
+            }
+        });
+    }
 	public void setButtonActions(){
 
 		/*
@@ -125,14 +149,18 @@ public class Login extends AppCompatActivity{
             return;
         }
 
+        Main_User.setUser_Phone(ed_phoneNumber.getText().toString());
+        Main_User.setUser_Pass(ed_password.getText().toString());
+        Main_User.setUser_Country(Countries.get(pos).getCountry_id());
         final ProgressDialog myDialog = new ProgressDialog(this);
         myDialog.setTitle(R.string.app_name);
         myDialog.setMessage("Authenticating the Account ....");
         myDialog.show();
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();
-        Send_Param.add(new kotlin.Pair<String, String>("User_Name", ed_phoneNumber.getText().toString()));
-        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", ed_password.getText().toString()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Name", Main_User.getUser_Phone()));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", Main_User.getUser_Pass()));
+        Send_Param.add(new kotlin.Pair<String, String>("Country", Main_User.getUser_Country()));
         Send_Param.add(new kotlin.Pair<String, String>("Service", "Log_In"));
         Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
 
@@ -154,9 +182,9 @@ public class Login extends AppCompatActivity{
                         ContentValues cv = new ContentValues();
                         cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[0],"");
                         cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[1],"");
-                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[2],ed_phoneNumber.getText().toString());
-                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[3],ed_password.getText().toString());
-                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[4], "");
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[2], Main_User.getUser_Phone());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[3], Main_User.getUser_Pass());
+                        cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[4], Main_User.getUser_Country());
                         cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[5], "");
                         cv.put(com.gcme.deeplife.Database.DeepLife.USER_FIELDS[6], "");
                         long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_USER, cv);
@@ -174,6 +202,14 @@ public class Login extends AppCompatActivity{
                         if(!json_response.isNull("Questions")){
                             JSONArray json_questions = json_response.getJSONArray("Questions");
                             SyncService.Add_Qustions(json_questions);
+                        }
+                        if(!json_response.isNull("Country")){
+                            JSONArray json_countries = json_response.getJSONArray("Country");
+                            SyncService.Add_Country(json_countries);
+                        }
+                        if(!json_response.isNull("Reports")){
+                            JSONArray json_reports = json_response.getJSONArray("Reports");
+                            SyncService.Add_Report_Forms(json_reports);
                         }
                         Intent register = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(register);
@@ -212,7 +248,7 @@ public class Login extends AppCompatActivity{
                 .setPositiveButton("Ok", dialogClickListener).show();
     }
     private boolean validatePhone() {
-        if (ed_phoneNumber.getText().toString().trim().isEmpty() || ed_phoneNumber.getText().toString().length()>14 || ed_phoneNumber.getText().toString().length()<10) {
+        if (ed_phoneNumber.getText().toString().trim().isEmpty() || ed_phoneNumber.getText().toString().length()>12 || ed_phoneNumber.getText().toString().length()<6) {
             inputLayoutPhone.setError(getString(R.string.err_msg_phone));
             requestFocus(ed_phoneNumber);
             return false;

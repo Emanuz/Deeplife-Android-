@@ -4,7 +4,7 @@ package com.gcme.deeplife.Models;
  * Created by BENGEOS on 4/5/16.
  */
 public class Country {
-    private String id,iso3,name,code;
+    private String id,Country_id,iso3,name,code;
 
     public String getId() {
         return id;
@@ -12,6 +12,14 @@ public class Country {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCountry_id() {
+        return Country_id;
+    }
+
+    public void setCountry_id(String country_id) {
+        Country_id = country_id;
     }
 
     public String getIso3() {

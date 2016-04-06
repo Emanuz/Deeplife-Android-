@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gcme.deeplife.Disciples.DiscipleObject;
 import com.gcme.deeplife.Models.ReportItem;
@@ -23,7 +24,7 @@ import javax.xml.validation.Validator;
  */
 public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
-    private ArrayList<ReportItem> ReportLists;
+    public static ArrayList<ReportItem> ReportLists;
     private static MyClickListener myClickListener;
     private static Context myContext;
 
@@ -42,7 +43,8 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Da
                 public void onClick(View v) {
                     int val = Integer.valueOf(Value.getText().toString());
                     val = val+1;
-                    Value.setText(""+val);
+                    ReportLists.get(getAdapterPosition()).setValue(""+val);
+                    Value.setText("" + val);
                 }
             });
             btnDown = (Button) itemView.findViewById(R.id.btn_dec);
@@ -53,6 +55,7 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Da
                     if(val>0){
                         val = val-1;
                         Value.setText(""+val);
+                        ReportLists.get(getAdapterPosition()).setValue(""+val);
                     }
                     Value.setText(""+val);
                 }

@@ -49,11 +49,12 @@ public class User_Profile extends AppCompatActivity {
         tv_phone = (TextView) findViewById(R.id.user_profile_phone);
         tv_country = (TextView) findViewById(R.id.user_profile_country);
         tv_fav_scripture = (TextView) findViewById(R.id.user_profile_favorite_quote);
-
+        if(com.gcme.deeplife.DeepLife.myDatabase.get_Country_by_CountryID(user.getUser_Country()) != null){
+            tv_country.setText(com.gcme.deeplife.DeepLife.myDatabase.get_Country_by_CountryID(user.getUser_Country()).getName());
+        }
         tv_name.setText(user.getUser_Name());
         tv_email.setText(user.getUser_Email());
         tv_phone.setText(user.getUser_Phone());
-        tv_country.setText(user.getUser_Country());
         tv_fav_scripture.setText(user.getUser_Favorite_Scripture());
 
         String image_location = user.getUser_Picture();

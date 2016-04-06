@@ -25,10 +25,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcme.deeplife.Adapters.Countries_Adapter;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.MainActivity;
+import com.gcme.deeplife.Models.Country;
 import com.gcme.deeplife.R;
 import com.gcme.deeplife.SyncService.SyncService;
+
+import java.util.ArrayList;
 
 
 public class AddDisciple extends AppCompatActivity {
@@ -38,6 +42,8 @@ public class AddDisciple extends AppCompatActivity {
 	private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPhone;
 	Spinner sp_countries, sp_gender;
 	Button addDisciple;
+	private ArrayList<Country> Countries;
+	private int Pos;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -47,6 +53,7 @@ public class AddDisciple extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle("Add your Disciple");
+		Countries = com.gcme.deeplife.DeepLife.myDatabase.get_All_Country();
 		init();
 
 	}
@@ -70,17 +77,18 @@ public class AddDisciple extends AppCompatActivity {
 		ed_email.addTextChangedListener(new MyTextWatcher(ed_email));
 		ed_phone.addTextChangedListener(new MyTextWatcher(ed_phone));
 
-		sp_countries.setAdapter(new MySpinnerAdapter(this, R.layout.countries_spinner, Register.list));
+		sp_countries.setAdapter(new Countries_Adapter(this, R.layout.countries_spinner, Countries));
 		sp_countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-				int i = sp_countries.getSelectedItemPosition();
-				ed_codes.setText(Register.codes[i]);
+				Pos = position;
+				ed_codes.setText(Countries.get(position).getCode());
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> parent) {
-				ed_codes.setText(Register.codes[0]);
+				Pos = 0;
+				ed_codes.setText(Countries.get(0).getCode());
 			}
 		});
 
@@ -145,20 +153,13 @@ public class AddDisciple extends AppCompatActivity {
 			return;
 		}
 
-        String name = ed_name.getText().toString();
-        String email = ed_email.getText().toString();
-        String phone = ed_phone.getText().toString();
-        String country = sp_countries.getSelectedItem().toString();
-        String gender = sp_gender.getSelectedItem().toString();
-        String code = ed_codes.getText().toString();
-
 		ContentValues values = new ContentValues();
-		values.put(DeepLife.DISCIPLES_FIELDS[0], name);
-		values.put(DeepLife.DISCIPLES_FIELDS[1], email);
-		values.put(DeepLife.DISCIPLES_FIELDS[2], code+phone);
-		values.put(DeepLife.DISCIPLES_FIELDS[3], country);
+		values.put(DeepLife.DISCIPLES_FIELDS[0], ed_name.getText().toString());
+		values.put(DeepLife.DISCIPLES_FIELDS[1], ed_email.getText().toString());
+		values.put(DeepLife.DISCIPLES_FIELDS[2], ed_phone.getText().toString());
+		values.put(DeepLife.DISCIPLES_FIELDS[3], Countries.get(Pos).getCountry_id());
 		values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
-		values.put(DeepLife.DISCIPLES_FIELDS[5], gender);
+		values.put(DeepLife.DISCIPLES_FIELDS[5], sp_gender.getSelectedItem().toString());
 		long i = com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_DISCIPLES, values);
 		if(i!=-1){
 			Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());

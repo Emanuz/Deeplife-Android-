@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Logs;
+import com.gcme.deeplife.Models.ReportItem;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.Models.User;
 import com.github.kittinunf.fuel.Fuel;
@@ -31,7 +32,7 @@ import me.tatarka.support.job.JobService;
  */
 public class SyncService extends JobService {
     private static final String TAG = "SyncService";
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule"};
+    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report"};
     private List<Object> Param;
     private Gson myParser;
     private List<kotlin.Pair<String,String>> Send_Param;
@@ -49,6 +50,14 @@ public class SyncService extends JobService {
         if(user != null ){
             Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
             Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
+            Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
+            Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
+            Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
+            Log.i(TAG, "Request Made: \n" + myParser.toJson(getParam()));
+        }else{
+            Send_Param.add(new kotlin.Pair<String, String>("User_Name",""));
+            Send_Param.add(new kotlin.Pair<String, String>("User_Pass",""));
+            Send_Param.add(new kotlin.Pair<String, String>("Country", ""));
             Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
             Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
         }
@@ -83,6 +92,10 @@ public class SyncService extends JobService {
                         if(!json_response.isNull("Log_Response")){
                             JSONArray json_logs = json_response.getJSONArray("Log_Response");
                             Delete_Logs(json_logs);
+                        }
+                        if(!json_response.isNull("Country")){
+                            JSONArray json_countries = json_response.getJSONArray("Country");
+                            SyncService.Add_Country(json_countries);
                         }
 
                     }
@@ -127,11 +140,19 @@ public class SyncService extends JobService {
     }
 
     public String getService(){
+        Log.i(TAG,"Found SendReports -> "+DeepLife.myDatabase.getSendReports().size());
+        Log.i(TAG,"Found Countries -> "+DeepLife.myDatabase.get_All_Country().size());
+        Log.i(TAG,"Found Questions -> "+DeepLife.myDatabase.get_All_Questions().size());
+        Log.i(TAG,"Found Reports Forms -> "+DeepLife.myDatabase.get_All_Report().size());
+
         Log.i(TAG,"Found SendLogs -> "+DeepLife.myDatabase.getSendLogs().size());
         Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
         Log.i(TAG,"Found UpdateDisciples -> "+DeepLife.myDatabase.getUpdateDisciples().size());
         Log.i(TAG,"Found SendSchedule -> "+DeepLife.myDatabase.getSendSchedules().size());
-
+        if(DeepLife.myDatabase.get_All_Country().size()<10){
+            Log.i(TAG,"Find Countries Service -> "+DeepLife.myDatabase.get_All_Country().size());
+            return "Country";
+        }
         if(DeepLife.myDatabase.getSendLogs().size()>0){
             Log.i(TAG,"Found SendLogs Service -> "+DeepLife.myDatabase.getSendLogs().size());
             return "Send_Log";
@@ -144,6 +165,9 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
             Log.i(TAG,"Found SendSchedule Service -> "+DeepLife.myDatabase.getSendSchedules().size());
             return "AddNew_Schedules";
+        }else if(DeepLife.myDatabase.getSendReports().size()>0){
+            Log.i(TAG,"Found SendReports Service -> "+DeepLife.myDatabase.getSendReports().size());
+            return "Send_Report";
         }else{
             return "Update";
         }
@@ -171,6 +195,12 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO Send -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDatabase.getSendSchedules();
+            for(int i=0;i<foundData.size();i++){
+                Found.add(foundData.get(i));
+            }
+        }else if(DeepLife.myDatabase.getSendReports().size()>0){
+            Log.i(TAG,"GET Reports TO Send -> \n");
+            ArrayList<ReportItem> foundData = DeepLife.myDatabase.getSendReports();
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
@@ -268,6 +298,26 @@ public class SyncService extends JobService {
                     cv.put(com.gcme.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[2], obj.getString("question"));
                     long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_Report_Forms,cv);
                     Log.i(TAG,"Adding Report -> "+obj.getString("id")+" : "+x);
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+    public static void Add_Country(JSONArray json_countries){
+        try{
+            if(json_countries.length()>0){
+                Log.i(TAG,"Adding New Country -> \n"+json_countries.toString());
+                DeepLife.myDatabase.Delete_All(com.gcme.deeplife.Database.DeepLife.Table_COUNTRY);
+                for(int i=0;i<json_countries.length();i++){
+                    JSONObject obj = json_countries.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(com.gcme.deeplife.Database.DeepLife.COUNTRY_FIELDS[0], obj.getString("id"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.COUNTRY_FIELDS[1], obj.getString("iso3"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.COUNTRY_FIELDS[2], obj.getString("name"));
+                    cv.put(com.gcme.deeplife.Database.DeepLife.COUNTRY_FIELDS[3], obj.getString("code"));
+                    long x = DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_COUNTRY,cv);
+                    Log.i(TAG,"Adding Country -> "+obj.getString("id")+" : "+x);
                 }
             }
         }catch (Exception e){
