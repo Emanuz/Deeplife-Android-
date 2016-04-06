@@ -1,2 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\design\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-design-23.2.1_f5394edf4a502b3869a2be2cf961745fe220c8c2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\com.github.kittinunf.fuel\fuel\1.1.2\f6398b14fc327faa11a3c61930503e019c7a418d\fuel-1.1.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="f6398b14fc327faa11a3c61930503e019c7a418d">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\fuel-1.1.2_811695523e1965625466d238d72f0761f7b7cacd.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-runtime\1.0.1\124852ea8cdd3d89827923b5e79627e8a7c314b2\kotlin-runtime-1.0.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="124852ea8cdd3d89827923b5e79627e8a7c314b2">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\kotlin-runtime-1.0.1_44380c4a689713d495affecebd9405d2f41fb349.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\palette-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="bcee2598dbb74f6d043225a0d7e178b0c7ea4006">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-palette-v7-23.2.1_c124ada0dbc76e837a7346113646515a22aeb01d.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.github.airk000\trigger\1.0.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="76895f2a615bef2015e1b57a71efdd62b518da59">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.github.airk000-trigger-1.0.0_3d66feed57a0d4537bffe745212dc7cebe480202.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-23.2.1_1d22ad400dfd70eed9419879373b98a8c5ea6a66.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.github.kittinunf.fuel\fuel-android\1.1.2\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c769121990f3c66893d6d60d2e3cb5a556bfb69c">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.github.kittinunf.fuel-fuel-android-1.1.2_ecd15d3c445c7df63b21b51a4f6ec6b513c2adc5.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.soundcloud.android\android-crop\1.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="11a65cf2b30c192b38a881d626fa771a78a2293d">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.soundcloud.android-android-crop-1.0.1_74df516ed1388aeaa84a0d58b4c1f056a820261d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\com.github.kittinunf.result\result\1.0.1\3232fdf0a5501dbacf605a372607801bc4e10c82\result-1.0.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3232fdf0a5501dbacf605a372607801bc4e10c82">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\result-1.0.1_c41689e688d2c4898b4a870dc4a443fc999c8285.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\me.tatarka.support\jobscheduler\0.1.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d5fa4ca32cbbd491d4e027d16f02e897dfed0f2">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\me.tatarka.support-jobscheduler-0.1.1_4049a6f501448d3f2ef0d7aa6e8fd4ddf9d9a5c9.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\gson-2.3.1_d03f5bcb749d479d039510f76e9f57099d0eb413.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-23.2.1_2957ae6762c5b95782e7b937d08d25c01d49a05d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\glide-3.7.0_c21b8090090b7a912822bed3e4a97473233827ca.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-23.2.1_4953dc2413178cd4363fe9df0f9327af92467d5a.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1_e824511db7073e47878b430a14b228aa59b42c3f.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="cb86970df0f0f25f766d320b279c7858c1ca0003">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-23.2.1_148071b865945cf341ec77019b264c9402d83442.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\picasso-2.5.2_f71d4463def5ca33adfc3826015518692ae40429.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib\1.0.1\68cddd9aec83d23f789f72bfdc933db245c4a635\kotlin-stdlib-1.0.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="68cddd9aec83d23f789f72bfdc933db245c4a635">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\kotlin-stdlib-1.0.1_292275e379a1fdddc9531e0ce3234572215a625d.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\2.3.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a95fd025efad7b05be3d29737bec37652e0fdb9e">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.wdullaer-materialdatetimepicker-2.3.0_b54eb7d9eccab2cf98b928ee48db3944d6411133.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e3885783ff8926ed9e2fdcd16816c2e1e73e7aee">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-23.2.1_fe39eb4d728d260ac6a30dadfd766b8f8829ed2c.jar" />
+    </item>
+    <item
+        jar="C:\Users\Roger\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1_45d011141968355c37339d67b0399b0867d409af.jar" />
+    </item>
+    <item
+        jar="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="E:\VLM\DeepLifeV2\DeepLife-Android-c4tk\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-23.2.1_b5665b01f9bc2ae4d09b1c87d3a572ec0807fe82.jar" />
+    </item>
+
+</items>
