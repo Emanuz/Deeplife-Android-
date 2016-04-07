@@ -463,8 +463,6 @@ public class Database {
             dis.setUser_Country(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[5])));
             dis.setUser_Picture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[6])));
             dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(DeepLife.USER_COLUMN[7])));
-            Log.i(DeepLife.TAG, "Found user!!!! " + dis.getUser_Name());
-            Log.i(DeepLife.TAG,"Cursor count!!!! " +c.getCount()+ " \n Index name "+ c.getString(2));
             return dis;
         }
         return null;

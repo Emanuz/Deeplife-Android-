@@ -1,5 +1,5 @@
-package com.gcme.deeplife.Disciples;
 
+package com.gcme.deeplife.Schedule;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
@@ -23,7 +23,7 @@ import com.gcme.deeplife.SyncService.SyncService;
 import java.util.ArrayList;
 
 /**
- * Created by BENGEOS on 3/25/16.
+ * Created by Roger on 3/25/16.
  */
 public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
@@ -50,7 +50,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
         @Override
         public void onClick(View v) {
-
+            Toast.makeText(myContext,"Watch out! You have a schedule.",Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -113,7 +113,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
     @Override
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.disciple_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.schedule_item, parent, false);
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
     }

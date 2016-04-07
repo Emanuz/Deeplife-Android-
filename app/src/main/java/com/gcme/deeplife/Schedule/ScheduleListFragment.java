@@ -13,7 +13,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gcme.deeplife.Disciples.ScheduleListAdapter;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.R;
 

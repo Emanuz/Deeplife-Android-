@@ -49,13 +49,12 @@ public class MainActivity extends AppCompatActivity
     ImageView nav_image;
     LinearLayout nav_header;
     User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        AlarmReciever alarmReciever = new AlarmReciever();
-        alarmReciever.setAlarm(this);*/
+
         image = (ImageView) findViewById(R.id.image);
         btn_navigation_back = (ImageView) findViewById(R.id.image);
         image.setImageResource(R.drawable.splash);
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile();
-        Log.i(DeepLife.TAG, "User name = " + user.getUser_Name());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
