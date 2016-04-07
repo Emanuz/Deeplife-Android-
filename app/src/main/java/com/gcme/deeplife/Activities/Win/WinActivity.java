@@ -28,24 +28,17 @@ public class WinActivity extends AppCompatActivity {
 
     public static WinViewPager mPager;
     private PagerAdapter mPagerAdapter;
-
     public static final String WIN = "WIN";
     public int NUM_PAGES;
     public static boolean answered_state;
     public static ArrayList<Integer> answer_from_db_id;
-
     public static ArrayList<Question> questions;
     public static ArrayList<String> answers;
     public static ArrayList<String> answerchoices;
     public static ArrayList<QuestionAnswer> answered_from_db = null;
-
     public static int answer_index = 0;
-
     public static int DISCIPLE_ID;
-
-
     Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +47,11 @@ public class WinActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.winactivity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Win Build Send");
+        getSupportActionBar().setTitle("Win");
 
         mPager = (WinViewPager) findViewById(R.id.win_viewpager);
         mPager.setSwipeable(true);
-        
+
         Bundle extras = this.getIntent().getExtras();
         answered_state = false;
         if(extras!=null){
@@ -74,13 +67,10 @@ public class WinActivity extends AppCompatActivity {
         }
 
         clear();
-        
         //initialize data
         init();
 
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
-
-
     }
 
     private void clear() {
@@ -109,13 +99,10 @@ public class WinActivity extends AppCompatActivity {
         NUM_PAGES++;
 
         Log.i("Deep Life", "The Page number inside win activity is " + NUM_PAGES + "");
-
-       questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(WIN);
-
+        questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(WIN);
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
         answerchoices.add("No");
-
         answers = new ArrayList<String>();
 
         //if answer in database
@@ -123,7 +110,7 @@ public class WinActivity extends AppCompatActivity {
             answered_from_db = com.gcme.deeplife.DeepLife.myDatabase.get_Answer(DISCIPLE_ID+"",WIN);
             answer_from_db_id = new ArrayList<Integer>();
 
-            for(int i=0; i<NUM_PAGES-1;i++){
+            for(int i=0; i<(com.gcme.deeplife.DeepLife.myDatabase.count_Questions(DeepLife.Table_QUESTION_LIST,WIN));i++){
                 answers.add(answered_from_db.get(i).getAnswer());
                 answer_from_db_id.add(Integer.parseInt(answered_from_db.get(i).getId()));
             }
@@ -135,7 +122,6 @@ public class WinActivity extends AppCompatActivity {
                 answers.add("");
             }
         }
-
     }
 
     @Override

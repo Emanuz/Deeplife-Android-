@@ -158,6 +158,7 @@ public class Disciple_Profile extends AppCompatActivity {
 
                     if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
                         bundle.putString("answer", "yes");
+                        Log.i(DeepLife.TAG,"Disciple has answered before for win");
                     }
 
                     intent.putExtras(bundle);
@@ -168,6 +169,7 @@ public class Disciple_Profile extends AppCompatActivity {
                     bundle.putString("disciple_id", disciple_id);
                     if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
                         bundle.putString("answer", "yes");
+                        Log.i(DeepLife.TAG, "Disciple has answered before for build");
                     }
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -178,6 +180,7 @@ public class Disciple_Profile extends AppCompatActivity {
 
                     if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
                         bundle.putString("answer", "yes");
+                        Log.i(DeepLife.TAG, "Disciple has answered before for send");
                     }
 
                     intent.putExtras(bundle);

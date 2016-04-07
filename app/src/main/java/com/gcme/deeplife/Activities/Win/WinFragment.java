@@ -3,7 +3,6 @@ package com.gcme.deeplife.Activities.Win;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +55,7 @@ public class WinFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.winfragment, container, false);
 
-         tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
+        tv_qdisc = (TextView) rootView.findViewById(R.id.win_question);
         rb_yes = (RadioButton) rootView.findViewById(R.id.rb_yes);
         rb_no = (RadioButton) rootView.findViewById(R.id.rb_no);
         tv_note = (TextView) rootView.findViewById(R.id.win_note);
@@ -83,7 +82,6 @@ public class WinFragment extends Fragment {
             }
 
             else{
-                Log.i("Deep Life", "else if ... swipe off");
                 WinActivity.mPager.setSwipeable(false);
             }
 

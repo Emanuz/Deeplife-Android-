@@ -33,7 +33,7 @@ import java.util.ArrayList;
 /**
  * Created by BENGEOS on 3/25/16.
  */
-public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapter.DataObjectHolder> {
+public class DiscipleListAdapter extends RecyclerView.Adapter<com.gcme.deeplife.Disciples.DiscipleListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
     private ArrayList<Disciples> DiscipleLists;
     private static MyClickListener myClickListener;
@@ -85,7 +85,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
 
         @Override
         public boolean onLongClick(View v) {
-            DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()),FullName.getText().toString(),Phone.getText().toString());
+            DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()), FullName.getText().toString(), Phone.getText().toString());
             return true;
         }
     }
@@ -159,8 +159,11 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
         return dataObjectHolder;
     }
+
+
+
     @Override
-    public void onBindViewHolder(final DataObjectHolder holder, int position) {
+    public void onBindViewHolder(com.gcme.deeplife.Disciples.DiscipleListAdapter.DataObjectHolder holder, int position) {
         String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
         Log.i(DeepLife.TAG, disciple_phase);
         holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
@@ -199,6 +202,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<DiscipleListAdapte
         }
         holder.progress.setProgress(build_progress_percent);
     }
+
 
     public void addItem(Disciples news){
         DiscipleLists.add(news);

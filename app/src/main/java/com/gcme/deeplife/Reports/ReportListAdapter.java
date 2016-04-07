@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gcme.deeplife.Disciples.DiscipleObject;
 import com.gcme.deeplife.Models.ReportItem;
 import com.gcme.deeplife.R;
 
 import java.util.ArrayList;
-
-import javax.xml.validation.Validator;
 
 /**
  * Created by BENGEOS on 3/27/16.
@@ -29,13 +25,14 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Da
     private static Context myContext;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView Question,Value;
+        TextView Question;
+        EditText Value;
         Button btnUp,btnDown;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             Question = (TextView) itemView.findViewById(R.id.txt_question);
-            Value = (TextView) itemView.findViewById(R.id.txt_value);
+            Value = (EditText) itemView.findViewById(R.id.txt_value);
             Value.setText("0");
             btnUp = (Button) itemView.findViewById(R.id.btn_inc);
             btnUp.setOnClickListener(new View.OnClickListener() {

@@ -32,7 +32,7 @@ public class OnBootReceiver extends BroadcastReceiver {
 				String dateTime = cursor.get(i).getAlarm_Time();
 
 				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat format = new SimpleDateFormat(Schedules.DATE_TIME_FORMAT);
+				SimpleDateFormat format = new SimpleDateFormat(ScheduleListFragment.DATE_TIME_FORMAT);
 				
 				try {
 					java.util.Date date = format.parse(dateTime);

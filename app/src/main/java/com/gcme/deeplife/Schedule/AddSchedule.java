@@ -159,13 +159,13 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
     }
     private void updateTimeText() {
         // Set the time button text based upon the value from the database
-        SimpleDateFormat timeFormat = new SimpleDateFormat(Schedules.TIME_FORMAT);
+        SimpleDateFormat timeFormat = new SimpleDateFormat(ScheduleListFragment.TIME_FORMAT);
         String timeForButton = timeFormat.format(mCalendar.getTime());
         tv_time.setText(timeForButton);
     }
     private void updateDateText() {
         // Set the date button text based upon the value from the database
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Schedules.DATE_FORMAT);
+        SimpleDateFormat dateFormat = new SimpleDateFormat(ScheduleListFragment.DATE_FORMAT);
         String dateForButton = dateFormat.format(mCalendar.getTime());
         tv_date.setText(dateForButton);
     }
@@ -226,7 +226,7 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 			return;
 		}
 
-		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(Schedules.DATE_TIME_FORMAT);
+		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(ScheduleListFragment.DATE_TIME_FORMAT);
 		String reminderDateTime = dateTimeFormat.format(mCalendar.getTime());
 
 		ContentValues values = new ContentValues();

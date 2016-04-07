@@ -40,6 +40,7 @@ public class Music_Play extends Activity {
             @Override
             public void onClick(View v) {
                 mediaPlayer.stop();
+                finish();
             }
         });
 

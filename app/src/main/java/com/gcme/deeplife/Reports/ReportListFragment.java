@@ -11,10 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.gcme.deeplife.Activities.Win.WinActivity;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.Models.ReportItem;
 import com.gcme.deeplife.R;
@@ -41,7 +39,7 @@ public class ReportListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.report_list_page,container,false);
-        myRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        myRecyclerView = (RecyclerView) view.findViewById(R.id.report_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         ArrayList<ReportItem> items = DeepLife.myDatabase.get_All_Report();
