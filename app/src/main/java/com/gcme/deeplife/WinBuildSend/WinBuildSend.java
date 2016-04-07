@@ -1,10 +1,9 @@
-package com.gcme.deeplife.Activities.Send;
+package com.gcme.deeplife.WinBuildSend;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -12,37 +11,30 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.gcme.deeplife.Activities.WinViewPager;
-import com.gcme.deeplife.Activities.Win_Thank_You;
-import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.DeepLife;
+import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.Models.Question;
-import com.gcme.deeplife.Models.QuestionAnswer;
 import com.gcme.deeplife.R;
 
 import java.util.ArrayList;
 
 /**
- * Created by rog on 11/7/2015.
+ * Created by Roger on 4/7/2016.
  */
-public class SendActivity extends AppCompatActivity {
+public class WinBuildSend extends AppCompatActivity {
 
+    public static Disciples disciple = null;
+    public static String disciple_stage;
+    public static String temp_stage;
     public static WinViewPager mPager;
-    private PagerAdapter mPagerAdapter;
-
-    public static final String SEND = "SEND";
     public int NUM_PAGES;
     public static boolean answered_state;
-    public static ArrayList<Integer> answer_from_db_id;
-
     public static ArrayList<Question> questions;
     public static ArrayList<String> answers;
     public static ArrayList<String> answerchoices;
-    public static ArrayList<QuestionAnswer> answered_from_db = null;
-
     public static int answer_index = 0;
     public static int DISCIPLE_ID;
-
     Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,86 +43,60 @@ public class SendActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.winactivity_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Win Build Send");
 
-        mPager = (WinViewPager) findViewById(R.id.win_viewpager);
-        mPager.setSwipeable(true);
-        
         Bundle extras = this.getIntent().getExtras();
-        answered_state = false;
         if(extras!=null){
             DISCIPLE_ID = Integer.parseInt(extras.getString("disciple_id").toString());
-            if(extras.containsKey("answer")) {
-                    answered_state = true;
-
-            }
         }
         else{
             return;
         }
 
-        clear();
-        
-        //initialize data
-        init();
+        disciple = DeepLife.myDatabase.getDiscipleProfile(DISCIPLE_ID + "");
+        disciple_stage = disciple.getBuild_Phase();
+        mPager = (WinViewPager) findViewById(R.id.win_viewpager);
+        mPager.setSwipeable(true);
 
+        getSupportActionBar().setTitle(disciple.getBuild_Phase());
+
+        switch (disciple_stage){
+            case "Added":
+                temp_stage = "WIN";
+                break;
+            case "WIN":
+                temp_stage = "BUILD";
+                break;
+            case "BUILD":
+                temp_stage = "SEND";
+                break;
+            default:
+                return;
+        }
+
+        handleInit();
         mPager.setAdapter(new ScreenSlidePagerAdapter(getSupportFragmentManager()));
 
     }
 
-    private void clear() {
-        answers = new ArrayList<String>();
-        answered_from_db = new ArrayList<QuestionAnswer>();
-        questions = new ArrayList<Question>();
-        answers.clear();
-        answered_from_db.clear();
-        questions.clear();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    public void init(){
-
-        //set the max number of pages from db
-        NUM_PAGES = (com.gcme.deeplife.DeepLife.myDatabase.count_Questions(DeepLife.Table_QUESTION_LIST,SEND));
+    public void handleInit(){
+        NUM_PAGES = (com.gcme.deeplife.DeepLife.myDatabase.count_Questions(com.gcme.deeplife.Database.DeepLife.Table_QUESTION_LIST,temp_stage));
         NUM_PAGES++;
-
-
-        questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(SEND);
-
+        questions = com.gcme.deeplife.DeepLife.myDatabase.get_All_Questions(temp_stage);
+        //answer choices
         answerchoices = new ArrayList<String>();
         answerchoices.add("Yes");
         answerchoices.add("No");
 
         answers = new ArrayList<String>();
 
-        //if answer in database
-        if(answered_state){
-            answered_from_db = com.gcme.deeplife.DeepLife.myDatabase.get_Answer(DISCIPLE_ID+"",SEND);
-            answer_from_db_id = new ArrayList<Integer>();
 
-            for(int i=0; i<NUM_PAGES-1;i++){
-                answers.add(answered_from_db.get(i).getAnswer());
-                answer_from_db_id.add(Integer.parseInt(answered_from_db.get(i).getId()));
-            }
+        for (int i = 0; i<NUM_PAGES - 1; i++){
+            answers.add("");
         }
 
-        //if answer not in database
-        else {
-            for (int i = 0; i < NUM_PAGES - 1; i++) {
-                answers.add("");
-            }
-        }
 
-    }
+
+        }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,8 +111,6 @@ public class SendActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -158,17 +122,16 @@ public class SendActivity extends AppCompatActivity {
 
             if(position==NUM_PAGES-1){
                 Bundle b = new Bundle();
-                b.putString("stage", SEND);
-                Fragment win = new Win_Thank_You();
+                b.putString("stage", temp_stage);
+                Fragment win = new WinBuildSend_ThankYou();
                 win.setArguments(b);
                 return win;
 
-               // return new Win_Thank_You();
             }
 
-            return SendFragment.create(position);
+            return WinBuildSendFragment.create(position,temp_stage);
 
-            }
+        }
 
         @Override
         public int getCount() {
@@ -178,8 +141,7 @@ public class SendActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
 
-            return SEND;
+            return temp_stage;
         }
     }
-
 }

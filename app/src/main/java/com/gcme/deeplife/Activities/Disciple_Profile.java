@@ -24,13 +24,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.gcme.deeplife.Activities.Build.BuildActivity;
-import com.gcme.deeplife.Activities.Send.SendActivity;
-import com.gcme.deeplife.Activities.Win.WinActivity;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
 import com.gcme.deeplife.Models.Disciples;
 import com.gcme.deeplife.R;
+import com.gcme.deeplife.WinBuildSend.WinBuildSend;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -112,6 +110,7 @@ public class Disciple_Profile extends AppCompatActivity {
         if (disciple.getPicture() != null) {
             profile_image.setImageBitmap(BitmapFactory.decodeFile(disciple.getPicture()));
         }
+        tv_build.setText(disciple.getBuild_Phase());
         tv_phone.setText(disciple.getPhone());
         tv_email.setText(disciple.getEmail());
         tv_gender.setText(disciple.getGender());
@@ -152,37 +151,21 @@ public class Disciple_Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (build.endsWith("Added")) {
-                    Intent intent = new Intent(Disciple_Profile.this, WinActivity.class);
+                    Intent intent = new Intent(Disciple_Profile.this, WinBuildSend.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
-
-                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "WIN") > 0) {
-                        bundle.putString("answer", "yes");
-                        Log.i(DeepLife.TAG,"Disciple has answered before for win");
-                    }
-
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (build.endsWith("WIN")) {
-                    Intent intent = new Intent(Disciple_Profile.this, BuildActivity.class);
+                    Intent intent = new Intent(Disciple_Profile.this, WinBuildSend.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
-                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "BUILD") > 0) {
-                        bundle.putString("answer", "yes");
-                        Log.i(DeepLife.TAG, "Disciple has answered before for build");
-                    }
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else if (build.endsWith("BUILD")) {
-                    Intent intent = new Intent(Disciple_Profile.this, SendActivity.class);
+                    Intent intent = new Intent(Disciple_Profile.this, WinBuildSend.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("disciple_id", disciple_id);
-
-                    if (com.gcme.deeplife.DeepLife.myDatabase.checkExistence(DeepLife.Table_QUESTION_ANSWER, DeepLife.QUESTION_ANSWER_FIELDS[0], disciple_id, "SEND") > 0) {
-                        bundle.putString("answer", "yes");
-                        Log.i(DeepLife.TAG, "Disciple has answered before for send");
-                    }
-
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

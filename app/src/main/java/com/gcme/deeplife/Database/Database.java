@@ -449,8 +449,7 @@ public class Database {
         return null;
     }
 
-    public User getUserProfile(String user_ID){
-
+    public User getUserProfile(){
         User dis = new User();
         String DB_Table = DeepLife.Table_USER;
         Cursor c = myDatabase.rawQuery("select * from " + DB_Table, null);

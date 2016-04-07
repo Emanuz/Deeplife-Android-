@@ -1,6 +1,7 @@
 package com.gcme.deeplife;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     CollapsingToolbarLayout collapsingToolbarLayout;
     static ImageView image, btn_navigation_back;
     TextView navigation_name;
+    ImageView nav_image;
     LinearLayout nav_header;
     User user;
     @Override
@@ -60,9 +62,7 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        int user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
-        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
-        Log.i(DeepLife.TAG, "User  = " + user_id);
+        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile();
         Log.i(DeepLife.TAG, "User name = " + user.getUser_Name());
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -76,7 +76,12 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         navigation_name = (TextView)header.findViewById(R.id.drawer_textView_name);
+        nav_image = (ImageView)header.findViewById(R.id.drawer_main_imageView);
+
         navigation_name.setText(user.getUser_Name());
+        if(user.getUser_Picture()!=null | user.getUser_Picture()!=""){
+            nav_image.setImageBitmap(BitmapFactory.decodeFile(user.getUser_Picture()));
+        }
         Log.i(DeepLife.TAG, "Nav name = " + user.getUser_Name());
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);

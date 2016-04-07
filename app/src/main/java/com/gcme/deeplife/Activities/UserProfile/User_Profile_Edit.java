@@ -70,7 +70,6 @@ public class User_Profile_Edit extends AppCompatActivity {
         setSupportActionBar((Toolbar) findViewById(R.id.user_profile_edit_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        user_id = com.gcme.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_USER);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.user_profile_edit_collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Edit Profile");
@@ -81,7 +80,8 @@ public class User_Profile_Edit extends AppCompatActivity {
     }
 
     public void init(){
-        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile(user_id+"");
+        user = com.gcme.deeplife.DeepLife.myDatabase.getUserProfile();
+        user_id = Integer.parseInt(user.getId());
 
         activity = this;
 
