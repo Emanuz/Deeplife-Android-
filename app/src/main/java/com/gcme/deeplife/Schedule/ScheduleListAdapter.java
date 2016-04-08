@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
-    private ArrayList<Schedule> ScheduleList;
+    private static ArrayList<Schedule> ScheduleList;
     private static MyClickListener myClickListener;
     private static Context myContext;
 
@@ -55,7 +55,12 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
         @Override
         public boolean onLongClick(View v) {
-            ScheduleListAdapter.delete_Dialog(Integer.parseInt(tv_id.getText().toString()));
+            //Toast.makeText(myContext,"Disciple ID: "+ScheduleList.get(getPosition()).getDisciple_Phone(), Toast.LENGTH_LONG).show();
+            try{
+                ScheduleListAdapter.delete_Dialog(Integer.parseInt(tv_id.getText().toString()));
+            }catch (Exception e){
+
+            }
             return true;
         }
     }
@@ -125,9 +130,7 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
         String title = ScheduleList.get(position).getTitle();
         String discription = ScheduleList.get(position).getDescription();
         int id = Integer.parseInt(ScheduleList.get(position).getID());
-
         Disciples disciple = com.gcme.deeplife.DeepLife.myDatabase.getDiscipleProfileFromPhone(user_phone);
-
         if(disciple != null){
             //set the values
             holder.tv_name.setText(disciple.getFull_Name());

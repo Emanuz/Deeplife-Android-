@@ -71,14 +71,8 @@ public class DiscipleListFragment extends Fragment {
         add_disciple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DeepLife.myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_DISCIPLES) < 1) {
-                    Toast.makeText(myContext, "No disciple Found. \n Please add your disciples first.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                else {
-                    Intent intent = new Intent(getActivity(), AddDisciple.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(getActivity(), AddDisciple.class);
+                startActivity(intent);
             }
         });
         return view;

@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.Models.Schedule;
 import com.gcme.deeplife.R;
 
@@ -70,8 +72,14 @@ public class ScheduleListFragment extends Fragment {
         add_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddSchedule.class);
-                startActivity(intent);
+                if (DeepLife.myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_DISCIPLES) < 1) {
+                    Toast.makeText(myContext, "No disciple Found. \n Please add your disciples first.", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Intent intent = new Intent(getActivity(), AddSchedule.class);
+                    startActivity(intent);
+                }
+
             }
         });
         return view;
