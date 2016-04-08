@@ -67,7 +67,9 @@ public class Login extends AppCompatActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		init();
-
+        if(DeepLife.myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_COUNTRY)<10){
+            getAll_Countries();
+        }
 	}
 
 	public void init(){
@@ -101,6 +103,45 @@ public class Login extends AppCompatActivity{
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Ed_Codes.setText(Countries.get(0).getCode());
+            }
+        });
+    }
+    public void getAll_Countries(){
+        final ProgressDialog myDialog = new ProgressDialog(this);
+        myDialog.setTitle(R.string.app_name);
+        myDialog.setMessage("Downloading Necessary Files ....");
+        myDialog.show();
+        List<Pair<String, String>> Send_Param;
+        Send_Param = new ArrayList<Pair<String, String>>();
+        Send_Param.add(new kotlin.Pair<String, String>("User_Name", ""));
+        Send_Param.add(new kotlin.Pair<String, String>("User_Pass", ""));
+        Send_Param.add(new kotlin.Pair<String, String>("Country", ""));
+        Send_Param.add(new kotlin.Pair<String, String>("Service", "Meta_Data"));
+        Send_Param.add(new kotlin.Pair<String, String>("Param", "[]"));
+
+        Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
+            @Override
+            public void success(Request request, Response response, String s) {
+                try {
+                    JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
+                    if (!myObject.isNull("Response")) {
+                        JSONObject json_response = myObject.getJSONObject("Response");
+                        if (!json_response.isNull("Country")) {
+                            JSONArray json_countries = json_response.getJSONArray("Country");
+                            SyncService.Add_Country(json_countries);
+                            myDialog.cancel();
+                            startActivity(getIntent());
+                            finish();
+                        }
+                    }
+                } catch (Exception e) {
+                    ShowErrorDialog("Make sure to turn on your internet connection. then try again");
+                }
+            }
+
+            @Override
+            public void failure(Request request, Response response, FuelError fuelError) {
+                ShowErrorDialog("Make sure to turn on your internet connection. then try again");
             }
         });
     }
@@ -237,6 +278,24 @@ public class Login extends AppCompatActivity{
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
                         // Yes button clicked
+                        break;
+                }
+            }
+        };
+        builder = new AlertDialog.Builder(myContext);
+        builder.setTitle(R.string.app_name)
+                .setMessage(message)
+                .setPositiveButton("Ok", dialogClickListener).show();
+    }
+    public void ShowErrorDialog(String message) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        // Yes button clicked
+                        startActivity(getIntent());
+                        finish();
                         break;
                 }
             }
