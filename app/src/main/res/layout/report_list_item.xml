@@ -18,7 +18,6 @@
             android:layout_height="2dp"
             android:layout_marginTop="35dp"
             android:background="@color/bg_logins">
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="2dp"
@@ -26,7 +25,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:background="@color/bg_logins">
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,7 +35,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="2">
                 <TextView
                     android:layout_width="match_parent"
@@ -45,8 +42,8 @@
                     android:layout_marginLeft="9dp"
                     android:layout_marginTop="35dp"
                     android:gravity="center_horizontal"
-                    android:text="Number of People that you tell about jessus christ"
-                    android:textSize="16sp"
+                    android:text="Number of People that you tell about jesus christ"
+                    android:textSize="22sp"
                     android:textColor="#000000"
                     android:id="@+id/txt_question" />
             </LinearLayout>
@@ -62,19 +59,19 @@
                     android:background="@drawable/btn_incrs"
                     android:id="@+id/btn_inc" />
                 <FrameLayout
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="60dp">
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                     <EditText
                         android:id="@+id/txt_value"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal|center_vertical"
                         android:textSize="35sp"
                         android:textColor="#000000"
-                        android:text="1"/>
+                        android:text="0"/>
                 </FrameLayout>
                 <Button
                     android:layout_width="50dp"
@@ -83,9 +80,5 @@
                     android:id="@+id/btn_dec" />
             </LinearLayout>
         </LinearLayout>
-
-
     </android.support.v7.widget.CardView>
-
-
 </LinearLayout>

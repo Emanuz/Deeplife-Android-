@@ -11,13 +11,23 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
     </android.support.design.widget.AppBarLayout>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:padding="5dp"
+        android:gravity="center_horizontal"
+        android:textSize="25sp"
+        android:background="@color/bg_login"
+        android:text="Last Time Report Sent"/>
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="45dp"
         android:id="@+id/report_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"/>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_report_send"
