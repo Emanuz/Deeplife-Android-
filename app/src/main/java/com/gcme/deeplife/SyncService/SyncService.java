@@ -141,7 +141,6 @@ public class SyncService extends JobService {
 
     public String getService(){
         Log.i(TAG,"Found SendReports -> "+DeepLife.myDatabase.getSendReports().size());
-        Log.i(TAG,"Found Countries -> "+DeepLife.myDatabase.get_All_Country().size());
         Log.i(TAG,"Found Questions -> "+DeepLife.myDatabase.get_All_Questions().size());
         Log.i(TAG,"Found Reports Forms -> "+DeepLife.myDatabase.get_All_Report().size());
 
@@ -149,10 +148,7 @@ public class SyncService extends JobService {
         Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
         Log.i(TAG,"Found UpdateDisciples -> "+DeepLife.myDatabase.getUpdateDisciples().size());
         Log.i(TAG,"Found SendSchedule -> "+DeepLife.myDatabase.getSendSchedules().size());
-        if(DeepLife.myDatabase.get_All_Country().size()<10){
-            Log.i(TAG,"Find Countries Service -> "+DeepLife.myDatabase.get_All_Country().size());
-            return "Country";
-        }
+
         if(DeepLife.myDatabase.getSendLogs().size()>0){
             Log.i(TAG,"Found SendLogs Service -> "+DeepLife.myDatabase.getSendLogs().size());
             return "Send_Log";
