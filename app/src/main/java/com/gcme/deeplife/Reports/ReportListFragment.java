@@ -62,7 +62,7 @@ public class ReportListFragment extends Fragment {
                         ContentValues log = new ContentValues();
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Report");
                         log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[5]);
-                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], ""+val);
+                        log.put(com.gcme.deeplife.Database.DeepLife.LOGS_FIELDS[2], val);
                         long x = com.gcme.deeplife.DeepLife.myDatabase.insert(com.gcme.deeplife.Database.DeepLife.Table_LOGS, log);
                         Toast.makeText(getActivity(),"New Report Added: "+x,Toast.LENGTH_LONG).show();
                     }
