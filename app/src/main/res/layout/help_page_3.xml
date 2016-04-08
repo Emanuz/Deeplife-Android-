@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/bg_login"
+    android:gravity="center_vertical"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="2"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:background="@color/btn_login"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="300dp"
+                        android:background="@drawable/main_back"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="100dp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        android:gravity="center_horizontal"
+                        android:text="lets make disciples, it is our calling. Add your new disciples with their full information"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent">
+
+                <requestFocus
+                    android:layout_gravity="bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:textSize="20sp"
+                        android:textColor="@color/btn_login"
+                        android:gravity="center_horizontal"
+                        android:text="Inorder to facilitate the fulfillment of the great commission, Deeplife help you to be accountable, measure and map your progress in your ministry "
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:background="@drawable/logoicon_xhdpi"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_height="100dp" />
+                    <Button
+                        android:id="@+id/help_finish"
+                        android:layout_width="match_parent"
+                        android:text="Start Now"
+                        android:layout_marginBottom="30dp"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:editable="false"
+                android:checked="false"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:editable="false"
+                android:checked="false"
+                android:layout_height="wrap_content" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:editable="false"
+                android:checked="true"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</LinearLayout>
