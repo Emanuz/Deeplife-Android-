@@ -70,7 +70,7 @@ public class WinBuildSend_ThankYou extends Fragment {
                         log.put(DeepLife.LOGS_FIELDS[2], WinBuildSend.DISCIPLE_ID);
                         com.gcme.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
 
-                        Toast.makeText(getActivity(), "Successfully Finished this Stage for "+WinBuildSend.disciple.getFull_Name(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Congratulations! The stage of your disciple "+WinBuildSend.disciple.getFull_Name()+ " is now " +stage, Toast.LENGTH_LONG).show();
                         WinBuildSend.answers.clear();
                         WinBuildSend.answer_index = 0;
                         WinBuildSend.answerchoices.clear();
@@ -92,7 +92,6 @@ public class WinBuildSend_ThankYou extends Fragment {
         Intent intent = new Intent(getActivity(),MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        getActivity().finishAffinity();
         getActivity().finish();
     }
     @Override

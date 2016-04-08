@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_disciples"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/icon_nav_man"
             android:title="Disciples" />
         <item
             android:id="@+id/nav_schedules"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icon_nav_schedule"
             android:title="Schedules" />
         <item
             android:id="@+id/nav_report"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Report" />
+            android:icon="@drawable/icon_nav_share"
+            android:title="Share" />
         <item
             android:id="@+id/nav_learning"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_nav_learn"
             android:title="Learning Tools" />
 
     </group>
@@ -27,7 +27,7 @@
         <menu>
             <item
                 android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/icon_nav_social"
                 android:title="Profiile" />
             <item
                 android:id="@+id/nav_logout"
@@ -38,14 +38,13 @@
 
     <item android:title="Communicate">
         <menu>
-
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icon_nav_facebook"
                 android:title="Facebook" />
             <item
                 android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@android:drawable/ic_dialog_info"
                 android:title="About" />
         </menu>
     </item>

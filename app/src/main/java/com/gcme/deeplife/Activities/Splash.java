@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.gcme.deeplife.Database.DeepLife;
+import com.gcme.deeplife.Helps.AppHelps;
 import com.gcme.deeplife.MainActivity;
 import com.gcme.deeplife.R;
 
@@ -44,13 +45,13 @@ public class Splash extends Activity {
 			startActivity(intent);
 			finish();
 		}else{
-			Intent intent = new Intent(this, Login.class);
+			Intent intent = new Intent(this, AppHelps.class);
 			startActivity(intent);
 			finish();
 		}
 
-
 	}
+
 
 	@Override
 	protected void onDestroy() {

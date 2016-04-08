@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.gcme.deeplife.Activities.AddDisciple;
 import com.gcme.deeplife.DeepLife;
@@ -70,8 +71,14 @@ public class DiscipleListFragment extends Fragment {
         add_disciple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddDisciple.class);
-                startActivity(intent);
+                if (DeepLife.myDatabase.count(com.gcme.deeplife.Database.DeepLife.Table_DISCIPLES) < 1) {
+                    Toast.makeText(myContext, "No disciple Found. \n Please add your disciples first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), AddDisciple.class);
+                    startActivity(intent);
+                }
             }
         });
         return view;

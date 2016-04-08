@@ -116,7 +116,6 @@ public class Login extends AppCompatActivity{
                 submitForm();
             }
 
-
         });
 
 		/*
@@ -213,6 +212,7 @@ public class Login extends AppCompatActivity{
                         }
                         Intent register = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(register);
+                        finish();
                     } else {
                         ShowDialog("Invalid user account! use a valid account please");
                     }
@@ -220,7 +220,6 @@ public class Login extends AppCompatActivity{
                     ShowDialog("Something went wrong! Please try again \n"+e.toString());
                     Log.i(TAG, "Error Occurred-> \n" + e.toString());
                 }
-
             }
 
             @Override

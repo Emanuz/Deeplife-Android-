@@ -29,11 +29,9 @@ import android.widget.Toast;
 import com.gcme.deeplife.Adapters.Countries_Adapter;
 import com.gcme.deeplife.DeepLife;
 import com.gcme.deeplife.MainActivity;
-import com.gcme.deeplife.Models.Country;
 import com.gcme.deeplife.Models.CountryDetails;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
-import com.gcme.deeplife.SyncService.SyncService;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
@@ -41,7 +39,6 @@ import com.github.kittinunf.fuel.core.Request;
 import com.github.kittinunf.fuel.core.Response;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -271,6 +268,8 @@ public class Register extends AppCompatActivity{
 
                         Intent register = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(register);
+                        finish();
+
                     } else {
                         ShowDialog("Invalid user account! use a valid account please");
                     }

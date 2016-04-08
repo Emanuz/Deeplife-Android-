@@ -30,9 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.gcme.deeplife.Adapters.Countries_Adapter;
 import com.gcme.deeplife.Database.DeepLife;
 import com.gcme.deeplife.ImageProcessing.ImageProcessing;
-import com.gcme.deeplife.Models.CountryDetails;
+import com.gcme.deeplife.Models.Country;
 import com.gcme.deeplife.Models.User;
 import com.gcme.deeplife.R;
 import com.soundcloud.android.crop.Crop;
@@ -42,7 +43,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
@@ -55,12 +56,13 @@ public class User_Profile_Edit extends AppCompatActivity {
     Button btn_save;
     ImageButton btn_image_pciker;
 
-
+    private ArrayList<Country> Countries;
     public String newImage = "";
     Bitmap imageFromCrop = null;
     int user_id;
     Activity activity;
     User user;
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +86,7 @@ public class User_Profile_Edit extends AppCompatActivity {
         user_id = Integer.parseInt(user.getId());
 
         activity = this;
-
+        Countries = com.gcme.deeplife.DeepLife.myDatabase.get_All_Country();
         btn_save = (Button) findViewById(R.id.user_profile_edit_save_button);
         btn_image_pciker = (ImageButton) findViewById(R.id.edit_profile_picture);
 
@@ -121,6 +123,21 @@ public class User_Profile_Edit extends AppCompatActivity {
     }
 
     public void spinnerInit() {
+            sp_countries.setAdapter(new Countries_Adapter(this, R.layout.countries_spinner, Countries));
+            sp_countries.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    pos = position;
+                    tv_country_code.setText(Countries.get(position).getCode());
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    tv_country_code.setText(Countries.get(0).getCode());
+                }
+            });
+
+        /*
         sp_countries.setAdapter(new MySpinnerAdapter(this, R.layout.countries_spinner, CountryDetails.country));
 
         String country = user.getUser_Country();
@@ -139,7 +156,7 @@ public class User_Profile_Edit extends AppCompatActivity {
 
             }
         });
-
+*/
         /*
         * handle save button
         */
@@ -154,7 +171,7 @@ public class User_Profile_Edit extends AppCompatActivity {
                 String name = tv_name.getText().toString();
                 String email = tv_email.getText().toString();
                 String fav_scripture = tv_fav_scripture.getText().toString();
-                String phone = tv_country_code.getText().toString() + tv_phone.getText().toString();
+                String phone = tv_phone.getText().toString();
                 String country = sp_countries.getSelectedItem().toString();
 
                 ContentValues values = new ContentValues();
@@ -171,7 +188,6 @@ public class User_Profile_Edit extends AppCompatActivity {
                 if (check != -1) {
                     Toast.makeText(User_Profile_Edit.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(User_Profile_Edit.this,User_Profile.class);
-                    com.gcme.deeplife.DeepLife.myDatabase.dispose();
                     startActivity(intent);
                     finish();
                 }
@@ -287,7 +303,6 @@ public class User_Profile_Edit extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        com.gcme.deeplife.DeepLife.myDatabase.dispose();
     }
 
 

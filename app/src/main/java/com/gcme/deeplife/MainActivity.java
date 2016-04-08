@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new DiscipleListFragment(), "Disciple List");
         adapter.addFragment(new ScheduleListFragment(), "Schedules");
-        adapter.addFragment(new ReportListFragment(), "Report");
+        adapter.addFragment(new ReportListFragment(), "Share");
         viewPager.setAdapter(adapter);
     }
 

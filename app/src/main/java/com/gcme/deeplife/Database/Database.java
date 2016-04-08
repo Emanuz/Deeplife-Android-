@@ -42,15 +42,10 @@ public class Database {
         mySQL.createTables(DeepLife.Table_COUNTRY, DeepLife.COUNTRY_FIELDS);
     }
 
-    public void dispose(){
-        myDatabase.close();
-    }
 
     public long insert(String DB_Table,ContentValues cv){
-        Log.i(TAG, "Inserting New Data on: "+DB_Table);
         long state = myDatabase.insert(DB_Table, null, cv);
         Log.i(TAG, "Inserting->: "+cv.toString());
-        Log.i(TAG, "Inserting Completed->: " + state + "\n");
         return state;
     }
     public long Delete_All(String DB_Table){
