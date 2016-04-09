@@ -1,4 +1,4 @@
-package com.gcme.deeplife;
+package deeplife.gcme.com.deeplife;
 
 import org.junit.Test;
 

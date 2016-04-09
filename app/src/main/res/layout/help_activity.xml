@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.gcme.deeplife.Helps.HelpViewPager
+<deeplife.gcme.com.deeplife.Helps.HelpViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/help_viewpage"
     android:layout_width="fill_parent"
@@ -11,4 +11,4 @@
         android:layout_height="0dp"
         />
     
-</com.gcme.deeplife.Helps.HelpViewPager>
+</deeplife.gcme.com.deeplife.Helps.HelpViewPager>

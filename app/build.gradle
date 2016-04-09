@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.gcme.deeplife"
+        applicationId "deeplife.gcme.com.deeplife"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0.2"
+        versionCode 3
+        versionName "1.1.0"
     }
     buildTypes {
         release {
