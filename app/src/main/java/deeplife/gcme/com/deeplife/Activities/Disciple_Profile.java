@@ -24,7 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.ImageProcessing.ImageProcessing;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
@@ -228,9 +229,9 @@ public class Disciple_Profile extends AppCompatActivity {
                         imageFromCrop = Glide.with(getApplicationContext()).load(Crop.getOutput(result)).asBitmap().into(720, 720).get();
                         imageFromCrop.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(file.getAbsolutePath()));
                     } catch (ExecutionException e) {
-                        Log.e(DeepLife.TAG, e.getMessage());
+                        Log.e(Database.TAG, e.getMessage());
                     } catch (InterruptedException e) {
-                        Log.e(DeepLife.TAG, e.getMessage());
+                        Log.e(Database.TAG, e.getMessage());
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -243,13 +244,12 @@ public class Disciple_Profile extends AppCompatActivity {
                 protected void onPostExecute(Void dummy) {
                     if (imageFromCrop != null) {
                         ContentValues values = new ContentValues();
-                        values.put(DeepLife.DISCIPLES_FIELDS[6], file.getAbsolutePath());
+                        values.put(Database.DISCIPLES_FIELDS[6], file.getAbsolutePath());
 
-                        long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
+                        long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(Database.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
                         if (check != -1) {
                             profile_image.setImageBitmap(imageFromCrop);
-                            Log.i(DeepLife.TAG, "Image successfully changed \n New Image location: " + disciple.getPicture());
-//                            myDB.insert(DeepLife.Table_LOGS,);
+                            Log.i(Database.TAG, "Image successfully changed \n New Image location: " + disciple.getPicture());
                         }
                     }
                 }

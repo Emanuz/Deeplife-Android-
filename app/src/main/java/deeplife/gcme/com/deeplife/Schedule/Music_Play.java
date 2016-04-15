@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.R;
 
@@ -25,7 +25,7 @@ public class Music_Play extends Activity {
         setContentView(R.layout.music_play);
         this.setFinishOnTouchOutside(false);
 
-        Long rowId = this.getIntent().getExtras().getLong(DeepLife.SCHEDULES_COLUMN[0]);
+        Long rowId = this.getIntent().getExtras().getLong(Database.SCHEDULES_COLUMN[0]);
 
         btn_stop = (Button) findViewById(R.id.music_play);
         tv_title = (TextView) findViewById(R.id.tv_music_play);

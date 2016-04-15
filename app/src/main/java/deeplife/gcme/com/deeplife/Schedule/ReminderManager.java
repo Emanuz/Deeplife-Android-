@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 
 import java.util.Calendar;
 
@@ -23,8 +23,8 @@ public class ReminderManager {
 	public void setReminder(Long taskId, Calendar when) {
 		
         Intent i = new Intent(mContext, OnAlarmReceiver.class);
-        i.putExtra(DeepLife.SCHEDULES_COLUMN[0], (long)taskId);
-		Log.i(DeepLife.TAG,"Row at REMinder manager "+ taskId);
+        i.putExtra(Database.SCHEDULES_COLUMN[0], (long)taskId);
+		Log.i(Database.TAG,"Row at REMinder manager "+ taskId);
         PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, i, PendingIntent.FLAG_ONE_SHOT);
         
         mAlarmManager.set(AlarmManager.RTC_WAKEUP, when.getTimeInMillis(), pi);

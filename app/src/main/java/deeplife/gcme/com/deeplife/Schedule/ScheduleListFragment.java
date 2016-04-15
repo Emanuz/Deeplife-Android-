@@ -72,7 +72,7 @@ public class ScheduleListFragment extends Fragment {
         add_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DeepLife.myDatabase.count(deeplife.gcme.com.deeplife.Database.DeepLife.Table_DISCIPLES) < 1) {
+                if (DeepLife.myDatabase.count(deeplife.gcme.com.deeplife.Database.Database.Table_DISCIPLES) < 1) {
                     Toast.makeText(myContext, "No disciple Found. \n Please add your disciples first.", Toast.LENGTH_SHORT).show();
                     return;
                 } else {

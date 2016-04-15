@@ -16,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,9 +27,10 @@ import deeplife.gcme.com.deeplife.Activities.AboutDeepLife;
 import deeplife.gcme.com.deeplife.Activities.Splash;
 import deeplife.gcme.com.deeplife.Activities.Under_Construction;
 import deeplife.gcme.com.deeplife.Activities.UserProfile.User_Profile;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListFragment;
 import deeplife.gcme.com.deeplife.Models.User;
+import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
 import deeplife.gcme.com.deeplife.Reports.ReportListFragment;
 import deeplife.gcme.com.deeplife.Schedule.ScheduleListFragment;
 
@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity
         if(user.getUser_Picture()!=null | user.getUser_Picture()!=""){
             nav_image.setImageBitmap(BitmapFactory.decodeFile(user.getUser_Picture()));
         }
-        Log.i(DeepLife.TAG, "Nav name = " + user.getUser_Name());
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -109,6 +107,7 @@ public class MainActivity extends AppCompatActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new NewsFeedPage(), "News Feed");
         adapter.addFragment(new DiscipleListFragment(), "Disciple List");
         adapter.addFragment(new ScheduleListFragment(), "Schedules");
         adapter.addFragment(new ReportListFragment(), "Share");
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, User_Profile.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-            deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(DeepLife.Table_USER);
+            deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(Database.Table_USER);
             intent = new Intent(this, Splash.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

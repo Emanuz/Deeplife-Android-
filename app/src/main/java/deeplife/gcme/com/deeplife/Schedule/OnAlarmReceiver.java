@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.content.pm.ComponentInfo;
 import android.util.Log;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 
 public class OnAlarmReceiver extends BroadcastReceiver {
 
@@ -20,19 +20,19 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		Log.d(TAG, "Received wake up from alarm manager.");
 		
-		long rowid = intent.getExtras().getLong(DeepLife.SCHEDULES_COLUMN[0]);
+		long rowid = intent.getExtras().getLong(Database.SCHEDULES_COLUMN[0]);
 		
 		WakeReminderIntentService.acquireStaticLock(context);
 
 		Intent intent2 = new Intent();
-		intent2.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowid);
+		intent2.putExtra(Database.SCHEDULES_COLUMN[0], rowid);
 		intent2.setClass(context,Music_Play.class);
 		intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(intent2);
 
 
 		Intent i = new Intent(context, ReminderService.class);
-		i.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowid);
+		i.putExtra(Database.SCHEDULES_COLUMN[0], rowid);
 		context.startService(i);
 		 
 	}

@@ -31,7 +31,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.ImageProcessing.ImageProcessing;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -175,16 +175,16 @@ public class User_Profile_Edit extends AppCompatActivity {
                 String country = sp_countries.getSelectedItem().toString();
 
                 ContentValues values = new ContentValues();
-                values.put(DeepLife.USER_FIELDS[0], name);
-                values.put(DeepLife.USER_FIELDS[1], email);
-                values.put(DeepLife.USER_FIELDS[2], phone);
-                values.put(DeepLife.USER_FIELDS[4], country);
+                values.put(Database.USER_FIELDS[0], name);
+                values.put(Database.USER_FIELDS[1], email);
+                values.put(Database.USER_FIELDS[2], phone);
+                values.put(Database.USER_FIELDS[4], country);
                 if (!newImage.equals("")) {
-                    values.put(DeepLife.USER_FIELDS[5], newImage);
+                    values.put(Database.USER_FIELDS[5], newImage);
                 }
-                values.put(DeepLife.USER_FIELDS[6], fav_scripture);
+                values.put(Database.USER_FIELDS[6], fav_scripture);
 
-                long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(DeepLife.Table_USER, values, user_id);
+                long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(Database.Table_USER, values, user_id);
                 if (check != -1) {
                     Toast.makeText(User_Profile_Edit.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(User_Profile_Edit.this,User_Profile.class);
@@ -221,9 +221,9 @@ public class User_Profile_Edit extends AppCompatActivity {
                             imageFromCrop = Glide.with(getApplicationContext()).load(Crop.getOutput(result)).asBitmap().into(720, 720).get();
                             imageFromCrop.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(file.getAbsolutePath()));
                         } catch (ExecutionException e) {
-                            Log.e(DeepLife.TAG, e.getMessage());
+                            Log.e(Database.TAG, e.getMessage());
                         } catch (InterruptedException e) {
-                            Log.e(DeepLife.TAG, e.getMessage());
+                            Log.e(Database.TAG, e.getMessage());
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         } catch (IOException e) {
@@ -236,12 +236,6 @@ public class User_Profile_Edit extends AppCompatActivity {
                         if (imageFromCrop != null) {
                             profile_image.setImageBitmap(imageFromCrop);
                             newImage = file.getAbsolutePath();
-/*                            ContentValues values = new ContentValues();
-                            values.put(DeepLife.USER_FIELDS[5], file.getAbsolutePath());
-                            long check = myDB.update(DeepLife.Table_USER, values, user_id);
-                            if (check != -1) {
-                                profile_image.setImageBitmap(imageFromCrop);
-                            }*/
                         }
                     }
                 }.execute();

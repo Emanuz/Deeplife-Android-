@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Adapters.ReportItems_Adapter;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.R;
 
@@ -37,10 +37,6 @@ public class Report_Page extends Fragment {
         View view = inflater.inflate(R.layout.report_page, container, false);
         ListView ReportLists = (ListView) view.findViewById(R.id.report_items);
         Reports = new ArrayList<ReportItem>();
-//        for(int i=0;i< DeepLife.REPORTS_FIELDS.length;i++){
-//            Reports.add(new ReportItem("","Exposing through mass means" +
-//                    ""+i,i));
-//        }
         ReportLists.setAdapter(new ReportItems_Adapter(getActivity(), Reports));
         Button btn_Report = (Button) view.findViewById(R.id.btn_send_report);
         btn_Report.setOnClickListener(new View.OnClickListener() {
@@ -63,18 +59,14 @@ public class Report_Page extends Fragment {
         Reports.get(pos).setReport_ID(""+value);
     }
     public void Save_Report(){
-        deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(DeepLife.Table_Reports);
+        deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(Database.Table_Reports);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String currentDate = sdf.format(new Date());
         ContentValues cv = new ContentValues();
-//        cv.put(DeepLife.REPORTS_FIELDS[0], currentDate);
-//        for(int i=0;i<DeepLife.REPORTS_FIELDS.length - 1;i++){
-//            cv.put(DeepLife.REPORTS_FIELDS[i+1],Reports.get(i).getValue());
-//        }
-        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_Reports,cv);
+        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_Reports,cv);
         ContentValues cv1 = new ContentValues();
-        cv1.put(DeepLife.LOGS_FIELDS[0],"Send_Report");
-        cv1.put(DeepLife.LOGS_FIELDS[1], deeplife.gcme.com.deeplife.DeepLife.myDatabase.get_Top_ID(DeepLife.Table_Reports));
-        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS,cv1);
+        cv1.put(Database.LOGS_FIELDS[0],"Send_Report");
+        cv1.put(Database.LOGS_FIELDS[1], deeplife.gcme.com.deeplife.DeepLife.myDatabase.get_Top_ID(Database.Table_Reports));
+        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS,cv1);
     }
 }

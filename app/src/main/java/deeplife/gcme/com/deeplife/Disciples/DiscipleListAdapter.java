@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Activities.Disciple_Profile;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Schedule;
@@ -99,22 +99,22 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
                     case DialogInterface.BUTTON_POSITIVE:
                         //Yes button clicked
                         Toast.makeText(myContext,"delete: "+id,Toast.LENGTH_LONG).show();
-                        long deleted = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_DISCIPLES,id);
+                        long deleted = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(Database.Table_DISCIPLES,id);
                         if(deleted!=-1){
                             Log.i("SyncService", "Adding Delete Log -> \n");
                             ContentValues log = new ContentValues();
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0], SyncService.Sync_Tasks[2]);
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2], phone);
-                            long val = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS,log);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0], SyncService.Sync_Tasks[2]);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], phone);
+                            long val = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS,log);
 
                             ArrayList<Schedule> schedules = deeplife.gcme.com.deeplife.DeepLife.myDatabase.get_Schedule_With_User(phone);
 
                             for(int i=0;i<schedules.size();i++){
                                 int schedule_id = Integer.parseInt(schedules.get(i).getID());
-                                long result = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,schedule_id);
+                                long result = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(Database.Table_SCHEDULES,schedule_id);
                                 if(result!=-1)
-                                        Log.i(DeepLife.TAG,"Schedule with id " + result +" removed");
+                                        Log.i(Database.TAG,"Schedule with id " + result +" removed");
                             }
                             Toast.makeText(myContext,"Disciple Deleted all the schedules ",Toast.LENGTH_SHORT).show();
 
@@ -165,7 +165,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
     @Override
     public void onBindViewHolder(deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter.DataObjectHolder holder, int position) {
         String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
-        Log.i(DeepLife.TAG, disciple_phase);
+        Log.i(Database.TAG, disciple_phase);
         holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
         holder.Phone.setText(DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());

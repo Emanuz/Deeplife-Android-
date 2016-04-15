@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		init();
-        if(DeepLife.myDatabase.count(deeplife.gcme.com.deeplife.Database.DeepLife.Table_COUNTRY)<10){
+        if(DeepLife.myDatabase.count(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY)<10){
             getAll_Countries();
         }
 	}
@@ -214,20 +214,20 @@ public class Login extends AppCompatActivity{
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
                     if (!myObject.isNull("Response")) {
 
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_DISCIPLES);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_SCHEDULES);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_USER);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_DISCIPLES);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_SCHEDULES);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
 
                         ContentValues cv = new ContentValues();
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[0],"");
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[1],"");
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[2], Main_User.getUser_Phone());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[3], Main_User.getUser_Pass());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[4], Main_User.getUser_Country());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[5], "");
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[6], "");
-                        long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_USER, cv);
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[0],"");
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[1],"");
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[2], Main_User.getUser_Phone());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[3], Main_User.getUser_Pass());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[4], Main_User.getUser_Country());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[5], "");
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[6], "");
+                        long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_USER, cv);
                         Log.i(TAG, "Main User Adding-> " + x);
 
                         JSONObject json_response = myObject.getJSONObject("Response");

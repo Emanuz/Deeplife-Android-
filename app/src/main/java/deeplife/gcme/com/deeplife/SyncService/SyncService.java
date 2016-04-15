@@ -124,7 +124,7 @@ public class SyncService extends JobService {
                     int id = Integer.valueOf(obj.getString("Log_ID"));
                     Log.i(TAG, "Deleting -> LogID: " + id);
                     if(id>0){
-                        long val = DeepLife.myDatabase.remove(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS, id);
+                        long val = DeepLife.myDatabase.remove(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, id);
                         Log.i(TAG, "Deleting -> LogID: " + id+" :-> "+val);
                     }
                 }
@@ -211,20 +211,20 @@ public class SyncService extends JobService {
                 for(int i=0;i<json_Disciples.length();i++){
                     JSONObject obj = json_Disciples.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[0], obj.getString("displayName"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[1], obj.getString("email"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[2], obj.getString("phone_no"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[3], obj.getString("country"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[4], obj.getString("stage"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.DISCIPLES_FIELDS[5], obj.getString("gender"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_DISCIPLES,cv);
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[0], obj.getString("displayName"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[1], obj.getString("email"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[2], obj.getString("phone_no"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[3], obj.getString("country"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[4], obj.getString("stage"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[5], obj.getString("gender"));
+                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_DISCIPLES,cv);
                     if(x>0){
                         Log.i(TAG,"Adding Disciple Log -> \n");
                         ContentValues log = new ContentValues();
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Disciple");
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1],Sync_Tasks[0]);
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2],obj.getString("id"));
-                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS,log);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Disciple");
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2],obj.getString("id"));
+                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS,log);
                     }
                 }
             }
@@ -240,20 +240,20 @@ public class SyncService extends JobService {
                 for(int i=0;i<json_schedules.length();i++){
                     JSONObject obj = json_schedules.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.SCHEDULES_FIELDS[0], obj.getString("disciple_phone"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.SCHEDULES_FIELDS[1], obj.getString("name"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.SCHEDULES_FIELDS[2], obj.getString("time"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.SCHEDULES_FIELDS[3], obj.getString("type"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.SCHEDULES_FIELDS[4], obj.getString("description"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[0], obj.getString("disciple_phone"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[1], obj.getString("name"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[2], obj.getString("time"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[3], obj.getString("type"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[4], obj.getString("description"));
 
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_SCHEDULES,cv);
+                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_SCHEDULES,cv);
                     if(x>0){
                         Log.i(TAG,"Adding Schedule Log -> \n");
                         ContentValues log = new ContentValues();
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Schedule");
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1],Sync_Tasks[0]);
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2],obj.getString("id"));
-                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS, log);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Schedule");
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2],obj.getString("id"));
+                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
                     }
                 }
             }
@@ -265,15 +265,15 @@ public class SyncService extends JobService {
         try{
             if(json_questions.length()>0){
                 Log.i(TAG,"Adding New Qustions -> \n"+json_questions.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_QUESTION_LIST);
+                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_QUESTION_LIST);
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[0], obj.getString("category"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[1], obj.getString("question"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[2], obj.getString("description"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_QUESTION_LIST,cv);
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[0], obj.getString("category"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[1], obj.getString("question"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[2], obj.getString("description"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
+                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_QUESTION_LIST,cv);
                     Log.i(TAG,"Adding Qustions -> "+obj.getString("id")+" : "+x);
                 }
             }
@@ -285,14 +285,14 @@ public class SyncService extends JobService {
         try{
             if(json_questions.length()>0){
                 Log.i(TAG,"Adding New Reports -> \n"+json_questions.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_Report_Forms);
+                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_Report_Forms);
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[0], obj.getString("id"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[1], obj.getString("category"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FORM_FIELDS[2], obj.getString("question"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_Report_Forms,cv);
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[0], obj.getString("id"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[1], obj.getString("category"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[2], obj.getString("question"));
+                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_Report_Forms,cv);
                     Log.i(TAG,"Adding Report -> "+obj.getString("id")+" : "+x);
                 }
             }
@@ -304,15 +304,15 @@ public class SyncService extends JobService {
         try{
             if(json_countries.length()>0){
                 Log.i(TAG,"Adding New Country -> \n"+json_countries.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_COUNTRY);
+                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY);
                 for(int i=0;i<json_countries.length();i++){
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.COUNTRY_FIELDS[0], obj.getString("id"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.COUNTRY_FIELDS[1], obj.getString("iso3"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.COUNTRY_FIELDS[2], obj.getString("name"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.COUNTRY_FIELDS[3], obj.getString("code"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_COUNTRY,cv);
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[0], obj.getString("id"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[1], obj.getString("iso3"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[2], obj.getString("name"));
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[3], obj.getString("code"));
+                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY,cv);
                     Log.i(TAG,"Adding Country -> "+obj.getString("id")+" : "+x);
                 }
             }

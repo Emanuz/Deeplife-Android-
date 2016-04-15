@@ -37,16 +37,17 @@
         <activity
             android:name=".Activities.Splash"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activities.Login"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -56,6 +57,7 @@
         <activity
             android:name=".Activities.Register"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -104,9 +106,7 @@
         <service android:name=".Alarm.AlarmService"></service>
         <service android:name=".SyncService.SyncService"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="true"
-
-            ></service>
+            android:exported="true"></service>
         <receiver android:name=".Alarm.AlarmReciever"></receiver>
 
         <receiver android:name=".Alarm.BootAlarmReciever"
@@ -143,6 +143,7 @@
         <activity
             android:name=".Activities.AboutDeepLife"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -215,8 +216,7 @@
         <activity
             android:name=".Schedule.Music_Play"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Dialog"
-            >
+            android:theme="@android:style/Theme.Dialog">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -231,9 +231,7 @@
         </receiver>
         <receiver android:name=".Schedule.OnAlarmReceiver" />
         <service android:name=".Schedule.ReminderService" />
-
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
-
     </application>
 
 </manifest>

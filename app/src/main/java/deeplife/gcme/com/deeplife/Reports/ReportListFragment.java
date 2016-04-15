@@ -54,16 +54,16 @@ public class ReportListFragment extends Fragment {
                 Calendar cal = Calendar.getInstance();
                 for(int i=0; i<ReportLists.size();i++){
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FIELDS[0],ReportLists.get(i).getReport_ID());
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FIELDS[1], ReportLists.get(i).getValue());
-                    cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.REPORT_FIELDS[2], cal.getTime().toString());
-                    Long val = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_Reports,cv);
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[0],ReportLists.get(i).getReport_ID());
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[1], ReportLists.get(i).getValue());
+                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[2], cal.getTime().toString());
+                    Long val = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_Reports,cv);
                     if(val > 0){
                         ContentValues log = new ContentValues();
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Report");
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[5]);
-                        log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2], val);
-                        long x = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS, log);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Report");
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[5]);
+                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], val);
+                        long x = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
                         Toast.makeText(getActivity(),"New Report Added: "+x,Toast.LENGTH_LONG).show();
                     }
                 }

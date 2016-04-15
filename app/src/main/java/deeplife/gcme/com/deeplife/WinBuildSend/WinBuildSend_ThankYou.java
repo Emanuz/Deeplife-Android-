@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
@@ -61,14 +61,14 @@ public class WinBuildSend_ThankYou extends Fragment {
                     }
 
                     ContentValues cv_build = new ContentValues();
-                    cv_build.put(DeepLife.DISCIPLES_FIELDS[4], stage);
-                    long update_state = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(DeepLife.Table_DISCIPLES, cv_build, WinBuildSend.DISCIPLE_ID);
+                    cv_build.put(Database.DISCIPLES_FIELDS[4], stage);
+                    long update_state = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(Database.Table_DISCIPLES, cv_build, WinBuildSend.DISCIPLE_ID);
                     if (update_state != -1) {
                         ContentValues log = new ContentValues();
-                        log.put(DeepLife.LOGS_FIELDS[0],"Disciple");
-                        log.put(DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
-                        log.put(DeepLife.LOGS_FIELDS[2], WinBuildSend.DISCIPLE_ID);
-                        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
+                        log.put(Database.LOGS_FIELDS[0],"Disciple");
+                        log.put(Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[3]);
+                        log.put(Database.LOGS_FIELDS[2], WinBuildSend.DISCIPLE_ID);
+                        deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS, log);
 
                         Toast.makeText(getActivity(), "Congratulations! The stage of your disciple "+WinBuildSend.disciple.getFull_Name()+ " is now " +stage, Toast.LENGTH_LONG).show();
                         WinBuildSend.answers.clear();

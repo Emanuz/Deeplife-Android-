@@ -29,7 +29,6 @@ public class DiscipleListFragment extends Fragment {
     private static RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
-
     FloatingActionButton add_disciple;
 
     @Override

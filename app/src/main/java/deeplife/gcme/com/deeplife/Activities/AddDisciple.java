@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.R;
@@ -154,21 +154,21 @@ public class AddDisciple extends AppCompatActivity {
 		}
 
 		ContentValues values = new ContentValues();
-		values.put(DeepLife.DISCIPLES_FIELDS[0], ed_name.getText().toString());
-		values.put(DeepLife.DISCIPLES_FIELDS[1], ed_email.getText().toString());
-		values.put(DeepLife.DISCIPLES_FIELDS[2], ed_phone.getText().toString());
-		values.put(DeepLife.DISCIPLES_FIELDS[3], Countries.get(Pos).getCountry_id());
-		values.put(DeepLife.DISCIPLES_FIELDS[4], "Added");
-		values.put(DeepLife.DISCIPLES_FIELDS[5], sp_gender.getSelectedItem().toString());
-		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_DISCIPLES, values);
+		values.put(Database.DISCIPLES_FIELDS[0], ed_name.getText().toString());
+		values.put(Database.DISCIPLES_FIELDS[1], ed_email.getText().toString());
+		values.put(Database.DISCIPLES_FIELDS[2], ed_phone.getText().toString());
+		values.put(Database.DISCIPLES_FIELDS[3], Countries.get(Pos).getCountry_id());
+		values.put(Database.DISCIPLES_FIELDS[4], "Added");
+		values.put(Database.DISCIPLES_FIELDS[5], sp_gender.getSelectedItem().toString());
+		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_DISCIPLES, values);
 		if(i!=-1){
-			Log.i(DeepLife.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
+			Log.i(Database.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
 			Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
 			ContentValues log = new ContentValues();
-			log.put(DeepLife.LOGS_FIELDS[0],"Disciple");
-			log.put(DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
-			log.put(DeepLife.LOGS_FIELDS[2], i);
-			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
+			log.put(Database.LOGS_FIELDS[0],"Disciple");
+			log.put(Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
+			log.put(Database.LOGS_FIELDS[2], i);
+			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS, log);
 			Intent intent = new Intent(AddDisciple.this, MainActivity.class);
 			startActivity(intent);
 			finish();

@@ -250,20 +250,20 @@ public class Register extends AppCompatActivity{
 
                     if (!myObject.isNull("Response")) {
 
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_DISCIPLES);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_SCHEDULES);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS);
-                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.DeepLife.Table_USER);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_DISCIPLES);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_SCHEDULES);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS);
+                        DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
 
                         ContentValues cv = new ContentValues();
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[0],New_User.getUser_Name());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[1],New_User.getUser_Email());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[2],New_User.getUser_Phone());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[3],New_User.getUser_Pass());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[4], New_User.getUser_Country());
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[5],"");
-                        cv.put(deeplife.gcme.com.deeplife.Database.DeepLife.USER_FIELDS[6],"");
-                        long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_USER, cv);
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[0],New_User.getUser_Name());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[1],New_User.getUser_Email());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[2],New_User.getUser_Phone());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[3],New_User.getUser_Pass());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[4], New_User.getUser_Country());
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[5],"");
+                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[6],"");
+                        long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_USER, cv);
                         Log.i(TAG, "Main User Adding-> " + x);
 
                         Intent register = new Intent(getApplicationContext(), MainActivity.class);

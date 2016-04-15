@@ -79,7 +79,7 @@ public class WinBuildSend extends AppCompatActivity {
     }
 
     public void handleInit(){
-        NUM_PAGES = (deeplife.gcme.com.deeplife.DeepLife.myDatabase.count_Questions(deeplife.gcme.com.deeplife.Database.DeepLife.Table_QUESTION_LIST,temp_stage));
+        NUM_PAGES = (deeplife.gcme.com.deeplife.DeepLife.myDatabase.count_Questions(deeplife.gcme.com.deeplife.Database.Database.Table_QUESTION_LIST,temp_stage));
         NUM_PAGES++;
         questions = deeplife.gcme.com.deeplife.DeepLife.myDatabase.get_All_Questions(temp_stage);
         //answer choices

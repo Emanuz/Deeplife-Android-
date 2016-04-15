@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
@@ -230,20 +230,20 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 		String reminderDateTime = dateTimeFormat.format(mCalendar.getTime());
 
 		ContentValues values = new ContentValues();
-		values.put(DeepLife.SCHEDULES_FIELDS[0], disciple_phone);
-		values.put(DeepLife.SCHEDULES_FIELDS[1], ed_title.getText().toString());
-		values.put(DeepLife.SCHEDULES_FIELDS[2], reminderDateTime);
-		values.put(DeepLife.SCHEDULES_FIELDS[3], "Normal");
-		values.put(DeepLife.SCHEDULES_FIELDS[4], ed_descr.getText().toString());
-		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_SCHEDULES, values);
+		values.put(Database.SCHEDULES_FIELDS[0], disciple_phone);
+		values.put(Database.SCHEDULES_FIELDS[1], ed_title.getText().toString());
+		values.put(Database.SCHEDULES_FIELDS[2], reminderDateTime);
+		values.put(Database.SCHEDULES_FIELDS[3], "Normal");
+		values.put(Database.SCHEDULES_FIELDS[4], ed_descr.getText().toString());
+		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_SCHEDULES, values);
 		if (i != -1) {
 			new ReminderManager(this).setReminder(i, mCalendar);
 
 			ContentValues log = new ContentValues();
-			log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0], "Schedule");
-			log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
-			log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2], i);
-			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS, log);
+			log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0], "Schedule");
+			log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
+			log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], i);
+			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
 
 			Toast.makeText(getApplicationContext(), "Alarm Successfully Added!", Toast.LENGTH_SHORT).show();
 			Intent intent = new Intent(AddSchedule.this, MainActivity.class);

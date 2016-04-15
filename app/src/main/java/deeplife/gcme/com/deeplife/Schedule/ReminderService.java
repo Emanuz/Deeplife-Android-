@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.R;
@@ -21,12 +21,12 @@ public class ReminderService extends WakeReminderIntentService {
 	@Override
 	void doReminderWork(Intent intent) {
 		Log.d("ReminderService", "Doing work.");
-		Long rowId = intent.getExtras().getLong(DeepLife.SCHEDULES_COLUMN[0]);
-		 Log.i(DeepLife.TAG, "Remainder id " + rowId);
+		Long rowId = intent.getExtras().getLong(Database.SCHEDULES_COLUMN[0]);
+		 Log.i(Database.TAG, "Remainder id " + rowId);
 		NotificationManager mgr = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 						
 		Intent notificationIntent = new Intent(this, MainActivity.class);
-		notificationIntent.putExtra(DeepLife.SCHEDULES_COLUMN[0], rowId);
+		notificationIntent.putExtra(Database.SCHEDULES_COLUMN[0], rowId);
 		
 		PendingIntent pi = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
@@ -52,11 +52,5 @@ public class ReminderService extends WakeReminderIntentService {
 
 		int id = (int)((long)rowId);
 		mgr.notify(id, note);
-
-/*
-		Intent intent2 = new Intent(this, Music_Play.class);
-		intent2.putExtra(DeepLife.SCHEDULES_COLUMN[0],rowId);
-
-		startActivity(intent2);*/
 	}
 }

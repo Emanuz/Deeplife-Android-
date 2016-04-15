@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Schedule;
@@ -72,14 +72,14 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        long deleted = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(DeepLife.Table_SCHEDULES,id);
+                        long deleted = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(Database.Table_SCHEDULES,id);
                         if(deleted!=-1){
                             Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
                             ContentValues log = new ContentValues();
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[0],"Schedule");
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
-                            log.put(deeplife.gcme.com.deeplife.Database.DeepLife.LOGS_FIELDS[2], id);
-                            deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.DeepLife.Table_LOGS, log);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Schedule");
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], id);
+                            deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
 
                             Intent intent = new Intent(myContext,MainActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

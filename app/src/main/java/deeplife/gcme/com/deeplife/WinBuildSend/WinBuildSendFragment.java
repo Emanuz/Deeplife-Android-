@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import deeplife.gcme.com.deeplife.Database.DeepLife;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.R;
 
 
@@ -106,7 +106,7 @@ public class WinBuildSendFragment extends Fragment {
         rb_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(DeepLife.TAG,"Answer size " +WinBuildSend.answers.size() + "\n Question size = " + WinBuildSend.questions.size());
+                Log.i(Database.TAG,"Answer size " +WinBuildSend.answers.size() + "\n Question size = " + WinBuildSend.questions.size());
                 WinBuildSend.answer_index = 1;
                 WinBuildSend.answers.set(mPageNumber, WinBuildSend.answerchoices.get(WinBuildSend.answer_index));
                 WinBuildSend.mPager.setSwipeable(true);
