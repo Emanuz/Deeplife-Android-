@@ -14,9 +14,9 @@ import me.tatarka.support.job.JobScheduler;
  * Created by BENGEOS on 3/27/16.
  */
 public class DeepLife extends Application {
-    public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
+ //   public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
 
- //   public static final String API_URL  = "http://192.168.0.186/syncSMS/public/deep_api";
+    public static final String API_URL  = "http://192.168.0.48/syncSMS/public/deep_api";
     private static final int JOB_ID = 100;
     private JobScheduler myJobScheduler;
     public static Database myDatabase;
@@ -33,7 +33,7 @@ public class DeepLife extends Application {
 
     public void JobConstr(){
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this,SyncService.class));
-        builder.setPeriodic(10000);
+        builder.setPeriodic(20000);
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
         myJobScheduler.schedule(builder.build());
     }

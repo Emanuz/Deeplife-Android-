@@ -3,6 +3,7 @@ package deeplife.gcme.com.deeplife.SyncService;
 import android.content.ContentValues;
 import android.util.Log;
 
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Logs;
@@ -30,6 +31,7 @@ import me.tatarka.support.job.JobService;
 /**
  * Created by BENGEOS on 3/27/16.
  */
+
 public class SyncService extends JobService {
     private static final String TAG = "SyncService";
     public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report"};
@@ -97,6 +99,10 @@ public class SyncService extends JobService {
                             JSONArray json_countries = json_response.getJSONArray("Country");
                             SyncService.Add_Country(json_countries);
                         }
+                        if(!json_response.isNull("NewsFeeds")){
+                            JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
+                            SyncService.Add_NewsFeed(json_newsfeeds);
+                        }
 
                     }
                 } catch (JSONException e) {
@@ -124,7 +130,7 @@ public class SyncService extends JobService {
                     int id = Integer.valueOf(obj.getString("Log_ID"));
                     Log.i(TAG, "Deleting -> LogID: " + id);
                     if(id>0){
-                        long val = DeepLife.myDatabase.remove(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, id);
+                        long val = DeepLife.myDatabase.remove(Database.Table_LOGS, id);
                         Log.i(TAG, "Deleting -> LogID: " + id+" :-> "+val);
                     }
                 }
@@ -143,6 +149,7 @@ public class SyncService extends JobService {
         Log.i(TAG,"Found SendReports -> "+DeepLife.myDatabase.getSendReports().size());
         Log.i(TAG,"Found Questions -> "+DeepLife.myDatabase.get_All_Questions().size());
         Log.i(TAG,"Found Reports Forms -> "+DeepLife.myDatabase.get_All_Report().size());
+        Log.i(TAG,"Found NewsFeeds -> "+DeepLife.myDatabase.getAllNewsFeeds().size());
 
         Log.i(TAG,"Found SendLogs -> "+DeepLife.myDatabase.getSendLogs().size());
         Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
@@ -211,20 +218,20 @@ public class SyncService extends JobService {
                 for(int i=0;i<json_Disciples.length();i++){
                     JSONObject obj = json_Disciples.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[0], obj.getString("displayName"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[1], obj.getString("email"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[2], obj.getString("phone_no"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[3], obj.getString("country"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[4], obj.getString("stage"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.DISCIPLES_FIELDS[5], obj.getString("gender"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_DISCIPLES,cv);
+                    cv.put(Database.DISCIPLES_FIELDS[0], obj.getString("displayName"));
+                    cv.put(Database.DISCIPLES_FIELDS[1], obj.getString("email"));
+                    cv.put(Database.DISCIPLES_FIELDS[2], obj.getString("phone_no"));
+                    cv.put(Database.DISCIPLES_FIELDS[3], obj.getString("country"));
+                    cv.put(Database.DISCIPLES_FIELDS[4], obj.getString("stage"));
+                    cv.put(Database.DISCIPLES_FIELDS[5], obj.getString("gender"));
+                    long x = DeepLife.myDatabase.insert(Database.Table_DISCIPLES,cv);
                     if(x>0){
                         Log.i(TAG,"Adding Disciple Log -> \n");
                         ContentValues log = new ContentValues();
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Disciple");
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1],Sync_Tasks[0]);
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2],obj.getString("id"));
-                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS,log);
+                        log.put(Database.LOGS_FIELDS[0],"Disciple");
+                        log.put(Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                        log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
+                        DeepLife.myDatabase.insert(Database.Table_LOGS,log);
                     }
                 }
             }
@@ -240,20 +247,20 @@ public class SyncService extends JobService {
                 for(int i=0;i<json_schedules.length();i++){
                     JSONObject obj = json_schedules.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[0], obj.getString("disciple_phone"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[1], obj.getString("name"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[2], obj.getString("time"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[3], obj.getString("type"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.SCHEDULES_FIELDS[4], obj.getString("description"));
+                    cv.put(Database.SCHEDULES_FIELDS[0], obj.getString("disciple_phone"));
+                    cv.put(Database.SCHEDULES_FIELDS[1], obj.getString("name"));
+                    cv.put(Database.SCHEDULES_FIELDS[2], obj.getString("time"));
+                    cv.put(Database.SCHEDULES_FIELDS[3], obj.getString("type"));
+                    cv.put(Database.SCHEDULES_FIELDS[4], obj.getString("description"));
 
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_SCHEDULES,cv);
+                    long x = DeepLife.myDatabase.insert(Database.Table_SCHEDULES,cv);
                     if(x>0){
                         Log.i(TAG,"Adding Schedule Log -> \n");
                         ContentValues log = new ContentValues();
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Schedule");
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1],Sync_Tasks[0]);
-                        log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2],obj.getString("id"));
-                        DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
+                        log.put(Database.LOGS_FIELDS[0],"Schedule");
+                        log.put(Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                        log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
+                        DeepLife.myDatabase.insert(Database.Table_LOGS, log);
                     }
                 }
             }
@@ -265,16 +272,16 @@ public class SyncService extends JobService {
         try{
             if(json_questions.length()>0){
                 Log.i(TAG,"Adding New Qustions -> \n"+json_questions.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_QUESTION_LIST);
+                DeepLife.myDatabase.Delete_All(Database.Table_QUESTION_LIST);
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[0], obj.getString("category"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[1], obj.getString("question"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[2], obj.getString("description"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_QUESTION_LIST,cv);
-                    Log.i(TAG,"Adding Qustions -> "+obj.getString("id")+" : "+x);
+                    cv.put(Database.QUESTION_LIST_FIELDS[0], obj.getString("category"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[1], obj.getString("question"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[2], obj.getString("description"));
+                    cv.put(Database.QUESTION_LIST_FIELDS[3], obj.getString("mandatory"));
+                    long x = DeepLife.myDatabase.insert(Database.Table_QUESTION_LIST,cv);
+                    Log.i(TAG,"Adding Questions -> "+obj.getString("id")+" : "+x);
                 }
             }
         }catch (Exception e){
@@ -285,14 +292,14 @@ public class SyncService extends JobService {
         try{
             if(json_questions.length()>0){
                 Log.i(TAG,"Adding New Reports -> \n"+json_questions.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_Report_Forms);
+                DeepLife.myDatabase.Delete_All(Database.Table_Report_Forms);
                 for(int i=0;i<json_questions.length();i++){
                     JSONObject obj = json_questions.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[0], obj.getString("id"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[1], obj.getString("category"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FORM_FIELDS[2], obj.getString("question"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_Report_Forms,cv);
+                    cv.put(Database.REPORT_FORM_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.REPORT_FORM_FIELDS[1], obj.getString("category"));
+                    cv.put(Database.REPORT_FORM_FIELDS[2], obj.getString("question"));
+                    long x = DeepLife.myDatabase.insert(Database.Table_Report_Forms,cv);
                     Log.i(TAG,"Adding Report -> "+obj.getString("id")+" : "+x);
                 }
             }
@@ -304,16 +311,46 @@ public class SyncService extends JobService {
         try{
             if(json_countries.length()>0){
                 Log.i(TAG,"Adding New Country -> \n"+json_countries.toString());
-                DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY);
+                DeepLife.myDatabase.Delete_All(Database.Table_COUNTRY);
                 for(int i=0;i<json_countries.length();i++){
                     JSONObject obj = json_countries.getJSONObject(i);
                     ContentValues cv = new ContentValues();
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[0], obj.getString("id"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[1], obj.getString("iso3"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[2], obj.getString("name"));
-                    cv.put(deeplife.gcme.com.deeplife.Database.Database.COUNTRY_FIELDS[3], obj.getString("code"));
-                    long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY,cv);
+                    cv.put(Database.COUNTRY_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.COUNTRY_FIELDS[1], obj.getString("iso3"));
+                    cv.put(Database.COUNTRY_FIELDS[2], obj.getString("name"));
+                    cv.put(Database.COUNTRY_FIELDS[3], obj.getString("code"));
+                    long x = DeepLife.myDatabase.insert(Database.Table_COUNTRY,cv);
                     Log.i(TAG,"Adding Country -> "+obj.getString("id")+" : "+x);
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
+    public static void Add_NewsFeed(JSONArray json_newsfeeds){
+        try{
+            if(json_newsfeeds.length()>0){
+                Log.i(TAG,"Adding New NewsFeeds -> \n"+json_newsfeeds.toString());
+                for(int i=0;i<json_newsfeeds.length();i++){
+                    JSONObject obj = json_newsfeeds.getJSONObject(i);
+                    ContentValues cv = new ContentValues();
+                    cv.put(Database.NewsFeed_FIELDS[0], obj.getString("id"));
+                    cv.put(Database.NewsFeed_FIELDS[1], obj.getString("title"));
+                    cv.put(Database.NewsFeed_FIELDS[2], obj.getString("content"));
+                    cv.put(Database.NewsFeed_FIELDS[3], obj.getString("image_url"));
+                    cv.put(Database.NewsFeed_FIELDS[4], "");
+                    cv.put(Database.NewsFeed_FIELDS[5], obj.getString("publish_date"));
+                    cv.put(Database.NewsFeed_FIELDS[6], obj.getString("category"));
+                    long x = DeepLife.myDatabase.insert(Database.Table_NEWSFEED,cv);
+                    Log.i(TAG,"Adding New NewsFeeds -> "+obj.getString("id")+" : "+x);
+                    if(x>0){
+                        Log.i(TAG,"Adding NewsFeed Log -> \n");
+                        ContentValues log = new ContentValues();
+                        log.put(Database.LOGS_FIELDS[0],"NewsFeeds");
+                        log.put(Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                        log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
+                        DeepLife.myDatabase.insert(Database.Table_LOGS, log);
+                    }
                 }
             }
         }catch (Exception e){
