@@ -10,6 +10,7 @@ import android.util.Log;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.NewsFeed;
 import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.Models.QuestionAnswer;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
@@ -25,7 +26,7 @@ public class Database {
     public static final String Table_SCHEDULES = "SCHEDULES";
     public static final String Table_LOGS = "LOGS";
     public static final String Table_USER = "USER";
-    public static final String Table_NEWSFEED = "USER";
+    public static final String Table_NEWSFEED = "NewsFeedf";
     public static final String Table_COUNTRY = "COUNTRIES";
     public static final String Table_Reports = "Reports";
     public static final String Table_Report_Forms = "Report_Form";
@@ -36,7 +37,7 @@ public class Database {
 
     public static final String[] DISCIPLES_FIELDS = {"Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] LOGS_FIELDS = { "Type", "Task","Value" };
-
+    public static final String[] NewsFeed_FIELDS = { "News_ID", "Title","Content","ImageURL","ImagePath","PubDate","Category" };
     public static final String[] COUNTRY_FIELDS = { "Country_id", "iso3","name","code" };
     public static final String[] SCHEDULES_FIELDS = { "Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description"};
     public static final String[] USER_FIELDS = { "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
@@ -48,6 +49,7 @@ public class Database {
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
     public static final String[] REPORT_FORM_COLUMN = {"id","Report_ID","Category","Questions"};
+    public static final String[] NewsFeed_COLUMN = { "id","News_ID", "Title","Content","ImageURL","ImagePath","PubDate","Category" };
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
     public static final String[] COUNTRY_COLUMN = {"id", "Country_id", "iso3","name","code" };
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
@@ -74,6 +76,7 @@ public class Database {
         mySQL.createTables(Table_Reports, REPORT_FIELDS);
         mySQL.createTables(Table_Report_Forms, REPORT_FORM_FIELDS);
         mySQL.createTables(Table_COUNTRY, COUNTRY_FIELDS);
+        mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
     }
 
 
@@ -304,6 +307,32 @@ public class Database {
         }
         return found;
     }
+    public ArrayList<NewsFeed> getAllNewsFeeds(){
+        ArrayList<NewsFeed> found = new ArrayList<>();
+        String DB_Table = Table_NEWSFEED;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i = 0;i < c.getCount();i++){
+                    c.moveToPosition(i);
+                    NewsFeed news = new NewsFeed();
+                    news.setId(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
+                    news.setNews_ID(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1])));
+                    news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
+                    news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
+                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
+                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
+                    news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
+                    news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
+                    found.add(news);
+                }
+            }
+        }catch (Exception e){
+            return found;
+        }
+        return found;
+    }
     public String get_DiscipleName(String phone){
         String Name = null;
         try{
@@ -449,7 +478,6 @@ public class Database {
                         Log.i(TAG, "Found Country:-> "+dis.toString());
                         return dis;
                     }
-
                 }
             }
         }catch (Exception e){
@@ -479,7 +507,7 @@ public class Database {
                 }
             }
         }catch (Exception e){
-
+            return found;
         }
         return found;
     }
@@ -807,6 +835,8 @@ public class Database {
             strs = REPORT_FORM_COLUMN;
         }else if(DB_Table == Table_COUNTRY){
             strs = COUNTRY_COLUMN;
+        }else if(DB_Table == Table_NEWSFEED){
+            strs = NewsFeed_COLUMN;
         }
         return strs;
     }
