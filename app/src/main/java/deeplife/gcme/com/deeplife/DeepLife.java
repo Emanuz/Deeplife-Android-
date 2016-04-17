@@ -5,6 +5,8 @@ import android.content.ComponentName;
 import android.content.Intent;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 import me.tatarka.support.job.JobInfo;
@@ -18,8 +20,10 @@ public class DeepLife extends Application {
 
     public static final String API_URL  = "http://192.168.0.48/syncSMS/public/deep_api";
     private static final int JOB_ID = 100;
+    public static  int DOWNLOAD_STATUS = 0;
     private JobScheduler myJobScheduler;
     public static Database myDatabase;
+    public static FileManager myFileManager;
 
     @Override
     public void onCreate() {
@@ -28,12 +32,13 @@ public class DeepLife extends Application {
         startService(intent);
         myDatabase = new Database(this);
         myJobScheduler  = JobScheduler.getInstance(this);
+        myFileManager = new FileManager(this);
         JobConstr();
     }
 
     public void JobConstr(){
         JobInfo.Builder builder = new JobInfo.Builder(JOB_ID, new ComponentName(this,SyncService.class));
-        builder.setPeriodic(20000);
+        builder.setPeriodic(10000);
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
         myJobScheduler.schedule(builder.build());
     }

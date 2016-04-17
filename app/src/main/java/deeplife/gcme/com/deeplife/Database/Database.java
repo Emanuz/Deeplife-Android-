@@ -289,6 +289,32 @@ public class Database {
         }
         return null;
     }
+    public NewsFeed get_NewsFeed_by_id(String ID){
+        try{
+            String DB_Table = Table_NEWSFEED;
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String news_id  = c.getString(c.getColumnIndex(NewsFeed_COLUMN[0]));
+                if(news_id.equals(ID)){
+                    NewsFeed news = new NewsFeed();
+                    news.setId(c.getString(c.getColumnIndex(NewsFeed_COLUMN[0])));
+                    news.setNews_ID(c.getString(c.getColumnIndex(NewsFeed_COLUMN[1])));
+                    news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
+                    news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
+                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
+                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
+                    news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
+                    news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
+                    return news;
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
 
     public ArrayList<String> get_all_in_column(String DB_Table,String atColumn){
         ArrayList<String> found = new ArrayList<String>();
@@ -322,7 +348,7 @@ public class Database {
                     news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
                     news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
                     news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
-                    news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
+                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
                     news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
                     news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));
                     found.add(news);
