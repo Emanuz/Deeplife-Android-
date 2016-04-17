@@ -32,6 +32,7 @@ public class NewsFeedPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable
@@ -42,10 +43,7 @@ public class NewsFeedPage extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         myContext = getActivity();
-        ArrayList<NewsFeed> items = new ArrayList<>();
-        items.add(new NewsFeed());
-        items.add(new NewsFeed());
-        items.add(new NewsFeed());
+        ArrayList<NewsFeed> items = DeepLife.myDatabase.getAllNewsFeeds();
         mAdapter = new NewsFeedAdapter(getActivity(),items);
         myRecyclerView.setAdapter(mAdapter);
         return view;

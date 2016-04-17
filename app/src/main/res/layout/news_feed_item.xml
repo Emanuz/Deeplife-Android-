@@ -55,8 +55,8 @@
                             android:text="this is the content of the news"/>
                     </LinearLayout>
                     <ImageView
+                        android:id="@+id/news_feed_image"
                         android:layout_width="120dp"
-                        android:background="@drawable/disciple_pic"
                         android:layout_gravity="right|center_vertical"
                         android:layout_height="90dp" />
                 </FrameLayout>
