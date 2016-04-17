@@ -17,6 +17,7 @@ import deeplife.gcme.com.deeplife.Models.Question;
 import deeplife.gcme.com.deeplife.Models.QuestionAnswer;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
+import deeplife.gcme.com.deeplife.Models.Testimony;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
@@ -78,6 +79,8 @@ public class Database {
         mySQL.createTables(Table_Report_Forms, REPORT_FORM_FIELDS);
         mySQL.createTables(Table_COUNTRY, COUNTRY_FIELDS);
         mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
+        mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
+
     }
 
 
@@ -359,6 +362,28 @@ public class Database {
             return found;
         }
         return found;
+    }
+
+    public Testimony get_Testimony_by_id(String ID){
+        try{
+            String DB_Table = Table_TESTIMONY;
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                String rep_id  = c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0]));
+                if(rep_id.equals(ID)){
+                    Testimony dis = new Testimony();
+                    dis.setId(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[0])));
+                    dis.setTitle(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[1])));
+                    dis.setDetail(c.getString(c.getColumnIndex(TESTIMONY_COLUMN[2])));
+                    return dis;
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return null;
     }
     public String get_DiscipleName(String phone){
         String Name = null;
@@ -840,7 +865,35 @@ public class Database {
         return Found;
     }
 
+    public ArrayList<Testimony> getSendTestimony(){
+        Log.i(TAG, "SendTestimony:\n");
+        ArrayList<Testimony> Found = new ArrayList<Testimony>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[6] + " | "+str);
+                    if(SyncService.Sync_Tasks[6].equals(str)){
+                        Log.i(TAG, "SendTestimony Count:-> " + c.getCount());
+                        Testimony newTestimony = get_Testimony_by_id(id);
+                        if(newTestimony !=null){
+                            newTestimony.setId(ID);
+                            Log.i(TAG, "Found for Testimony Send:-> \n" + newTestimony.toString());
+                            Found.add(newTestimony);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
 
+        }
+        return Found;
+    }
 
     private String[] getColumns(String DB_Table){
         String[] strs = null;
@@ -864,6 +917,8 @@ public class Database {
             strs = COUNTRY_COLUMN;
         }else if(DB_Table == Table_NEWSFEED){
             strs = NewsFeed_COLUMN;
+        }else if(DB_Table == Table_TESTIMONY){
+            strs = TESTIMONY_COLUMN;
         }
         return strs;
     }

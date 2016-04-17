@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Database.Database;
-import deeplife.gcme.com.deeplife.Database.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
@@ -86,17 +85,17 @@ public class AddTestimony extends AppCompatActivity {
 
 		ContentValues values = new ContentValues();
 		values.put(Database.TESTIMONY_FIELDS[0], ed_title.getText().toString());
-		values.put(DeepLife.TESTIMONY_FIELDS[1], ed_detail.getText().toString());
+		values.put(Database.TESTIMONY_FIELDS[1], ed_detail.getText().toString());
 
-		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_TESTIMONY, values);
+		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_TESTIMONY, values);
 		if(i!=-1){
-			Log.i(DeepLife.TAG, "Successfully Added new Testimony \n Values: " + values.toString());
+			Log.i(Database.TAG, "Successfully Added new Testimony \n Values: " + values.toString());
 			Toast.makeText(getApplicationContext(), "New Testimony Successfully Sent!!", Toast.LENGTH_SHORT).show();
 			ContentValues log = new ContentValues();
-			log.put(DeepLife.LOGS_FIELDS[0],"Testimony");
-			log.put(DeepLife.LOGS_FIELDS[1], SyncService.Sync_Tasks[6]);
-			log.put(DeepLife.LOGS_FIELDS[2], i);
-			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(DeepLife.Table_LOGS, log);
+			log.put(Database.LOGS_FIELDS[0],"Testimony");
+			log.put(Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[6]);
+			log.put(Database.LOGS_FIELDS[2], i);
+			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS, log);
 			Intent intent = new Intent(AddTestimony.this, MainActivity.class);
 			startActivity(intent);
 			finish();

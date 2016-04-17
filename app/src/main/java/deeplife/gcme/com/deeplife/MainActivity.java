@@ -23,7 +23,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import deeplife.gcme.com.deeplife.Activities.AboutDeepLife;
+import deeplife.gcme.com.deeplife.Activities.AddTestimony;
 import deeplife.gcme.com.deeplife.Activities.Splash;
 import deeplife.gcme.com.deeplife.Activities.Under_Construction;
 import deeplife.gcme.com.deeplife.Activities.UserProfile.User_Profile;
@@ -33,9 +37,6 @@ import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
 import deeplife.gcme.com.deeplife.Reports.ReportListFragment;
 import deeplife.gcme.com.deeplife.Schedule.ScheduleListFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -151,6 +152,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
             intent = new Intent(this, User_Profile.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_testimony) {
+            intent = new Intent(this, AddTestimony.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
             deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(Database.Table_USER);

@@ -39,7 +39,9 @@
     <string name="edit">Edit</string>
     <string name="under_constraction">Sorry, this feature is currently under development. Wait till next version release.</string>
 
-
+    <string name="hint_testimony_name">Enter Title</string>
+    <string name="hint_testimony_detail">Enter Testimony </string>
+    <string name="send_testimony">Send Testimony </string>
 
     <string name="menu_save">Save</string>
     <string name="menu_delete">Delete</string>
@@ -52,6 +54,8 @@
     <string name="err_msg_email_phone">Enter a valid email address or phone number</string>
     <string name="err_msg_password">Enter the password</string>
     <string name="err_msg_phone">Enter a valid phone number</string>
+    <string name="err_msg_testimony_title">Enter testimony title</string>
+    <string name="err_msg_testimony_detail">Enter testimony detail</string>
 
     <string-array name="drawerentry">
         <item>Main Menu</item>

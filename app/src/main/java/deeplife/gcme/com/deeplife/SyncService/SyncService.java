@@ -3,16 +3,6 @@ package deeplife.gcme.com.deeplife.SyncService;
 import android.content.ContentValues;
 import android.util.Log;
 
-import deeplife.gcme.com.deeplife.Database.Database;
-import deeplife.gcme.com.deeplife.DeepLife;
-import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
-import deeplife.gcme.com.deeplife.FileManager.FileManager;
-import deeplife.gcme.com.deeplife.Models.Disciples;
-import deeplife.gcme.com.deeplife.Models.Logs;
-import deeplife.gcme.com.deeplife.Models.NewsFeed;
-import deeplife.gcme.com.deeplife.Models.ReportItem;
-import deeplife.gcme.com.deeplife.Models.Schedule;
-import deeplife.gcme.com.deeplife.Models.User;
 import com.github.kittinunf.fuel.Fuel;
 import com.github.kittinunf.fuel.core.FuelError;
 import com.github.kittinunf.fuel.core.Handler;
@@ -29,6 +19,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
+import deeplife.gcme.com.deeplife.Models.Disciples;
+import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.NewsFeed;
+import deeplife.gcme.com.deeplife.Models.ReportItem;
+import deeplife.gcme.com.deeplife.Models.Schedule;
+import deeplife.gcme.com.deeplife.Models.Testimony;
+import deeplife.gcme.com.deeplife.Models.User;
 import me.tatarka.support.job.JobParameters;
 import me.tatarka.support.job.JobService;
 
@@ -206,6 +207,9 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendReports().size()>0){
             Log.i(TAG,"Found SendReports Service -> "+DeepLife.myDatabase.getSendReports().size());
             return "Send_Report";
+        }else if(DeepLife.myDatabase.getSendTestimony().size()>0){
+            Log.i(TAG,"Found SendReports Service -> "+DeepLife.myDatabase.getSendTestimony().size());
+            return "Send_Testimony";
         }else{
             return "Update";
         }
@@ -239,6 +243,12 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendReports().size()>0){
             Log.i(TAG,"GET Reports TO Send -> \n");
             ArrayList<ReportItem> foundData = DeepLife.myDatabase.getSendReports();
+            for(int i=0;i<foundData.size();i++){
+                Found.add(foundData.get(i));
+            }
+        }else if(DeepLife.myDatabase.getSendTestimony().size()>0){
+            Log.i(TAG,"GET Testimony TO Send -> \n");
+            ArrayList<Testimony> foundData = DeepLife.myDatabase.getSendTestimony();
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
