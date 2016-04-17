@@ -5,8 +5,11 @@ import android.util.Log;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Logs;
+import deeplife.gcme.com.deeplife.Models.NewsFeed;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -22,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +43,11 @@ public class SyncService extends JobService {
     private Gson myParser;
     private List<kotlin.Pair<String,String>> Send_Param;
     private User user;
+    private FileManager myFileManager;
     public SyncService(){
         Param = new ArrayList<Object>();
         myParser = new Gson();
+        myFileManager = new FileManager(this);
     }
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -63,6 +69,7 @@ public class SyncService extends JobService {
             Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
             Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
         }
+
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -71,35 +78,35 @@ public class SyncService extends JobService {
                 Gson myGson = new Gson();
                 try {
                     JSONObject myObject = (JSONObject) new JSONTokener(s).nextValue();
-                    Log.i(TAG,"Server Response -> \n"+myObject.toString());
-                    if(!myObject.isNull("Response")){
+                    Log.i(TAG, "Server Response -> \n" + myObject.toString());
+                    if (!myObject.isNull("Response")) {
                         JSONObject json_response = myObject.getJSONObject("Response");
-                        Log.i(TAG,"Server  Response JSON OBJECT -> \n"+json_response.toString()+"---->"+!json_response.isNull("Confirmed_Logs"));
-                        if(!json_response.isNull("Disciples")){
+                        Log.i(TAG, "Server  Response JSON OBJECT -> \n" + json_response.toString() + "---->" + !json_response.isNull("Confirmed_Logs"));
+                        if (!json_response.isNull("Disciples")) {
                             JSONArray json_Disciples = json_response.getJSONArray("Disciples");
                             Add_Disciple(json_Disciples);
                         }
-                        if(!json_response.isNull("Schedules")){
+                        if (!json_response.isNull("Schedules")) {
                             JSONArray json_schedules = json_response.getJSONArray("Schedules");
                             Add_Schedule(json_schedules);
                         }
-                        if(!json_response.isNull("Questions")){
+                        if (!json_response.isNull("Questions")) {
                             JSONArray json_questions = json_response.getJSONArray("Questions");
                             Add_Qustions(json_questions);
                         }
-                        if(!json_response.isNull("Reports")){
+                        if (!json_response.isNull("Reports")) {
                             JSONArray json_questions = json_response.getJSONArray("Reports");
                             Add_Report_Forms(json_questions);
                         }
-                        if(!json_response.isNull("Log_Response")){
+                        if (!json_response.isNull("Log_Response")) {
                             JSONArray json_logs = json_response.getJSONArray("Log_Response");
                             Delete_Logs(json_logs);
                         }
-                        if(!json_response.isNull("Country")){
+                        if (!json_response.isNull("Country")) {
                             JSONArray json_countries = json_response.getJSONArray("Country");
                             SyncService.Add_Country(json_countries);
                         }
-                        if(!json_response.isNull("NewsFeeds")){
+                        if (!json_response.isNull("NewsFeeds")) {
                             JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
                             SyncService.Add_NewsFeed(json_newsfeeds);
                         }
@@ -115,6 +122,34 @@ public class SyncService extends JobService {
                 Log.i(TAG, "Error: \n" + fuelError);
             }
         });
+        if(DeepLife.DOWNLOAD_STATUS == 0){
+            ArrayList<NewsFeed> newsFeeds = DeepLife.myDatabase.getAllNewsFeeds();
+            if(newsFeeds.size()>0){
+                if(newsFeeds.size()<5){
+                    for(int i = 0; i<newsFeeds.size();i++){
+                        String image_name = "image"+newsFeeds.get(i).getNews_ID()+".png";
+                        Log.i(TAG, "Downloading:->" + image_name);
+                        File image_file = myFileManager.getFileAt("images",image_name);
+                        if(!image_file.isFile()){
+                            Log.i(TAG, "Downloading From:->" + newsFeeds.get(i).getImageURL());
+                            new FileDownloader(this,newsFeeds.get(i).getImageURL(),"images",image_name).execute();
+                        }
+
+                    }
+                }else{
+                    for(int i = 0; i<5;i++){
+                        String image_name = "image"+newsFeeds.get(i).getNews_ID()+".png";
+                        Log.i(TAG, "Downloading:->" + image_name);
+                        File image_file = myFileManager.getFileAt("images",image_name);
+                        if(!image_file.isFile()){
+                            Log.i(TAG, "Downloading From:->" + newsFeeds.get(i).getImageURL());
+                            new FileDownloader(this,newsFeeds.get(i).getImageURL(),"images",image_name).execute();
+                        }
+                    }
+                }
+            }
+        }
+
         jobFinished(params, false);
         return false;
     }
@@ -149,7 +184,7 @@ public class SyncService extends JobService {
         Log.i(TAG,"Found SendReports -> "+DeepLife.myDatabase.getSendReports().size());
         Log.i(TAG,"Found Questions -> "+DeepLife.myDatabase.get_All_Questions().size());
         Log.i(TAG,"Found Reports Forms -> "+DeepLife.myDatabase.get_All_Report().size());
-        Log.i(TAG,"Found NewsFeeds -> "+DeepLife.myDatabase.getAllNewsFeeds().size());
+        Log.i(TAG, "Found NewsFeeds -> " + DeepLife.myDatabase.getAllNewsFeeds().size());
 
         Log.i(TAG,"Found SendLogs -> "+DeepLife.myDatabase.getSendLogs().size());
         Log.i(TAG,"Found SendDisciple -> "+DeepLife.myDatabase.getSendDisciples().size());
@@ -351,6 +386,7 @@ public class SyncService extends JobService {
                         log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
                         DeepLife.myDatabase.insert(Database.Table_LOGS, log);
                     }
+
                 }
             }
         }catch (Exception e){
