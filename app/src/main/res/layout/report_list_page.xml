@@ -18,8 +18,9 @@
         android:layout_marginLeft="30dp"
         android:padding="5dp"
         android:gravity="center_horizontal"
-        android:textSize="25sp"
+        android:textSize="20dp"
         android:background="@color/bg_login"
+        android:textColor="@color/white"
         android:text="Last Time Report Sent"/>
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="45dp"

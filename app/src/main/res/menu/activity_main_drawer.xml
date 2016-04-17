@@ -30,6 +30,10 @@
                 android:icon="@drawable/icon_nav_social"
                 android:title="Profiile" />
             <item
+                android:id="@+id/nav_testimony"
+                android:icon="@drawable/icon_nav_social"
+                android:title="Send Testimony" />
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Log out" />

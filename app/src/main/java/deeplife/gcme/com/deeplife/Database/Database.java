@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Logs;
@@ -17,9 +19,6 @@ import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
-
-import java.security.spec.ECField;
-import java.util.ArrayList;
 
 public class Database {
     public static final String Table_DISCIPLES = "DISCIPLES";
@@ -32,7 +31,7 @@ public class Database {
     public static final String Table_Report_Forms = "Report_Form";
     public static final String Table_QUESTION_LIST = "QUESTION_LIST";
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
-
+    public static final String Table_TESTIMONY = "TESTIMONY";
 
 
     public static final String[] DISCIPLES_FIELDS = {"Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
@@ -45,6 +44,7 @@ public class Database {
     public static final String[] REPORT_FORM_FIELDS = {"Report_ID","Category","Questions"};
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
+    public static final String[] TESTIMONY_FIELDS = {"title", "detail"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
@@ -56,6 +56,7 @@ public class Database {
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
+    public static final String[] TESTIMONY_COLUMN = {"id","title", "detail"};
 
 
 	private SQLiteDatabase myDatabase;
