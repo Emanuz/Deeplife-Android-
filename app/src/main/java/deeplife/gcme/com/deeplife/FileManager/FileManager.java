@@ -19,9 +19,17 @@ public class FileManager {
     private File myFile;
     public FileManager(Context context){
         myContext = context;
-        myFile = new File(Environment.getExternalStorageDirectory(), "DeepLife");
-        if(!myFile.isDirectory()){
-            myFile.mkdir();
+        if(isExternalStorageWritable()){
+            myFile = new File(Environment.getExternalStorageDirectory(), "DeepLife");
+            if(!myFile.isDirectory()){
+                myFile.mkdir();
+            }
+        }
+        else{
+            myFile = new File(context.getFilesDir().getPath(), "DeepLife");
+            if(!myFile.isDirectory()){
+                myFile.mkdir();
+            }
         }
         createFolder("images");
     }
