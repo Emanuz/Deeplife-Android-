@@ -214,6 +214,7 @@ public class SyncService extends JobService {
             return "Update";
         }
     }
+
     public ArrayList<Object> getParam(){
         ArrayList<Object> Found = new ArrayList<Object>();
         if(DeepLife.myDatabase.getSendLogs().size()>0){
@@ -281,10 +282,9 @@ public class SyncService extends JobService {
                 }
             }
         }catch (Exception e){
-
         }
-
     }
+
     public static void Add_Schedule(JSONArray json_schedules){
         try{
             if(json_schedules.length()>0){
