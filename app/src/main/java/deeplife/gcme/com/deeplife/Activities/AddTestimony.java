@@ -113,7 +113,6 @@ public class AddTestimony extends AppCompatActivity {
 		} else {
 			inputLayoutTitle.setErrorEnabled(false);
 		}
-
 		return true;
 	}
 
@@ -126,7 +125,6 @@ public class AddTestimony extends AppCompatActivity {
 		} else {
 			inputLayoutDetail.setErrorEnabled(false);
 		}
-
 		return true;
 	}
 
