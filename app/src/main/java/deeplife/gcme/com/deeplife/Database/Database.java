@@ -458,7 +458,27 @@ public class Database {
         return found;
     }
 
-
+    public boolean isUniqueDisciple(String Country_Code,String Phone){
+        Log.i(TAG, "Checking for duplication: \n");
+        String DB_Table = Table_DISCIPLES;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for(int i=0;i<c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    String country = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3]));
+                    String phone = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4]));
+                    if(country.equals(Country_Code) & phone.equals(Phone)) {
+                        return true;
+                    }
+                }
+            }
+        }catch (Exception e){
+            return false;
+        }
+        return false;
+    }
      public ArrayList<Schedule> get_All_Schedule(){
          Log.i(TAG, "GetAll Schedule:\n");
         String DB_Table = Table_SCHEDULES;

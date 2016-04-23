@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.R;
@@ -160,19 +161,24 @@ public class AddDisciple extends AppCompatActivity {
 		values.put(Database.DISCIPLES_FIELDS[3], Countries.get(Pos).getCountry_id());
 		values.put(Database.DISCIPLES_FIELDS[4], "Added");
 		values.put(Database.DISCIPLES_FIELDS[5], sp_gender.getSelectedItem().toString());
-		long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_DISCIPLES, values);
-		if(i!=-1){
-			Log.i(Database.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
-			Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
-			ContentValues log = new ContentValues();
-			log.put(Database.LOGS_FIELDS[0],"Disciple");
-			log.put(Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
-			log.put(Database.LOGS_FIELDS[2], i);
-			deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS, log);
-			Intent intent = new Intent(AddDisciple.this, MainActivity.class);
-			startActivity(intent);
-			finish();
+		if(DeepLife.myDatabase.isUniqueDisciple(Countries.get(Pos).getCountry_id(),ed_phone.getText().toString())){
+			long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_DISCIPLES, values);
+			if(i!=-1){
+				Log.i(Database.TAG, "Successfully Added new Disciple \n Values: " + values.toString());
+				Toast.makeText(getApplicationContext(), "New Disciple Successfully Added!!", Toast.LENGTH_SHORT).show();
+				ContentValues log = new ContentValues();
+				log.put(Database.LOGS_FIELDS[0],"Disciple");
+				log.put(Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[1]);
+				log.put(Database.LOGS_FIELDS[2], i);
+				deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_LOGS, log);
+				Intent intent = new Intent(AddDisciple.this, MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		}else{
+			Toast.makeText(getApplicationContext(), "The phone number is already taken, please use different phone number !!", Toast.LENGTH_SHORT).show();
 		}
+
 	}
 
 	private boolean validateName() {
