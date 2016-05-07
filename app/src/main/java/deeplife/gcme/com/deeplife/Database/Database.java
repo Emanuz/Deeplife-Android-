@@ -52,7 +52,7 @@ public class Database {
     public static final String[] REPORT_FORM_COLUMN = {"id","Report_ID","Category","Questions"};
     public static final String[] NewsFeed_COLUMN = { "id","News_ID", "Title","Content","ImageURL","ImagePath","PubDate","Category" };
     public static final String[] REPORT_COLUMN = {"id","Report_ID","Value","Date"};
-    public static final String[] COUNTRY_COLUMN = {"id", "Country_id", "iso3","name","code" };
+    public static final String[] COUNTRY_COLUMN = {"id", "Country_id", "iso3","name","code"};
     public static final String[] LOGS_COLUMN = { "id", "Type", "Task","Value" };
     public static final String[] USER_COLUMN = { "id", "Full_Name", "Email","Phone","Password","Country","Picture","Favorite_Scripture" };
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
@@ -80,9 +80,7 @@ public class Database {
         mySQL.createTables(Table_COUNTRY, COUNTRY_FIELDS);
         mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
         mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
-
     }
-
 
     public long insert(String DB_Table,ContentValues cv){
         long state = myDatabase.insert(DB_Table, null, cv);
