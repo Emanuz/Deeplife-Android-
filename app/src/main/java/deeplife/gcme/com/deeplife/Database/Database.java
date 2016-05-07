@@ -26,7 +26,7 @@ public class Database {
     public static final String Table_SCHEDULES = "SCHEDULES";
     public static final String Table_LOGS = "LOGS";
     public static final String Table_USER = "USER";
-    public static final String Table_NEWSFEED = "NewsFeedf";
+    public static final String Table_NEWSFEED = "NewsFeed";
     public static final String Table_COUNTRY = "COUNTRIES";
     public static final String Table_Reports = "Reports";
     public static final String Table_Report_Forms = "Report_Form";
@@ -467,17 +467,18 @@ public class Database {
                 c.moveToFirst();
                 for(int i=0;i<c.getCount(); i++) {
                     c.moveToPosition(i);
-                    String country = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3]));
-                    String phone = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4]));
+                    String country = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4]));
+                    String phone = c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3]));
                     if(country.equals(Country_Code) & phone.equals(Phone)) {
                         return true;
                     }
                 }
+                return false;
             }
         }catch (Exception e){
-            return false;
+            return true;
         }
-        return false;
+        return true;
     }
      public ArrayList<Schedule> get_All_Schedule(){
          Log.i(TAG, "GetAll Schedule:\n");
