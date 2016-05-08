@@ -161,7 +161,7 @@ public class AddDisciple extends AppCompatActivity {
 		values.put(Database.DISCIPLES_FIELDS[3], Countries.get(Pos).getCountry_id());
 		values.put(Database.DISCIPLES_FIELDS[4], "Added");
 		values.put(Database.DISCIPLES_FIELDS[5], sp_gender.getSelectedItem().toString());
-		if(DeepLife.myDatabase.isUniqueDisciple(Countries.get(Pos).getCountry_id(),ed_phone.getText().toString())){
+		if(!DeepLife.myDatabase.isUniqueDisciple(Countries.get(Pos).getCountry_id(),ed_phone.getText().toString())){
 			long i = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(Database.Table_DISCIPLES, values);
 			if(i!=-1){
 				Log.i(Database.TAG, "Successfully Added new Disciple \n Values: " + values.toString());

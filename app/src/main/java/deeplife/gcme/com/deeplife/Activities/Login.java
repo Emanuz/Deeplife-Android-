@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
+import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Country;
@@ -219,16 +220,7 @@ public class Login extends AppCompatActivity{
                         DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS);
                         DeepLife.myDatabase.Delete_All(deeplife.gcme.com.deeplife.Database.Database.Table_USER);
 
-                        ContentValues cv = new ContentValues();
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[0],"");
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[1],"");
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[2], Main_User.getUser_Phone());
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[3], Main_User.getUser_Pass());
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[4], Main_User.getUser_Country());
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[5], "");
-                        cv.put(deeplife.gcme.com.deeplife.Database.Database.USER_FIELDS[6], "");
-                        long x = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_USER, cv);
-                        Log.i(TAG, "Main User Adding-> " + x);
+
 
                         JSONObject json_response = myObject.getJSONObject("Response");
                         if(!json_response.isNull("Disciples")){
@@ -251,9 +243,14 @@ public class Login extends AppCompatActivity{
                             JSONArray json_reports = json_response.getJSONArray("Reports");
                             SyncService.Add_Report_Forms(json_reports);
                         }
-                        Intent register = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(register);
-                        finish();
+                        if(!json_response.isNull("Profile")){
+                            JSONObject json_profile = json_response.getJSONObject("Profile");
+                            SyncService.Add_UserProfile(json_profile);
+                            Intent main_activity = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(main_activity);
+                            finish();
+                        }
+
                     } else {
                         ShowDialog("Invalid user account! use a valid account please");
                     }

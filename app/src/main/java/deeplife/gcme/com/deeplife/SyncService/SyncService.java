@@ -356,6 +356,23 @@ public class SyncService extends JobService {
 
         }
     }
+    public static void Add_UserProfile(JSONObject json_profile){
+        try{
+            ContentValues cv = new ContentValues();
+            cv.put(Database.USER_FIELDS[0], json_profile.getString("firstName"));
+            cv.put(Database.USER_FIELDS[1], json_profile.getString("email"));
+            cv.put(Database.USER_FIELDS[2], json_profile.getString("phone_no"));
+            cv.put(Database.USER_FIELDS[3], json_profile.getString("password"));
+            cv.put(Database.USER_FIELDS[4], json_profile.getString("country"));
+            cv.put(Database.USER_FIELDS[5], json_profile.getString("id"));
+            cv.put(Database.USER_FIELDS[6], json_profile.getString("id"));
+            Log.i(TAG, "Adding User Profile-> \n" + json_profile.toString());
+            DeepLife.myDatabase.Delete_All(Database.Table_USER);
+            long x = DeepLife.myDatabase.insert(Database.Table_USER, cv);
+        }catch (Exception e){
+
+        }
+    }
     public static void Add_Country(JSONArray json_countries){
         try{
             if(json_countries.length()>0){
