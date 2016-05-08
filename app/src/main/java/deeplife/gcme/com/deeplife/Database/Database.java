@@ -350,6 +350,7 @@ public class Database {
                     news.setTitle(c.getString(c.getColumnIndex(NewsFeed_COLUMN[2])));
                     news.setContent(c.getString(c.getColumnIndex(NewsFeed_COLUMN[3])));
                     news.setImageURL(c.getString(c.getColumnIndex(NewsFeed_COLUMN[4])));
+//                    news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
                     news.setImagePath(c.getString(c.getColumnIndex(NewsFeed_COLUMN[5])));
                     news.setPubDate(c.getString(c.getColumnIndex(NewsFeed_COLUMN[6])));
                     news.setCategory(c.getString(c.getColumnIndex(NewsFeed_COLUMN[7])));

@@ -2,9 +2,9 @@ package deeplife.gcme.com.deeplife.NewsFeed;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-import deeplife.gcme.com.deeplife.Activities.Disciple_Profile;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.NewsFeed;
 import deeplife.gcme.com.deeplife.R;
@@ -79,20 +80,24 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.Title.setText((NewsFeeds.get(position).getTitle()));
         holder.Content.setText(NewsFeeds.get(position).getContent());
-        File imageFile = myFileManager.createFileAt("images", "images" + NewsFeeds.get(position).getNews_ID() + ".png");
+        //File imageFile = myFileManager.getFileAt("images", NewsFeeds.get(position).getImagePath());
+        File imageFile = myFileManager.getFileAt("images", NewsFeeds.get(position).getImagePath());
+        Log.i("Deep Life", imageFile.getAbsolutePath());
         Toast.makeText(myContext,"Image Path: "+String.valueOf(imageFile.isFile()),Toast.LENGTH_LONG).show();
         FileInputStream stream = null;
         try{
             stream = new FileInputStream(imageFile);
         }catch (Exception e){
-
         }
-        holder.NewsImage.setImageBitmap(BitmapFactory.decodeStream(stream));
+        //holder.NewsImage.setImageBitmap(BitmapFactory.decodeStream(stream));
+        Glide.with(myContext).load(imageFile.getAbsolutePath()).into(holder.NewsImage);
     }
+
     @Override
     public int getItemCount() {
         return NewsFeeds.size();
     }
+
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
