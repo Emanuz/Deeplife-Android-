@@ -248,7 +248,7 @@ public class Login extends AppCompatActivity{
                             SyncService.Add_UserProfile(json_profile);
                             ContentValues cv = new ContentValues();
                             cv.put(Database.USER_FIELDS[2],Main_User.getUser_Phone());
-                            cv.put(Database.USER_FIELDS[4], Main_User.getUser_Pass());
+                            cv.put(Database.USER_FIELDS[3], Main_User.getUser_Pass());
                             User dis = DeepLife.myDatabase.get_User();
                             long x = DeepLife.myDatabase.update(Database.Table_USER, cv, Integer.valueOf(dis.getId()));
                             Log.i(TAG, "Update User Table-> \n" + x);
