@@ -16,7 +16,7 @@ import me.tatarka.support.job.JobScheduler;
 public class DeepLife extends Application {
  //   public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
 
-    public static final String API_URL  = "http://192.168.0.53/DeepLife-Web-API/public/deep_api";
+    public static final String API_URL  = "http://192.168.0.67/syncSMS/public/deep_api";
     private static final int JOB_ID = 100;
     public static  int DOWNLOAD_STATUS = 0;
     private JobScheduler myJobScheduler;

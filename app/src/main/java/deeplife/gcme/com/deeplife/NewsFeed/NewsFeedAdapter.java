@@ -84,6 +84,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
         File imageFile = myFileManager.getFileAt("images", NewsFeeds.get(position).getImagePath());
         Log.i("Deep Life", imageFile.getAbsolutePath());
         Toast.makeText(myContext,"Image Path: "+String.valueOf(imageFile.isFile()),Toast.LENGTH_LONG).show();
+
         FileInputStream stream = null;
         try{
             stream = new FileInputStream(imageFile);
