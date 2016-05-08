@@ -7,7 +7,6 @@ import android.content.Intent;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
-
 import me.tatarka.support.job.JobInfo;
 import me.tatarka.support.job.JobScheduler;
 

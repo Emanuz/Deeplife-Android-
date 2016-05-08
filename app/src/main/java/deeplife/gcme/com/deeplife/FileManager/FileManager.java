@@ -2,7 +2,6 @@ package deeplife.gcme.com.deeplife.FileManager;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +32,7 @@ public class FileManager {
         }
         createFolder("images");
     }
+
     public boolean createFolder(String FolderName){
         File Folder = new File(myFile,FolderName);
         if(!Folder.isDirectory()){
@@ -42,6 +42,7 @@ public class FileManager {
             return true;
         }
     }
+
     public File getFile(String name){
         File file = new File(myFile,name);
         return file;

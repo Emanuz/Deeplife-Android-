@@ -39,7 +39,7 @@ import me.tatarka.support.job.JobService;
 
 public class SyncService extends JobService {
     private static final String TAG = "SyncService";
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report"};
+    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony"};
     private List<Object> Param;
     private Gson myParser;
     private List<kotlin.Pair<String,String>> Send_Param;
@@ -128,20 +128,22 @@ public class SyncService extends JobService {
             if(newsFeeds.size()>0){
                 if(newsFeeds.size()<5){
                     for(int i = 0; i<newsFeeds.size();i++){
-                        String image_name = "image"+newsFeeds.get(i).getNews_ID()+".png";
+                        //String image_name = "image"+newsFeeds.get(i).getNews_ID()+".png";
+                        String image_name = newsFeeds.get(i).getImagePath();
                         Log.i(TAG, "Downloading:->" + image_name);
-                        File image_file = myFileManager.getFileAt("images",image_name);
+                        File image_file = myFileManager.createFileAt("images", image_name);
                         if(!image_file.isFile()){
                             Log.i(TAG, "Downloading From:->" + newsFeeds.get(i).getImageURL());
                             new FileDownloader(this,newsFeeds.get(i).getImageURL(),"images",image_name).execute();
                         }
-
                     }
-                }else{
+                } else{
                     for(int i = 0; i<5;i++){
                         String image_name = "image"+newsFeeds.get(i).getNews_ID()+".png";
                         Log.i(TAG, "Downloading:->" + image_name);
-                        File image_file = myFileManager.getFileAt("images",image_name);
+//                        File image_file = myFileManager.getFileAt("images",image_name);
+                        File image_file = myFileManager.createFileAt("images", image_name);
+
                         if(!image_file.isFile()){
                             Log.i(TAG, "Downloading From:->" + newsFeeds.get(i).getImageURL());
                             new FileDownloader(this,newsFeeds.get(i).getImageURL(),"images",image_name).execute();
@@ -402,7 +404,7 @@ public class SyncService extends JobService {
                     cv.put(Database.NewsFeed_FIELDS[1], obj.getString("title"));
                     cv.put(Database.NewsFeed_FIELDS[2], obj.getString("content"));
                     cv.put(Database.NewsFeed_FIELDS[3], obj.getString("image_url"));
-                    cv.put(Database.NewsFeed_FIELDS[4], "");
+                    cv.put(Database.NewsFeed_FIELDS[4], "image"+obj.getString("id")+".png");
                     cv.put(Database.NewsFeed_FIELDS[5], obj.getString("publish_date"));
                     cv.put(Database.NewsFeed_FIELDS[6], obj.getString("category"));
                     long x = DeepLife.myDatabase.insert(Database.Table_NEWSFEED,cv);
