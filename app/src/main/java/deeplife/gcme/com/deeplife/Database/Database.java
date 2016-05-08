@@ -182,8 +182,30 @@ public class Database {
         }
         return pos;
     }
+    public User get_User(){
+        String DB_Table = Table_USER;
+        User found = new User();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                User dis = new User();
+                dis.setId(c.getString(c.getColumnIndex(USER_COLUMN[0])));
+                dis.setUser_Name(c.getString(c.getColumnIndex(USER_COLUMN[1])));
+                dis.setUser_Email(c.getString(c.getColumnIndex(USER_COLUMN[2])));
+                dis.setUser_Phone(c.getString(c.getColumnIndex(USER_COLUMN[3])));
+                dis.setUser_Pass(c.getString(c.getColumnIndex(USER_COLUMN[4])));
+                dis.setUser_Country(c.getString(c.getColumnIndex(USER_COLUMN[5])));
+                dis.setUser_Picture(c.getString(c.getColumnIndex(USER_COLUMN[6])));
+                dis.setUser_Favorite_Scripture(c.getString(c.getColumnIndex(USER_COLUMN[7])));
+                return dis;
+            }
+        }catch (Exception e){
 
-
+        }
+        return found;
+    }
     public ArrayList<Question> get_All_Questions(String Category){
         String DB_Table = Table_QUESTION_LIST;
         ArrayList<Question> found = new ArrayList<Question>();
