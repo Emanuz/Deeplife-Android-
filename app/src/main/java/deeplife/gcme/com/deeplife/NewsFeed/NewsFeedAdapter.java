@@ -42,7 +42,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
     public static class DataObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         TextView Title,Content;
         ImageView NewsImage;
-        String news_id;
+        String news_id,image_path;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -59,6 +59,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
             Intent intent = new Intent(myContext,NewsFeedDetail.class);
             Bundle b = new Bundle();
             b.putString("news_id",news_id);
+            b.putString("news_image_path",image_path);
             intent.putExtras(b);
             myContext.startActivity(intent);
         }
@@ -83,7 +84,7 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
         //File imageFile = myFileManager.getFileAt("images", NewsFeeds.get(position).getImagePath());
         File imageFile = myFileManager.getFileAt("images", NewsFeeds.get(position).getImagePath());
         Log.i("Deep Life", imageFile.getAbsolutePath());
-        Toast.makeText(myContext,"Image Path: "+String.valueOf(imageFile.isFile()),Toast.LENGTH_LONG).show();
+        //Toast.makeText(myContext,"Image Path: "+String.valueOf(imageFile.isFile()),Toast.LENGTH_LONG).show();
 
         FileInputStream stream = null;
         try{
@@ -92,6 +93,8 @@ public class NewsFeedAdapter extends RecyclerView.Adapter<NewsFeedAdapter.DataOb
         }
         //holder.NewsImage.setImageBitmap(BitmapFactory.decodeStream(stream));
         Glide.with(myContext).load(imageFile.getAbsolutePath()).into(holder.NewsImage);
+        holder.image_path = imageFile.getAbsolutePath();
+        holder.news_id = NewsFeeds.get(position).getId();
     }
 
     @Override
