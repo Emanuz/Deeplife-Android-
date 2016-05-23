@@ -66,7 +66,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:" + Phone.getText()));
+                    intent.setData(Uri.parse("tel:"+Phone.getText()));
                     myContext.startActivity(intent);
                 }
             });
@@ -167,7 +167,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
         String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
         Log.i(Database.TAG, disciple_phase);
         holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
-        holder.Phone.setText(DiscipleLists.get(position).getPhone());
+        holder.Phone.setText("+"+DiscipleLists.get(position).getCountry()+DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());
         if(DiscipleLists.get(position).getPicture() !=null) {
             holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(DiscipleLists.get(position).getPicture()));
