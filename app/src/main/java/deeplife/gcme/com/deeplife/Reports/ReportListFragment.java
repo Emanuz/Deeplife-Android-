@@ -15,13 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by BENGEOS on 3/27/16.
@@ -70,20 +70,39 @@ public class ReportListFragment extends Fragment {
                     }
                 }
                 Show_Dialog("Your report has sent successfully!");
+                confirmSend();
             }
         });
         return view;
     }
-    public static void update_view(){
 
+    public void send(){
+        ArrayList<ReportItem> ReportLists = ReportListAdapter.ReportLists;
+        Calendar cal = Calendar.getInstance();
+        for(int i=0; i<ReportLists.size();i++){
+            ContentValues cv = new ContentValues();
+            cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[0],ReportLists.get(i).getReport_ID());
+            cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[1], ReportLists.get(i).getValue());
+            cv.put(deeplife.gcme.com.deeplife.Database.Database.REPORT_FIELDS[2], cal.getTime().toString());
+            Long val = DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_Reports,cv);
+            if(val > 0){
+                ContentValues log = new ContentValues();
+                log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Report");
+                log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[5]);
+                log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], val);
+                long x = deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
+                Toast.makeText(getActivity(),"New Report Added: "+x,Toast.LENGTH_LONG).show();
+            }
+        }
     }
-    public static void Show_Dialog(String message) {
 
+    public static void Show_Dialog(String message) {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
+
                         //Yes button clicked
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -92,11 +111,35 @@ public class ReportListFragment extends Fragment {
                 }
             }
         };
-
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
         builder.setTitle(R.string.app_name).setMessage(message)
                 .setPositiveButton("Ok ", dialogClickListener)
                 .setNegativeButton("Cancel", dialogClickListener)
                 .show();
+    }
+
+
+    public void confirmSend(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        //Yes button clicked
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        send();
+                        break;
+                }
+            }
+        };
+    android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    builder.setTitle("Deep Life:").setMessage("Are you sure you want to send this report? ")
+            .setPositiveButton("Yes", dialogClickListener)
+            .setNegativeButton("No", dialogClickListener)//.setNeutralButton(" ", dialogClickListener)
+            .show();
+
     }
 }
