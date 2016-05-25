@@ -495,11 +495,12 @@ public class Database {
                     }
                 }
                 return false;
+            }else{
+                return false;
             }
         }catch (Exception e){
             return true;
         }
-        return true;
     }
      public ArrayList<Schedule> get_All_Schedule(){
          Log.i(TAG, "GetAll Schedule:\n");
