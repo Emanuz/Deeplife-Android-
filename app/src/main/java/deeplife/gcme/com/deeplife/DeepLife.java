@@ -39,4 +39,5 @@ public class DeepLife extends Application {
         builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED);
         myJobScheduler.schedule(builder.build());
     }
+
 }
