@@ -1,6 +1,11 @@
 package deeplife.gcme.com.deeplife.Reports;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
+import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.R;
+import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
 import java.util.ArrayList;
 
@@ -100,4 +110,5 @@ public class ReportListAdapter extends RecyclerView.Adapter<ReportListAdapter.Da
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
+
 }
