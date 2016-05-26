@@ -100,7 +100,6 @@ public class ReportListFragment extends Fragment {
                     case DialogInterface.BUTTON_POSITIVE:
                         send();
                         break;
-//				    case DialogInterface.BUTTON_NEUTRAL:
                     case DialogInterface.BUTTON_NEGATIVE:
                         break;
                 }
@@ -110,7 +109,7 @@ public class ReportListFragment extends Fragment {
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Deep Life:").setMessage("Are you sure you want to send this report? ")
                 .setPositiveButton("Yes", dialogClickListener)
-                .setNegativeButton("No", dialogClickListener)//.setNeutralButton(" ", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
                 .show();
     }
 
