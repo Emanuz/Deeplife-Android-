@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,7 +94,11 @@ public class MainActivity extends AppCompatActivity
 
         nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
 
-
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            Log.i("Test", "Tab: " + bundle.getInt("tab"));
+            setTab(bundle.getInt("tab"));
+        }
     }
 
     @Override
@@ -113,6 +118,10 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new ScheduleListFragment(), "Schedules");
         adapter.addFragment(new ReportListFragment(), "Share");
         viewPager.setAdapter(adapter);
+    }
+
+    public void setTab(int tab){
+        this.viewPager.setCurrentItem(tab,true);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Music_Play extends Activity {
         Schedule schedule = deeplife.gcme.com.deeplife.DeepLife.myDatabase.getScheduleWithId(rowId+"");
         tv_title.setText(schedule.getTitle());
 
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jadhiel);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ringtone);
         mediaPlayer.start();
 
         btn_stop.setOnClickListener(new View.OnClickListener() {

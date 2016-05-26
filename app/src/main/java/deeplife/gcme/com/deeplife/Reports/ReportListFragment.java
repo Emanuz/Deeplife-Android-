@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,12 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
@@ -32,6 +35,7 @@ public class ReportListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private static Context myContext;
     private FloatingActionButton SendReport;
+    private TextView tv_last_date;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +44,9 @@ public class ReportListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_list_page,container,false);
+        View view = inflater.inflate(R.layout.report_list_page,container,true);
         myRecyclerView = (RecyclerView) view.findViewById(R.id.report_recycler_view);
+//        tv_last_date = (TextView) view.findViewById(R.id.tv_last_report_date);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         ArrayList<ReportItem> items = DeepLife.myDatabase.get_All_Report();
@@ -76,6 +81,13 @@ public class ReportListFragment extends Fragment {
                 Toast.makeText(getActivity(),"New Report Added: "+x,Toast.LENGTH_LONG).show();
             }
         }
+        tv_last_date.setText("Last Report: " + cal.getTime().getDate() + cal.getTime().getDay() + cal.getTime().getTime());
+        getActivity().finish();
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("tab",4);
+        intent.putExtras(b);
+        startActivity(intent);
     }
 
     public void confirmSend(){
@@ -100,6 +112,10 @@ public class ReportListFragment extends Fragment {
                 .setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener)//.setNeutralButton(" ", dialogClickListener)
                 .show();
+    }
+
+    public void updateViews(){
+
     }
 
 }
