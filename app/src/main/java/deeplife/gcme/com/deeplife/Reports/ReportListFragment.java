@@ -80,7 +80,6 @@ public class ReportListFragment extends Fragment {
         });
         return view;
     }
-
     public void send(){
         ArrayList<ReportItem> ReportLists = ReportListAdapter.ReportLists;
         Calendar cal = Calendar.getInstance();
@@ -152,11 +151,6 @@ public class ReportListFragment extends Fragment {
             .setNegativeButton("No", dialogClickListener)//.setNeutralButton(" ", dialogClickListener)
             .show();
     }
-
-    public void updateViews(){
-
-    }
-
 }
 
 
