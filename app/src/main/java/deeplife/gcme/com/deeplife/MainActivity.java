@@ -36,6 +36,7 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListFragment;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
+import deeplife.gcme.com.deeplife.Reports.ReportFragment;
 import deeplife.gcme.com.deeplife.Reports.ReportListFragment;
 import deeplife.gcme.com.deeplife.Schedule.ScheduleListFragment;
 

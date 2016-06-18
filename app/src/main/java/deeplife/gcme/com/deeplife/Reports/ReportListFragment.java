@@ -44,9 +44,9 @@ public class ReportListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.report_list_page,container,true);
+        View view = inflater.inflate(R.layout.report_list_page,container,false);
         myRecyclerView = (RecyclerView) view.findViewById(R.id.report_recycler_view);
-//        tv_last_date = (TextView) view.findViewById(R.id.tv_last_report_date);
+        tv_last_date = (TextView) view.findViewById(R.id.tv_last_report_date);
         mLayoutManager = new LinearLayoutManager(getActivity());
         myRecyclerView.setLayoutManager(mLayoutManager);
         ArrayList<ReportItem> items = DeepLife.myDatabase.get_All_Report();
