@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Activities.Disciple_Profile;
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Schedule;
@@ -167,7 +168,8 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
         String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
         Log.i(Database.TAG, disciple_phase);
         holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
-        holder.Phone.setText("+"+DiscipleLists.get(position).getCountry()+DiscipleLists.get(position).getPhone());
+        String country_Code = DeepLife.myDatabase.get_Country_by_CountryID(DiscipleLists.get(position).getCountry()).getCode();
+        holder.Phone.setText("+"+country_Code+DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());
         if(DiscipleLists.get(position).getPicture() !=null) {
             holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(DiscipleLists.get(position).getPicture()));
