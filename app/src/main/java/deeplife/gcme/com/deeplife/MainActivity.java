@@ -151,10 +151,12 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
-        if (id == R.id.nav_disciples) {
+        if (id == R.id.nav_news) {
             viewPager.setCurrentItem(0, true);
-        } else if (id == R.id.nav_schedules) {
+        } else if (id == R.id.nav_disciples) {
             viewPager.setCurrentItem(1, true);
+        } else if (id == R.id.nav_schedules) {
+            viewPager.setCurrentItem(2, true);
         } else if (id == R.id.nav_report) {
             viewPager.setCurrentItem(3, true);
         } else if (id == R.id.nav_learning) {
