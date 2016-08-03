@@ -16,25 +16,25 @@
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-23.2.1_ce858c72bbe727086d87af6d2d172cd3afd23006.jar" />
     </item>
     <item
-        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/httpclient-4.5.2.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/gson-2.3.1_fc7b19126e5f4e3a0424d0d2d3e220afdee81899.jar" />
+        sha1="733db77aa8d9b2d68015189df76ab06304406e50">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpclient-4.5.2_c7a2d3154fa33bdd0b2d810a77b3e60753dd8483.jar" />
     </item>
     <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.github.kittinunf.fuel/fuel-android/1.1.2/jars/classes.jar"
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/jna-platform-4.1.0.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="c769121990f3c66893d6d60d2e3cb5a556bfb69c">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.github.kittinunf.fuel-fuel-android-1.1.2_4297b9453b6f0045bc49fb63f4e4f9c973e4f51f.jar" />
+        sha1="23457ad1cf75c2c16763330de5565a0e67b4bc0a">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/jna-platform-4.1.0_bd7fedfb070a00512af79e11d326d6214d0fea6d.jar" />
     </item>
     <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/jna-4.1.0.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="673d77a5bbddd766037f088e775df525c46407f0">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.1_d335a7ae6cb0921cbe462747c82272ffc3a6439b.jar" />
+        sha1="1c12d070e602efd8021891cdd7fd18bc129372d4">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/jna-4.1.0_51541afcec0c865ff5efb520e7d94fb590f17360.jar" />
     </item>
     <item
         jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.0.1/68cddd9aec83d23f789f72bfdc933db245c4a635/kotlin-stdlib-1.0.1.jar"
@@ -72,32 +72,18 @@
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.2.1_9e878e4d487f8c4975a1ff19364aef6b93d25def.jar" />
     </item>
     <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/fluent-hc-4.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="7bfdfa49de6d720ad3c8cedb6a5238eec564dfed">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/fluent-hc-4.5.2_6659290f1c4a9feddfaefc0a4c64c7dc448899ec.jar" />
+    </item>
+    <item
         jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.wdullaer/materialdatetimepicker/2.3.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="a95fd025efad7b05be3d29737bec37652e0fdb9e">
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.wdullaer-materialdatetimepicker-2.3.0_9f889d34d350ce4c3720836694a54a21c8f69088.jar" />
-    </item>
-    <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/1.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="11a65cf2b30c192b38a881d626fa771a78a2293d">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.soundcloud.android-android-crop-1.0.1_69631f0142d6c93174a7d8dbecaeffc37901e3e3.jar" />
-    </item>
-    <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.2.1_3c328f989a32eec4a58d61112834e96fadbe8af0.jar" />
-    </item>
-    <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/me.tatarka.support/jobscheduler/0.1.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="8d5fa4ca32cbbd491d4e027d16f02e897dfed0f2">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/me.tatarka.support-jobscheduler-0.1.1_da79c93a5301cc09176f4ed8c470d231844d3508.jar" />
     </item>
     <item
         jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.github.kittinunf.result/result/1.0.1/3232fdf0a5501dbacf605a372607801bc4e10c82/result-1.0.1.jar"
@@ -107,11 +93,11 @@
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/result-1.0.1_a6767d36566054fa6bc630e4af5d3fbf99d105a7.jar" />
     </item>
     <item
-        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/httpclient-win-4.5.2.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.1_7990e816cb4c1026c88d0e7a2f0fd463a7253e63.jar" />
+        sha1="80635f3fdebcb3687ca3246214e597916504b996">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpclient-win-4.5.2_b4d2f1be72ccd48b0a861220112f2084b5b20e40.jar" />
     </item>
     <item
         jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.github.airk000/trigger/1.0.0/jars/classes.jar"
@@ -119,6 +105,13 @@
         revision="23.0.2"
         sha1="76895f2a615bef2015e1b57a71efdd62b518da59">
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.github.airk000-trigger-1.0.0_e1bf111aca9c3d02599896d15d055f303ae01fb7.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.volley/volley/1.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2cd4b982617e544728de0782d718a58ce1b06e3f">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.volley-volley-1.0.0_41194fa81bb1b0ce20ebd5bc2e7c1b8673658339.jar" />
     </item>
     <item
         jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
@@ -135,18 +128,116 @@
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/fuel-1.1.2_e7718c0269af553cb9f9aff6f9a28930119a37ee.jar" />
     </item>
     <item
-        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
-        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/glide-3.7.0_6692001edf2ae4c3813b109f30ed19945b978fc1.jar" />
-    </item>
-    <item
         jar="/Users/bengeos/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.1/support-annotations-23.2.1.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
         <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/support-annotations-23.2.1_a2e4d03480dd30b1eb0c399f466a85c12d67d9d7.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5/82edcaec6c7b4599eaeaaf11167ceea41db42f33/httpclient-android-4.3.5.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="82edcaec6c7b4599eaeaaf11167ceea41db42f33">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5_85ec5cdab6f124a4b4461a22ae64fb8e385d3fc3.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3.6/cf8bacbf0d476c7f2221f861269365b66447f7ec/httpmime-4.3.6.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="cf8bacbf0d476c7f2221f861269365b66447f7ec">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpmime-4.3.6_27e3293a34811b2d810920632e29f53e6804cf72.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/gson-2.3.1_fc7b19126e5f4e3a0424d0d2d3e220afdee81899.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/commons-codec-1.9.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9ce04e34240f674bc72680f8b843b1457383161a">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/commons-codec-1.9_d79106de97e9ddb217a51430d29626d1e56db4d5.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.github.kittinunf.fuel/fuel-android/1.1.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c769121990f3c66893d6d60d2e3cb5a556bfb69c">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.github.kittinunf.fuel-fuel-android-1.1.2_4297b9453b6f0045bc49fb63f4e4f9c973e4f51f.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.2.1_d335a7ae6cb0921cbe462747c82272ffc3a6439b.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/commons-logging-1.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4bfc12adfe4842bf07b657f0369c4cb522955686">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/commons-logging-1.2_7a356f9bea413bede42b31aaab3768d71688c4dd.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.soundcloud.android/android-crop/1.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="11a65cf2b30c192b38a881d626fa771a78a2293d">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.soundcloud.android-android-crop-1.0.1_69631f0142d6c93174a7d8dbecaeffc37901e3e3.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/httpclient-cache-4.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="bd50ea83908dbf2f387a333216e66d2f0c5079bd">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpclient-cache-4.5.2_d858bfdae7055bade98932204cfbcf8f59f46733.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/design/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="72961d8b453b46e277702f18de9d210bc019e36e">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.2.1_3c328f989a32eec4a58d61112834e96fadbe8af0.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/me.tatarka.support/jobscheduler/0.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d5fa4ca32cbbd491d4e027d16f02e897dfed0f2">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/me.tatarka.support-jobscheduler-0.1.1_da79c93a5301cc09176f4ed8c470d231844d3508.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.2.1_7990e816cb4c1026c88d0e7a2f0fd463a7253e63.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/httpmime-4.5.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="22b4c53dd9b6761024258de8f9240c3dce6ea368">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpmime-4.5.2_1ff3da6027f5f6c59ed0228bd555ea2cee34da1f.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/DeepLife-Android-c4tk/app/libs/httpcore-4.4.4.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="b31526a230871fbe285fbcbe2813f9c0839ae9b0">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/httpcore-4.4.4_e77a6d3bad2ce8900dec0d2f3b8d808daec3fd1d.jar" />
+    </item>
+    <item
+        jar="/Users/bengeos/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/3.7.0/9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4/glide-3.7.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/pre-dexed/debug/glide-3.7.0_6692001edf2ae4c3813b109f30ed19945b978fc1.jar" />
     </item>
     <item
         jar="/Users/bengeos/DeepLife-Android-c4tk/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.2.1/jars/libs/internal_impl-23.2.1.jar"

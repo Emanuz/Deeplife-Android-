@@ -26,6 +26,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
+import deeplife.gcme.com.deeplife.FileManager.FileUploader;
 import deeplife.gcme.com.deeplife.ImageProcessing.ImageProcessing;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
@@ -54,6 +57,7 @@ public class Disciple_Profile extends AppCompatActivity {
     Disciples disciple;
     Activity activity;
     Button btn_complet;
+    private FileManager myFileManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class Disciple_Profile extends AppCompatActivity {
 
         disciple_id = getIntent().getExtras().getString("id");
         init(disciple_id);
+        myFileManager = new FileManager(this);
 
     }
 
@@ -245,8 +250,15 @@ public class Disciple_Profile extends AppCompatActivity {
                     if (imageFromCrop != null) {
                         ContentValues values = new ContentValues();
                         values.put(Database.DISCIPLES_FIELDS[6], file.getAbsolutePath());
+                        Toast.makeText(Disciple_Profile.this, "ImageFIle: "+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+                        Log.i("ImageFile",file.getAbsolutePath());
 
-                        long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(Database.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
+                        ContentValues cv = new ContentValues();
+                        cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[0],"Upload_User_Pic");
+                        cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[1],file.getAbsolutePath());
+                        DeepLife.myDatabase.insert(DeepLife.myDatabase.Table_IMAGE_SYNC,cv);
+
+                        long check = DeepLife.myDatabase.update(Database.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
                         if (check != -1) {
                             profile_image.setImageBitmap(imageFromCrop);
                             Log.i(Database.TAG, "Image successfully changed \n New Image location: " + disciple.getPicture());
@@ -262,5 +274,9 @@ public class Disciple_Profile extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private File SaveFile(String FileName, Bitmap image){
+        return new File("");
     }
 }

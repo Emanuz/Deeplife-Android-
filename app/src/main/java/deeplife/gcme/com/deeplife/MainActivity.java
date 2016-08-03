@@ -34,6 +34,7 @@ import deeplife.gcme.com.deeplife.Activities.Under_Construction;
 import deeplife.gcme.com.deeplife.Activities.UserProfile.User_Profile;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListFragment;
+import deeplife.gcme.com.deeplife.FileManager.FileUploader;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
 import deeplife.gcme.com.deeplife.Reports.ReportFragment;
@@ -67,8 +68,7 @@ public class MainActivity extends AppCompatActivity
         user = deeplife.gcme.com.deeplife.DeepLife.myDatabase.getUserProfile();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity
         View header = navigationView.getHeaderView(0);
         navigation_name = (TextView)header.findViewById(R.id.drawer_textView_name);
         nav_image = (ImageView)header.findViewById(R.id.drawer_main_imageView);
+
 
         navigation_name.setText(user.getUser_Name());
         if(user.getUser_Picture()!=null | user.getUser_Picture()!=""){
@@ -127,7 +128,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -174,15 +174,16 @@ public class MainActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
-        }
-        else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_send) {
             Uri uri = Uri.parse("http://www.facebook.com"); // missing 'http://' will cause crashed
             intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        }
-        else if (id == R.id.nav_about) {
+        } else if (id == R.id.nav_about) {
             intent = new Intent(this, AboutDeepLife.class);
             startActivity(intent);
+        } else if(id == R.id.nav_learning_test){
+            FileUploader myFileUploader = new FileUploader(this,"","916417951","passben","Upload_User_Pic","[]","68");
+            myFileUploader.execute();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -18,12 +18,16 @@ import org.json.JSONTokener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
+import deeplife.gcme.com.deeplife.FileManager.FileUploader;
+import deeplife.gcme.com.deeplife.FileManager.MultipartUtility;
 import deeplife.gcme.com.deeplife.Models.Disciples;
+import deeplife.gcme.com.deeplife.Models.ImageSync;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.NewsFeed;
 import deeplife.gcme.com.deeplife.Models.ReportItem;
@@ -45,10 +49,16 @@ public class SyncService extends JobService {
     private List<kotlin.Pair<String,String>> Send_Param;
     private User user;
     private FileManager myFileManager;
+    private FileUploader myUploader;
+    private MultipartUtility myMultipartUtility;
+    private boolean isUploading;
     public SyncService(){
         Param = new ArrayList<Object>();
         myParser = new Gson();
         myFileManager = new FileManager(this);
+        myUploader = new FileUploader(this,"","","","","","");
+        isUploading = false;
+
     }
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -56,6 +66,15 @@ public class SyncService extends JobService {
         user = DeepLife.myDatabase.getUser();
         Param.add(DeepLife.myDatabase.getUser());
         Send_Param = new ArrayList<kotlin.Pair<String,String>>();
+
+
+        ImageSync found = DeepLife.myDatabase.Get_Top_ImageSync();
+        if(found != null && !myUploader.isRunning()){
+            Log.i(TAG, "Uploading File: \n" + found.toString());
+            myUploader.setParams(found.getParam(),user.getUser_Name(),user.getUser_Pass(),found.getService(),"[]",user.getUser_Country());
+            myUploader.execute();
+            isUploading = false;
+        }
         if(user != null ){
             Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
             Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));

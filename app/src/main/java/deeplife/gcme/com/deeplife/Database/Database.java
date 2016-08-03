@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.Disciples;
+import deeplife.gcme.com.deeplife.Models.ImageSync;
 import deeplife.gcme.com.deeplife.Models.Logs;
 import deeplife.gcme.com.deeplife.Models.NewsFeed;
 import deeplife.gcme.com.deeplife.Models.Question;
@@ -33,6 +34,8 @@ public class Database {
     public static final String Table_QUESTION_LIST = "QUESTION_LIST";
     public static final String Table_QUESTION_ANSWER = "QUESTION_ANSWER";
     public static final String Table_TESTIMONY = "TESTIMONY";
+    public static final String Table_IMAGE_SYNC = "ImageToSync";
+
 
 
     public static final String[] DISCIPLES_FIELDS = {"Full_Name", "Email", "Phone", "Country","Build_phase","Gender","Picture" };
@@ -46,6 +49,7 @@ public class Database {
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_FIELDS = {"title", "detail"};
+    public static final String[] IMAGE_SYNC_FIELDS = {"Service", "Param"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
@@ -58,6 +62,7 @@ public class Database {
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_COLUMN = {"id","title", "detail"};
+    public static final String[] IMAGE_SYNC_COLUMN = {"id","Service", "Param"};
 
 
 	private SQLiteDatabase myDatabase;
@@ -80,6 +85,7 @@ public class Database {
         mySQL.createTables(Table_COUNTRY, COUNTRY_FIELDS);
         mySQL.createTables(Table_NEWSFEED, NewsFeed_FIELDS);
         mySQL.createTables(Table_TESTIMONY, TESTIMONY_FIELDS);
+        mySQL.createTables(Table_IMAGE_SYNC,IMAGE_SYNC_FIELDS);
     }
 
     public long insert(String DB_Table,ContentValues cv){
@@ -206,6 +212,46 @@ public class Database {
         }
         return found;
     }
+    public ArrayList<ImageSync> Get_All_ImageSync(){
+        String DB_Table = Table_IMAGE_SYNC;
+        ArrayList<ImageSync> found = new ArrayList<ImageSync>();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            c.moveToFirst();
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
+                ImageSync dis = new ImageSync();
+                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
+                dis.setService(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
+                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
+                found.add(dis);
+            }
+        }catch (Exception e){
+
+        }
+        return found;
+    }
+    public ImageSync Get_Top_ImageSync(){
+        String DB_Table = Table_IMAGE_SYNC;
+        ImageSync found = new ImageSync();
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if(c.getCount()>0){
+                c.moveToPosition(0);
+                ImageSync dis = new ImageSync();
+                dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
+                dis.setService(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
+                dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
+                return dis;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+
     public ArrayList<Question> get_All_Questions(String Category){
         String DB_Table = Table_QUESTION_LIST;
         ArrayList<Question> found = new ArrayList<Question>();
