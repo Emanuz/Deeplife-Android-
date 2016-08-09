@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.R;
 
@@ -18,7 +21,7 @@ public class User_Profile extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     ImageView profile_image;
     TextView tv_name,tv_email, tv_fav_scripture, tv_phone, tv_country;
-
+    private FileManager myFileManager;
     User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +30,7 @@ public class User_Profile extends AppCompatActivity {
         setContentView(R.layout.user_profile_page);
         setSupportActionBar((Toolbar) findViewById(R.id.user_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
+        myFileManager = new FileManager(this);
         init();
 
     }
@@ -54,11 +56,12 @@ public class User_Profile extends AppCompatActivity {
         tv_phone.setText(user.getUser_Phone());
         tv_fav_scripture.setText(user.getUser_Favorite_Scripture());
 
-        String image_location = user.getUser_Picture();
-        if(image_location!=null){
-            profile_image.setImageBitmap(BitmapFactory.decodeFile(image_location));
+        if(user.getUser_Picture() != null){
+            File image_file = myFileManager.getFileAt("DeepLife",user.getUser_Picture());
+            if(image_file.isFile()){
+                profile_image.setImageBitmap(BitmapFactory.decodeFile(image_file.getAbsolutePath()));
+            }
         }
-
     }
 
 

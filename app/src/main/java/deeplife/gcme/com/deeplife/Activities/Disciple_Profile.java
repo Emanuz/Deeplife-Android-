@@ -28,7 +28,6 @@ import com.bumptech.glide.Glide;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
-import deeplife.gcme.com.deeplife.FileManager.FileUploader;
 import deeplife.gcme.com.deeplife.ImageProcessing.ImageProcessing;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.R;
@@ -66,11 +65,9 @@ public class Disciple_Profile extends AppCompatActivity {
         setContentView(R.layout.disciple_profile_page);
         setSupportActionBar((Toolbar) findViewById(R.id.disciple_profile_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        myFileManager = new FileManager(this);
         disciple_id = getIntent().getExtras().getString("id");
         init(disciple_id);
-        myFileManager = new FileManager(this);
-
     }
 
     public void init(String disciple_id) {
@@ -114,7 +111,10 @@ public class Disciple_Profile extends AppCompatActivity {
     }
     public void setData() {
         if (disciple.getPicture() != null) {
-            profile_image.setImageBitmap(BitmapFactory.decodeFile(disciple.getPicture()));
+            File image_file = myFileManager.getFileAt("DeepLife",disciple.getPicture());
+            if(image_file.isFile()){
+                profile_image.setImageBitmap(BitmapFactory.decodeFile(image_file.getAbsolutePath()));
+            }
         }
         tv_build.setText(disciple.getBuild_Phase());
         tv_phone.setText(disciple.getPhone());
@@ -253,10 +253,7 @@ public class Disciple_Profile extends AppCompatActivity {
                         Toast.makeText(Disciple_Profile.this, "ImageFIle: "+file.getAbsolutePath(), Toast.LENGTH_LONG).show();
                         Log.i("ImageFile",file.getAbsolutePath());
 
-                        ContentValues cv = new ContentValues();
-                        cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[0],"Upload_User_Pic");
-                        cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[1],file.getAbsolutePath());
-                        DeepLife.myDatabase.insert(DeepLife.myDatabase.Table_IMAGE_SYNC,cv);
+
 
                         long check = DeepLife.myDatabase.update(Database.Table_DISCIPLES, values, Integer.parseInt(disciple_id));
                         if (check != -1) {

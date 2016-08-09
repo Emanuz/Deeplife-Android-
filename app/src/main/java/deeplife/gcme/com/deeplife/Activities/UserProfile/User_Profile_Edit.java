@@ -32,6 +32,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.ImageProcessing.ImageProcessing;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
@@ -52,11 +54,13 @@ public class User_Profile_Edit extends AppCompatActivity {
     ImageView profile_image;
     EditText tv_name,tv_email, tv_fav_scripture, tv_phone;
     private Spinner sp_countries;
+    private FileManager myFileManager;
     TextView tv_country_code;
     Button btn_save;
     ImageButton btn_image_pciker;
 
     private ArrayList<Country> Countries;
+    private ContentValues ImageSync;
     public String newImage = "";
     Bitmap imageFromCrop = null;
     int user_id;
@@ -76,7 +80,7 @@ public class User_Profile_Edit extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.user_profile_edit_collapsing_toolbar);
         collapsingToolbarLayout.setTitle("Edit Profile");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-
+        myFileManager = new FileManager(this);
         init();
 
     }
@@ -117,9 +121,8 @@ public class User_Profile_Edit extends AppCompatActivity {
                 Crop.pickImage(activity);
             }
         });
-
         spinnerInit();
-
+        sp_countries.setSelection(DeepLife.myDatabase.Get_Country_Posistion_By_id(user.getUser_Country()));
     }
 
     public void spinnerInit() {
@@ -133,7 +136,11 @@ public class User_Profile_Edit extends AppCompatActivity {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    tv_country_code.setText(Countries.get(0).getCode());
+                    String name = DeepLife.myDatabase.get_Country_by_Country_Code(user.getUser_Country()).getName();
+                    if(name != null){
+                        tv_country_code.setText(name);
+                    }
+
                 }
             });
 
@@ -172,7 +179,8 @@ public class User_Profile_Edit extends AppCompatActivity {
                 String email = tv_email.getText().toString();
                 String fav_scripture = tv_fav_scripture.getText().toString();
                 String phone = tv_phone.getText().toString();
-                String country = sp_countries.getSelectedItem().toString();
+                Country c = DeepLife.myDatabase.get_Country_by_Country_Code(tv_country_code.getText().toString());
+                String country = c.getCountry_id();
 
                 ContentValues values = new ContentValues();
                 values.put(Database.USER_FIELDS[0], name);
@@ -184,13 +192,18 @@ public class User_Profile_Edit extends AppCompatActivity {
                 }
                 values.put(Database.USER_FIELDS[6], fav_scripture);
 
-                long check = deeplife.gcme.com.deeplife.DeepLife.myDatabase.update(Database.Table_USER, values, user_id);
+                long check = DeepLife.myDatabase.update(Database.Table_USER, values, user_id);
                 if (check != -1) {
+                    if(ImageSync != null){
+                        DeepLife.myDatabase.insert(DeepLife.myDatabase.Table_IMAGE_SYNC,ImageSync);
+                    }
                     Toast.makeText(User_Profile_Edit.this, "Successfully Saved", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(User_Profile_Edit.this,User_Profile.class);
                     startActivity(intent);
                     finish();
                 }
+
+
             }
         });
     }
@@ -235,7 +248,19 @@ public class User_Profile_Edit extends AppCompatActivity {
                     protected void onPostExecute(Void dummy) {
                         if (imageFromCrop != null) {
                             profile_image.setImageBitmap(imageFromCrop);
-                            newImage = file.getAbsolutePath();
+                            newImage = file.getName();
+                            File des = myFileManager.getFileAt("DeepLife",file.getName());
+                            try {
+                                myFileManager.CopyFile(file,des);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            ContentValues cv = new ContentValues();
+                            cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[0],file.getAbsolutePath());
+                            cv.put(DeepLife.myDatabase.IMAGE_SYNC_FIELDS[1],"Upload_User_Pic");
+                            ImageSync = cv;
+
                         }
                     }
                 }.execute();
