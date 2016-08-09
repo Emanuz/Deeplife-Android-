@@ -37,18 +37,19 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 		 
 	}
 
-	public void SetAlarm(Context context)
+	public void SetAlarm(Context context, int taskId, long interval)
 	{
 		AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 		Intent i = new Intent(context, OnAlarmReceiver.class);
-		PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-		am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 60 * 10, pi); // Millisec * Second * Minute
+		i.putExtra(Database.SCHEDULES_COLUMN[0], taskId);
+		PendingIntent pi = PendingIntent.getBroadcast(context, taskId, i, 0);
+		am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis()+interval, pi); // Millisec * Second * Minute
 	}
 
-	public void CancelAlarm(Context context)
+	public void CancelAlarm(Context context, int taskID)
 	{
 		Intent intent = new Intent(context, OnAlarmReceiver.class);
-		PendingIntent sender = PendingIntent.getBroadcast(context, 0, intent, 0);
+		PendingIntent sender = PendingIntent.getBroadcast(context, taskID, intent,PendingIntent.FLAG_ONE_SHOT);
 		AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		alarmManager.cancel(sender);
 	}

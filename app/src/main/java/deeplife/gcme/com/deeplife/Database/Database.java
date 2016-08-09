@@ -49,7 +49,7 @@ public class Database {
     public static final String[] REPORT_FIELDS = {"Report_ID","Value","Date"};
     public static final String[] QUESTION_ANSWER_FIELDS = {"Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_FIELDS = {"title", "detail"};
-    public static final String[] IMAGE_SYNC_FIELDS = {"Service", "Param"};
+    public static final String[] IMAGE_SYNC_FIELDS = {"FileName", "Param"};
 
     public static final String[] DISCIPLES_COLUMN = { "id", "Full_Name","Email", "Phone", "Country","Build_phase","Gender","Picture" };
     public static final String[] SCHEDULES_COLUMN = { "id","Disciple_Phone","Title","Alarm_Time","Alarm_Repeat","Description" };
@@ -62,7 +62,7 @@ public class Database {
     public static final String[] QUESTION_LIST_COLUMN = {"id","Category","Description", "Note","Mandatory"};
     public static final String[] QUESTION_ANSWER_COLUMN = {"id", "Disciple_Phone","Question_ID", "Answer","Build_Stage"};
     public static final String[] TESTIMONY_COLUMN = {"id","title", "detail"};
-    public static final String[] IMAGE_SYNC_COLUMN = {"id","Service", "Param"};
+    public static final String[] IMAGE_SYNC_COLUMN = {"id","FileName", "Param"};
 
 
 	private SQLiteDatabase myDatabase;
@@ -222,7 +222,7 @@ public class Database {
                 c.moveToPosition(i);
                 ImageSync dis = new ImageSync();
                 dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
-                dis.setService(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
+                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
                 dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
                 found.add(dis);
             }
@@ -237,10 +237,10 @@ public class Database {
         try{
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
             if(c.getCount()>0){
-                c.moveToPosition(0);
+                c.moveToPosition(c.getCount()-1);
                 ImageSync dis = new ImageSync();
                 dis.setId(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[0])));
-                dis.setService(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
+                dis.setFilePath(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[1])));
                 dis.setParam(c.getString(c.getColumnIndex(IMAGE_SYNC_COLUMN[2])));
                 return dis;
             }else{
@@ -495,6 +495,42 @@ public class Database {
         }
 		return id;
 	}
+    public Disciples Get_Disciple_By_Phone(String Phone_Num){
+        Disciples found = null;
+        Log.i(TAG, "GetDisciple by Phone: \n");
+        String DB_Table = Table_DISCIPLES;
+        try{
+            Log.i(TAG, "GetDisciple by Phone -> Searching for  \n");
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            Log.i(TAG, "GetDisciple by Phone -> Searching for "+c.getCount());
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+
+                for(int i=0;i<c.getCount(); i++) {
+                    c.moveToPosition(i);
+                    Log.i(TAG, "GetDisciple by Phone -> Searching for "+c.getPosition());
+                    if(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])).equals(Phone_Num)){
+                        Log.i(TAG, "Comparing: \n" + c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])) +" | "+ Phone_Num);
+                        Disciples dis = new Disciples();
+                        dis.setId(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[0])));
+                        dis.setFull_Name(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[1])));
+                        dis.setEmail(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[2])));
+                        dis.setPhone(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[3])));
+                        dis.setCountry(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[4])));
+                        dis.setBuild_Phase(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[5])));
+                        dis.setGender(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[6])));
+                        dis.setPicture(c.getString(c.getColumnIndex(DISCIPLES_COLUMN[7])));
+                        Log.i(TAG, "Found Disciples:-> "+dis.toString());
+                        return dis;
+                    }
+                }
+            }
+            Log.i(TAG, "GetDisciple by Phone -> Found:  "+found.toString());
+        }catch (Exception e){
+
+        }
+        return found;
+    }
     public ArrayList<Disciples> getDisciples(){
         Log.i(TAG, "GetDisciples: \n");
         String DB_Table = Table_DISCIPLES;
@@ -574,6 +610,25 @@ public class Database {
         }
         return found;
     }
+    public int Get_Country_Posistion_By_id(String id){
+        Log.i(TAG, "GetAll Countries:\n");
+        String DB_Table = Table_COUNTRY;
+        try{
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    if(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])).equals(id)){
+                        return c.getPosition();
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return 0;
+    }
     public ArrayList<Country> get_All_Country(){
         Log.i(TAG, "GetAll Countries:\n");
         String DB_Table = Table_COUNTRY;
@@ -610,6 +665,33 @@ public class Database {
                     c.moveToPosition(i);
                     String id = c.getString(c.getColumnIndex(COUNTRY_COLUMN[1]));
                     if(id.equals(CountryID)){
+                        Country dis = new Country();
+                        dis.setId(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
+                        dis.setCountry_id(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));
+                        dis.setIso3(c.getString(c.getColumnIndex(COUNTRY_COLUMN[2])));
+                        dis.setName(c.getString(c.getColumnIndex(COUNTRY_COLUMN[3])));
+                        dis.setCode(c.getString(c.getColumnIndex(COUNTRY_COLUMN[4])));
+                        Log.i(TAG, "Found Country:-> "+dis.toString());
+                        return dis;
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
+    public Country get_Country_by_Country_Code(String CountryCode){
+        try{
+            Log.i(TAG, "GetAll Country by CountryID:\n");
+            String DB_Table = Table_COUNTRY;
+            Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
+            if (c.getCount() > 0) {
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String id = c.getString(c.getColumnIndex(COUNTRY_COLUMN[4]));
+                    if(id.equals(CountryCode)){
                         Country dis = new Country();
                         dis.setId(c.getString(c.getColumnIndex(COUNTRY_COLUMN[0])));
                         dis.setCountry_id(c.getString(c.getColumnIndex(COUNTRY_COLUMN[1])));

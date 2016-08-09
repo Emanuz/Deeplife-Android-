@@ -32,25 +32,31 @@ public class ReminderService extends WakeReminderIntentService {
 
 		Schedule schedule = deeplife.gcme.com.deeplife.DeepLife.myDatabase.getScheduleWithId(rowId + "");
 
-		Notification.Builder builder = new Notification.Builder(getApplicationContext())
-				.setContentTitle(schedule.getTitle())
-				.setContentIntent(pi)
-				.setContentText(schedule.getDescription())
-				.setAutoCancel(true)
-				.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE)
-				.setWhen(System.currentTimeMillis());
+		if(schedule != null){
+			Notification.Builder builder = new Notification.Builder(getApplicationContext())
+					.setContentTitle(schedule.getTitle())
+					.setContentTitle("This is titile")
+					.setContentIntent(pi)
+					.setContentText(schedule.getDescription())
+					.setContentText("this is the contet")
+					.setAutoCancel(true)
+					.setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE)
+					.setWhen(System.currentTimeMillis());
 
-		try{
-			Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ringtone);
-			builder.setSound(uri);
-		}catch (Exception e){
+			try{
+				Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.ringtone);
+				builder.setSound(uri);
+			}catch (Exception e){
 
+			}
+			builder.setSmallIcon(R.drawable.logoicon_ldpi);
+
+			Notification note = builder.build();
+
+			int id = (int)((long)rowId);
+			mgr.notify(id, note);
 		}
-		builder.setSmallIcon(R.drawable.logoicon_ldpi);
 
-		Notification note = builder.build();
 
-		int id = (int)((long)rowId);
-		mgr.notify(id, note);
 	}
 }

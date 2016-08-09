@@ -34,7 +34,6 @@ import deeplife.gcme.com.deeplife.Activities.Under_Construction;
 import deeplife.gcme.com.deeplife.Activities.UserProfile.User_Profile;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListFragment;
-import deeplife.gcme.com.deeplife.FileManager.FileUploader;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
 import deeplife.gcme.com.deeplife.Reports.ReportFragment;
@@ -93,9 +92,8 @@ public class MainActivity extends AppCompatActivity
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle("DEEP LIFE");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
-
         nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
-
+        viewPager.setCurrentItem(DeepLife.Slide_Pos,true);
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             Log.i("Test", "Tab: " + bundle.getInt("tab"));
@@ -150,6 +148,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        DeepLife.Slide_Pos = id;
         Intent intent;
         if (id == R.id.nav_news) {
             viewPager.setCurrentItem(0, true);
@@ -181,9 +180,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             intent = new Intent(this, AboutDeepLife.class);
             startActivity(intent);
-        } else if(id == R.id.nav_learning_test){
-            FileUploader myFileUploader = new FileUploader(this,"","916417951","passben","Upload_User_Pic","[]","68");
-            myFileUploader.execute();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -65,6 +65,12 @@
         <item>SEND</item>
         <item>Logout</item>
     </string-array>
+    <string-array name="alarm_types">
+        <item>Every Hour</item>
+        <item>Every Day</item>
+        <item>Every Week</item>
+        <item>Every Month</item>
+    </string-array>
 
     <string-array name="gender">
         <item>Male</item>

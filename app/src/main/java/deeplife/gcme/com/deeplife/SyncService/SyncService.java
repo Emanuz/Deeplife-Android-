@@ -1,6 +1,10 @@
 package deeplife.gcme.com.deeplife.SyncService;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.github.kittinunf.fuel.Fuel;
@@ -15,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +29,6 @@ import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
 import deeplife.gcme.com.deeplife.FileManager.FileManager;
-import deeplife.gcme.com.deeplife.FileManager.FileUploader;
 import deeplife.gcme.com.deeplife.FileManager.MultipartUtility;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.ImageSync;
@@ -49,14 +53,12 @@ public class SyncService extends JobService {
     private List<kotlin.Pair<String,String>> Send_Param;
     private User user;
     private FileManager myFileManager;
-    private FileUploader myUploader;
     private MultipartUtility myMultipartUtility;
     private boolean isUploading;
     public SyncService(){
         Param = new ArrayList<Object>();
         myParser = new Gson();
         myFileManager = new FileManager(this);
-        myUploader = new FileUploader(this,"","","","","","");
         isUploading = false;
 
     }
@@ -67,21 +69,12 @@ public class SyncService extends JobService {
         Param.add(DeepLife.myDatabase.getUser());
         Send_Param = new ArrayList<kotlin.Pair<String,String>>();
 
-
-        ImageSync found = DeepLife.myDatabase.Get_Top_ImageSync();
-        if(found != null && !myUploader.isRunning()){
-            Log.i(TAG, "Uploading File: \n" + found.toString());
-            myUploader.setParams(found.getParam(),user.getUser_Name(),user.getUser_Pass(),found.getService(),"[]",user.getUser_Country());
-            myUploader.execute();
-            isUploading = false;
-        }
         if(user != null ){
             Send_Param.add(new kotlin.Pair<String, String>("User_Name",user.getUser_Name()));
             Send_Param.add(new kotlin.Pair<String, String>("User_Pass",user.getUser_Pass()));
             Send_Param.add(new kotlin.Pair<String, String>("Country", user.getUser_Country()));
             Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
             Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
-            Log.i(TAG, "Request Made: \n" + myParser.toJson(getParam()));
         }else{
             Send_Param.add(new kotlin.Pair<String, String>("User_Name",""));
             Send_Param.add(new kotlin.Pair<String, String>("User_Pass",""));
@@ -89,7 +82,7 @@ public class SyncService extends JobService {
             Send_Param.add(new kotlin.Pair<String, String>("Service",getService()));
             Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
         }
-
+        Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -130,10 +123,14 @@ public class SyncService extends JobService {
                             JSONArray json_newsfeeds = json_response.getJSONArray("NewsFeeds");
                             SyncService.Add_NewsFeed(json_newsfeeds);
                         }
-
+                        if (!json_response.isNull("Upload_Response")) {
+                            JSONArray json_imgSync = json_response.getJSONArray("Upload_Response");
+                            SyncService.Delete_Image_Sync(json_imgSync);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.i(TAG, "Error  After Success : \n" + e.toString());
                 }
             }
 
@@ -196,6 +193,26 @@ public class SyncService extends JobService {
 
         }
     }
+    private static void Delete_Image_Sync(JSONArray json_logs) {
+        try{
+            Log.i(TAG,"Deleting Image Sync -> \n");
+            Log.i(TAG,"Found  -> "+json_logs.length()+"   ->"+json_logs.toString());
+            if(json_logs.length()>0){
+                for(int i=0;i<json_logs.length();i++){
+                    JSONObject obj = json_logs.getJSONObject(i);
+                    Log.i(TAG, "Deleting  -> Logs: " + obj.toString());
+                    int id = Integer.valueOf(obj.getString("id"));
+                    Log.i(TAG, "Deleting -> LogID: " + id);
+                    if(id>0){
+                        long val = DeepLife.myDatabase.remove(Database.Table_IMAGE_SYNC, id);
+                        Log.i(TAG, "Deleting -> ID: " + id+" :-> "+val);
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+    }
 
     @Override
     public boolean onStopJob(JobParameters params) {
@@ -219,6 +236,9 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendDisciples().size()>0){
             Log.i(TAG,"Found SendDisciple Service -> "+DeepLife.myDatabase.getSendDisciples().size());
             return "AddNew_Disciples";
+        }else if(DeepLife.myDatabase.Get_Top_ImageSync() != null){
+            ImageSync tosync = DeepLife.myDatabase.Get_Top_ImageSync();
+            return tosync.getParam();
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
             Log.i(TAG,"Found UpdateDisciples Service -> "+DeepLife.myDatabase.getUpdateDisciples().size());
             return "Update_Disciples";
@@ -250,6 +270,14 @@ public class SyncService extends JobService {
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
+        }else if(DeepLife.myDatabase.Get_Top_ImageSync() != null){
+            Log.i(TAG,"GET Images TO SEND -> \n");
+            ImageSync tosync = DeepLife.myDatabase.Get_Top_ImageSync();
+            ImageSync img = new ImageSync();
+            img.setImage(encodeImage(tosync.getFilePath()));
+            img.setParam(tosync.getParam());
+            img.setId(tosync.getId());
+            Found.add(img);
         }else if(DeepLife.myDatabase.getUpdateDisciples().size()>0){
             Log.i(TAG,"GET DISCIPLES TO UPDATE -> \n");
             ArrayList<Disciples> foundData = DeepLife.myDatabase.getUpdateDisciples();
@@ -291,7 +319,16 @@ public class SyncService extends JobService {
                     cv.put(Database.DISCIPLES_FIELDS[3], obj.getString("country"));
                     cv.put(Database.DISCIPLES_FIELDS[4], obj.getString("stage"));
                     cv.put(Database.DISCIPLES_FIELDS[5], obj.getString("gender"));
-                    long x = DeepLife.myDatabase.insert(Database.Table_DISCIPLES,cv);
+                    cv.put(Database.DISCIPLES_FIELDS[6], obj.getString("picture"));
+                    Disciples dis = DeepLife.myDatabase.Get_Disciple_By_Phone(obj.getString("phone_no"));
+                    long x = 0;
+                    if( dis == null){
+                        Log.i("--Update--","Adding New Disciples -> \n"+cv.toString());
+                        x = DeepLife.myDatabase.insert(Database.Table_DISCIPLES,cv);
+                    }else{
+                        Log.i("--Update--","Updating  Disciples -> \n"+dis.getId());
+                        x = DeepLife.myDatabase.update(Database.Table_DISCIPLES,cv, Integer.valueOf(dis.getId()));
+                    }
                     if(x>0){
                         Log.i(TAG,"Adding Disciple Log -> \n");
                         ContentValues log = new ContentValues();
@@ -442,5 +479,16 @@ public class SyncService extends JobService {
         }catch (Exception e){
 
         }
+    }
+    public static String encodeImage(String filePath) {
+        File myFile = new File(filePath);
+        if(myFile.isFile()){
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+            ByteArrayOutputStream bao = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bao);
+            byte[] ba = bao.toByteArray();
+            return Base64.encodeToString(ba, 0);
+        }
+        return filePath;
     }
 }

@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,12 +24,15 @@ import android.widget.Toast;
 import deeplife.gcme.com.deeplife.Activities.Disciple_Profile;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
+import deeplife.gcme.com.deeplife.FileManager.FileDownloader;
+import deeplife.gcme.com.deeplife.FileManager.FileManager;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.R;
 import deeplife.gcme.com.deeplife.SyncService.SyncService;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,9 +40,11 @@ import java.util.ArrayList;
  */
 public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter.DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
+    private static String TAG = "Image Download";
     private ArrayList<Disciples> DiscipleLists;
     private static MyClickListener myClickListener;
     private static Context myContext;
+    private FileManager myFileManager;
     int build_progress_percent; //for  assigning maximum percent for the progress bar
     boolean checked = false; //for checking whether the progress thread is called. It must be called only once.
 
@@ -86,8 +92,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
 
         @Override
         public boolean onLongClick(View v) {
-            DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()), FullName.getText().toString(), Phone.getText().toString());
-            return true;
+            Disciples dis = DeepLife.myDatabase.getDiscipleProfile(id.getText().toString());
+            if(dis != null){
+                DiscipleListAdapter.delete_Dialog(Integer.parseInt(id.getText().toString()), FullName.getText().toString(), dis.getPhone());
+                return true;
+            }
+            return false;
         }
     }
 
@@ -146,6 +156,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
     public DiscipleListAdapter(Context context, ArrayList<Disciples> discipleLists){
         this.DiscipleLists = discipleLists;
         this.myContext = context;
+        myFileManager = new FileManager(myContext);
 
     }
 
@@ -171,8 +182,21 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
         String country_Code = DeepLife.myDatabase.get_Country_by_CountryID(DiscipleLists.get(position).getCountry()).getCode();
         holder.Phone.setText("+"+country_Code+DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());
-        if(DiscipleLists.get(position).getPicture() !=null) {
-            holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(DiscipleLists.get(position).getPicture()));
+        if(DiscipleLists.get(position).getPicture() != null){
+            Log.i(TAG, "Downloading Image For:-> "+DiscipleLists.get(position).getPhone());
+            File image_file = myFileManager.getFileAt("DeepLife",DiscipleLists.get(position).getPicture());
+            Log.i(TAG, "Image Path:-> "+image_file.getAbsolutePath());
+            if(image_file.isFile()) {
+                holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getAbsolutePath()));
+            }else{
+                Log.i(TAG, "Downloading Image: \n");
+                Log.i(TAG, " Image Name: "+DiscipleLists.get(position).getPicture());
+                Log.i(TAG, " Image URL: "+DeepLife.PROFILE_PIC_URL+DiscipleLists.get(position).getPicture());
+                FileDownloader bb = new FileDownloader(myContext,DeepLife.PROFILE_PIC_URL+DiscipleLists.get(position).getPicture(),"DeepLife",DiscipleLists.get(position).getPicture());
+                bb.execute();
+            }
+        }else {
+            Log.i(TAG, "Null Pictures:-> "+DiscipleLists.get(position).getPhone());
         }
         holder.build_phase.setText(disciple_phase);
 
