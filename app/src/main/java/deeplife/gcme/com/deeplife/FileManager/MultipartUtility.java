@@ -4,6 +4,8 @@ package deeplife.gcme.com.deeplife.FileManager;
  * Created by bengeos on 8/2/16.
  */
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 
 import java.io.File;
@@ -43,7 +45,7 @@ public class MultipartUtility {
     public MultipartUtility(String requestURL, String charset)
             throws IOException {
         this.charset = charset;
-
+        Gson bb = new Gson();
         // creates a unique boundary based on time stamp
         boundary = "===" + System.currentTimeMillis() + "===";
 
