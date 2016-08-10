@@ -21,7 +21,10 @@ import org.json.JSONTokener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -47,7 +50,7 @@ import me.tatarka.support.job.JobService;
 
 public class SyncService extends JobService {
     private static final String TAG = "SyncService";
-    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony"};
+    public static final String[] Sync_Tasks = {"Send_Log", "Send_Disciples","Remove_Disciple","Update_Disciple","Send_Schedule","Send_Report","Send_Testimony","Update_Schedules"};
     private List<Object> Param;
     private Gson myParser;
     private List<kotlin.Pair<String,String>> Send_Param;
@@ -245,6 +248,9 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
             Log.i(TAG,"Found SendSchedule Service -> "+DeepLife.myDatabase.getSendSchedules().size());
             return "AddNew_Schedules";
+        }else if(DeepLife.myDatabase.getUpdateSchedules().size()>0){
+            Log.i(TAG,"Found Update Schedule Service -> "+DeepLife.myDatabase.getUpdateSchedules().size());
+            return "Update_Schedules";
         }else if(DeepLife.myDatabase.getSendReports().size()>0){
             Log.i(TAG,"Found SendReports Service -> "+DeepLife.myDatabase.getSendReports().size());
             return "Send_Report";
@@ -287,6 +293,12 @@ public class SyncService extends JobService {
         }else if(DeepLife.myDatabase.getSendSchedules().size()>0){
             Log.i(TAG,"GET Schedules TO Send -> \n");
             ArrayList<Schedule> foundData = DeepLife.myDatabase.getSendSchedules();
+            for(int i=0;i<foundData.size();i++){
+                Found.add(foundData.get(i));
+            }
+        }else if(DeepLife.myDatabase.getUpdateSchedules().size()>0){
+            Log.i(TAG,"GET Schedules TO UPDATE -> \n");
+            ArrayList<Schedule> foundData = DeepLife.myDatabase.getUpdateSchedules();
             for(int i=0;i<foundData.size();i++){
                 Found.add(foundData.get(i));
             }
@@ -345,6 +357,7 @@ public class SyncService extends JobService {
 
     public static void Add_Schedule(JSONArray json_schedules){
         try{
+            DateFormat df = new SimpleDateFormat(DeepLife.DATE_TIME_FORMAT);
             if(json_schedules.length()>0){
                 Log.i(TAG,"Adding New Schedules -> \n"+json_schedules.toString());
                 for(int i=0;i<json_schedules.length();i++){
@@ -355,16 +368,23 @@ public class SyncService extends JobService {
                     cv.put(Database.SCHEDULES_FIELDS[2], obj.getString("time"));
                     cv.put(Database.SCHEDULES_FIELDS[3], obj.getString("type"));
                     cv.put(Database.SCHEDULES_FIELDS[4], obj.getString("description"));
-
-                    long x = DeepLife.myDatabase.insert(Database.Table_SCHEDULES,cv);
-                    if(x>0){
-                        Log.i(TAG,"Adding Schedule Log -> \n");
-                        ContentValues log = new ContentValues();
-                        log.put(Database.LOGS_FIELDS[0],"Schedule");
-                        log.put(Database.LOGS_FIELDS[1],Sync_Tasks[0]);
-                        log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
-                        DeepLife.myDatabase.insert(Database.Table_LOGS, log);
+                    Schedule sch = DeepLife.myDatabase.get_Schedule_by_time(obj.getString("time"));
+                    long x = 0;
+                    if(sch != null){
+                        x = DeepLife.myDatabase.update(Database.Table_SCHEDULES,cv,Integer.valueOf(sch.getID()));
+                    }else{
+                        x = DeepLife.myDatabase.insert(Database.Table_SCHEDULES,cv);
                     }
+                    Log.i(TAG,"Adding Schedule Log -> \n");
+                    ContentValues log = new ContentValues();
+                    log.put(Database.LOGS_FIELDS[0],"Schedule");
+                    log.put(Database.LOGS_FIELDS[1],Sync_Tasks[0]);
+                    log.put(Database.LOGS_FIELDS[2],obj.getString("id"));
+                    DeepLife.myDatabase.insert(Database.Table_LOGS, log);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(df.parse(obj.getString("time")));
+                    DeepLife.myReminderManager.setReminder(x,cal);
                 }
             }
         }catch (Exception e){

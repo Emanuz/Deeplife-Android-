@@ -230,7 +230,7 @@ public class Register extends AppCompatActivity{
         myDialog.setTitle(R.string.app_name);
         myDialog.setMessage("Authenticating the Account ....");
         myDialog.show();
-        ArrayList<User> user = new ArrayList<>();
+        ArrayList<User> user = new ArrayList<User>();
         user.add(New_User);
         List<Pair<String, String>> Send_Param;
         Send_Param = new ArrayList<Pair<String, String>>();

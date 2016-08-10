@@ -34,6 +34,7 @@ import deeplife.gcme.com.deeplife.Activities.Under_Construction;
 import deeplife.gcme.com.deeplife.Activities.UserProfile.User_Profile;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Disciples.DiscipleListFragment;
+import deeplife.gcme.com.deeplife.Models.Schedule;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.NewsFeed.NewsFeedPage;
 import deeplife.gcme.com.deeplife.Reports.ReportFragment;
@@ -168,7 +169,16 @@ public class MainActivity extends AppCompatActivity
             intent = new Intent(this, AddTestimony.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-            deeplife.gcme.com.deeplife.DeepLife.myDatabase.Delete_All(Database.Table_USER);
+            ArrayList<Schedule> sch = DeepLife.myDatabase.get_All_Schedule();
+            for (Schedule _sch: sch) {
+                DeepLife.myReminderManager.CancelAlarm(Integer.valueOf(_sch.getID()));
+            }
+            DeepLife.myDatabase.Delete_All(Database.Table_USER);
+            DeepLife.myDatabase.Delete_All(Database.Table_LOGS);
+            DeepLife.myDatabase.Delete_All(Database.Table_DISCIPLES);
+            DeepLife.myDatabase.Delete_All(Database.Table_SCHEDULES);
+            DeepLife.myDatabase.Delete_All(Database.Table_NEWSFEED);
+            
             intent = new Intent(this, Splash.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -189,8 +199,8 @@ public class MainActivity extends AppCompatActivity
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);

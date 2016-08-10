@@ -229,7 +229,7 @@ public class AddSchedule extends AppCompatActivity implements android.app.TimePi
 			return;
 		}
 
-		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(ScheduleListFragment.DATE_TIME_FORMAT);
+		SimpleDateFormat dateTimeFormat = new SimpleDateFormat(DeepLife.DATE_TIME_FORMAT);
 		String reminderDateTime = dateTimeFormat.format(mCalendar.getTime());
 
 		ContentValues values = new ContentValues();

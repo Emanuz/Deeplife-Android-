@@ -19,7 +19,7 @@ import me.tatarka.support.job.JobScheduler;
  */
 public class DeepLife extends Application {
 //    public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
-    public static final String DEEP_URL  = "http://192.168.0.193/";
+    public static final String DEEP_URL  = "http://192.168.11.149/";
     public static final String API_URL  = DEEP_URL+"DeepLife_Final/public/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"DeepLife_Final/public/img/profile/";
     private static final int JOB_ID = 100;
@@ -30,6 +30,7 @@ public class DeepLife extends Application {
     public static int Slide_Pos = 0;
     public static ReminderManager myReminderManager;
     public static Context myContext;
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd kk:mm:ss";
 
     @Override
     public void onCreate() {

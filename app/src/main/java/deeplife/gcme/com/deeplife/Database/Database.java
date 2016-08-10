@@ -404,7 +404,7 @@ public class Database {
         return found;
     }
     public ArrayList<NewsFeed> getAllNewsFeeds(){
-        ArrayList<NewsFeed> found = new ArrayList<>();
+        ArrayList<NewsFeed> found = new ArrayList<NewsFeed>();
         String DB_Table = Table_NEWSFEED;
         try{
             Cursor c = myDatabase.query(DB_Table, getColumns(DB_Table), null, null, null, null, null);
@@ -756,6 +756,33 @@ public class Database {
         }
         return null;
     }
+    public Schedule get_Schedule_by_time(String time){
+        try{
+            String DB_Table = Table_SCHEDULES;
+            Cursor c = myDatabase.query(DB_Table,getColumns(DB_Table),null,null,null,null,null);
+            c.moveToFirst();
+            if(c.getCount()>0){
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    Schedule dis = new Schedule();
+                    dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
+                    dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
+                    dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
+                    dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
+                    dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
+                    dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
+                    Log.i(TAG, "Schedule Time Comparing: "+dis.getAlarm_Time()+" | "+time);
+                    if(dis.getAlarm_Time().equals(time)){
+                        return dis;
+                    }
+                }
+
+            }
+        }catch (Exception e){
+
+        }
+        return null;
+    }
 
     public Disciples getDiscipleProfile(String Dis_ID){
         try{
@@ -894,7 +921,7 @@ public class Database {
     }
     public ArrayList<Logs> getSendLogs(){
         Log.i(TAG, "SendLogs:\n");
-        ArrayList<Logs> Found = new ArrayList<>();
+        ArrayList<Logs> Found = new ArrayList<Logs>();
         try{
             Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
             if(c != null && c.getCount()>0){
@@ -922,7 +949,7 @@ public class Database {
     }
     public ArrayList<Disciples> getSendDisciples(){
         Log.i(TAG, "SendDisciples:\n");
-        ArrayList<Disciples> Found = new ArrayList<>();
+        ArrayList<Disciples> Found = new ArrayList<Disciples>();
         try{
             Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
             if(c != null && c.getCount()>0){
@@ -951,7 +978,7 @@ public class Database {
     }
     public ArrayList<Schedule> getSendSchedules(){
         Log.i(TAG, "SendSchedules:\n");
-        ArrayList<Schedule> Found = new ArrayList<>();
+        ArrayList<Schedule> Found = new ArrayList<Schedule>();
         try{
             Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
             if(c != null && c.getCount()>0){
@@ -978,9 +1005,37 @@ public class Database {
         }
         return Found;
     }
+    public ArrayList<Schedule> getUpdateSchedules(){
+        Log.i(TAG, "UpdateDisciples:\n");
+        ArrayList<Schedule> Found = new ArrayList<Schedule>();
+        try{
+            Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
+            if(c != null && c.getCount()>0){
+                c.moveToFirst();
+                for(int i=0;i<c.getCount();i++){
+                    c.moveToPosition(i);
+                    String ID = c.getString(c.getColumnIndex(LOGS_COLUMN[0]));
+                    String str = c.getString(c.getColumnIndex(LOGS_COLUMN[2]));
+                    String id = c.getString(c.getColumnIndex(LOGS_COLUMN[3]));
+                    Log.i(TAG, "Comparing-> \n" + SyncService.Sync_Tasks[3] + " | "+str);
+                    if(SyncService.Sync_Tasks[7].equals(str)){
+                        Log.i(TAG, "Update Schedule Count:-> " + c.getCount());
+                        Schedule newschedule = getScheduleWithId(id);
+                        if(newschedule !=null){
+                            newschedule.setID(ID);
+                            Found.add(newschedule);
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+
+        }
+        return Found;
+    }
     public ArrayList<ReportItem> getSendReports(){
         Log.i(TAG, "SendReports:\n");
-        ArrayList<ReportItem> Found = new ArrayList<>();
+        ArrayList<ReportItem> Found = new ArrayList<ReportItem>();
         try{
             Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
             if(c != null && c.getCount()>0){
@@ -1009,7 +1064,7 @@ public class Database {
     }
     public ArrayList<Disciples> getUpdateDisciples(){
         Log.i(TAG, "UpdateDisciples:\n");
-        ArrayList<Disciples> Found = new ArrayList<>();
+        ArrayList<Disciples> Found = new ArrayList<Disciples>();
         try{
             Cursor c = myDatabase.query(Table_LOGS, LOGS_COLUMN, null, null, null, null, null);
             if(c != null && c.getCount()>0){
