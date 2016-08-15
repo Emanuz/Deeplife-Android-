@@ -1,13 +1,18 @@
 package deeplife.gcme.com.deeplife.Activities;
 
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -67,6 +72,9 @@ public class Login extends AppCompatActivity{
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        }
 		init();
         if(DeepLife.myDatabase.count(deeplife.gcme.com.deeplife.Database.Database.Table_COUNTRY)<10){
             getAll_Countries();
@@ -174,7 +182,25 @@ public class Login extends AppCompatActivity{
         });
 
 	}
-	@Override
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case 11:{
+                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    Intent intent  = new Intent(this,Splash.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        }
+
+    }
+
+    @Override
 	protected void onDestroy() {
 		super.onDestroy();
 	}

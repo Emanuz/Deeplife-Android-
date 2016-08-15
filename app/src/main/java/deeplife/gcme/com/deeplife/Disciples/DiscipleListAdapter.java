@@ -1,15 +1,19 @@
 package deeplife.gcme.com.deeplife.Disciples;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.view.menu.ActionMenuItemView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -72,9 +76,13 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
             phoneIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:"+Phone.getText()));
-                    myContext.startActivity(intent);
+                    if (ContextCompat.checkSelfPermission(myContext, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:"+Phone.getText()));
+                        myContext.startActivity(intent);
+                    }else{
+                        Toast.makeText(myContext,"Phone Call Permision is Required!",Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             itemView.setOnClickListener(this);
