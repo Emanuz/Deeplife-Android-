@@ -31,6 +31,7 @@ import deeplife.gcme.com.deeplife.Adapters.Countries_Adapter;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
+import deeplife.gcme.com.deeplife.Main_Activity;
 import deeplife.gcme.com.deeplife.Models.Country;
 import deeplife.gcme.com.deeplife.Models.User;
 import deeplife.gcme.com.deeplife.R;
@@ -278,7 +279,7 @@ public class Login extends AppCompatActivity{
                             User dis = DeepLife.myDatabase.get_User();
                             long x = DeepLife.myDatabase.update(Database.Table_USER, cv, Integer.valueOf(dis.getId()));
                             Log.i(TAG, "Update User Table-> \n" + x);
-                            Intent main_activity = new Intent(getApplicationContext(),MainActivity.class);
+                            Intent main_activity = new Intent(getApplicationContext(),Main_Activity.class);
                             startActivity(main_activity);
                             finish();
                         }

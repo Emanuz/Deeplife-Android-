@@ -69,28 +69,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toast.makeText(this,"Check if Permission granted",Toast.LENGTH_LONG).show();
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE_STATE);
         }
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
-//        }
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
-//        }
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_INTERNET);
-//        }
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
-//        }
+        setContentView(R.layout.activity_main);
 
-        image = (ImageView) findViewById(R.id.image);
         btn_navigation_back = (ImageView) findViewById(R.id.image);
-        image.setImageResource(R.drawable.splash);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -123,12 +107,12 @@ public class MainActivity extends AppCompatActivity
         collapsingToolbarLayout.setTitle("DEEP LIFE");
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
         nav_header = (LinearLayout) findViewById(R.id.nav_header_layout);
-        viewPager.setCurrentItem(DeepLife.Slide_Pos,true);
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            Log.i("Test", "Tab: " + bundle.getInt("tab"));
-            setTab(bundle.getInt("tab"));
-        }
+        //viewPager.setCurrentItem(DeepLife.Slide_Pos,true);
+//        Bundle bundle = getIntent().getExtras();
+//        if(bundle != null){
+//            Log.i("Test", "Tab: " + bundle.getInt("tab"));
+//            setTab(bundle.getInt("tab"));
+//        }
     }
 
     @Override

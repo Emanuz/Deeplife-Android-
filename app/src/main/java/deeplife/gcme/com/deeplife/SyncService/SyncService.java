@@ -86,6 +86,7 @@ public class SyncService extends JobService {
             Send_Param.add(new kotlin.Pair<String, String>("Param",myParser.toJson(getParam())));
         }
         Log.i(TAG, "Prepared Request: \n" + Send_Param.toString());
+
         Fuel.post(DeepLife.API_URL, Send_Param).responseString(new Handler<String>() {
             @Override
             public void success(Request request, Response response, String s) {
@@ -171,6 +172,7 @@ public class SyncService extends JobService {
                 }
             }
         }
+
 
         jobFinished(params, false);
         return false;

@@ -81,7 +81,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
                         intent.setData(Uri.parse("tel:"+Phone.getText()));
                         myContext.startActivity(intent);
                     }else{
-                        Toast.makeText(myContext,"Phone Call Permision is Required!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(myContext,"Phone Call Permission is Required!",Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -186,7 +186,7 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
     public void onBindViewHolder(deeplife.gcme.com.deeplife.Disciples.DiscipleListAdapter.DataObjectHolder holder, int position) {
         String disciple_phase = DiscipleLists.get(position).getBuild_Phase();
         Log.i(Database.TAG, disciple_phase);
-        holder.FullName.setText((DiscipleLists.get(position).getFull_Name()));
+        holder.FullName.setText(Capitalize((DiscipleLists.get(position).getFull_Name())));
         String country_Code = DeepLife.myDatabase.get_Country_by_CountryID(DiscipleLists.get(position).getCountry()).getCode();
         holder.Phone.setText("+"+country_Code+DiscipleLists.get(position).getPhone());
         holder.id.setText(DiscipleLists.get(position).getId());
@@ -195,7 +195,11 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
             File image_file = myFileManager.getFileAt("DeepLife",DiscipleLists.get(position).getPicture());
             Log.i(TAG, "Image Path:-> "+image_file.getAbsolutePath());
             if(image_file.isFile()) {
-                holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getAbsolutePath()));
+                try{
+                    holder.discipleImage.setImageBitmap(BitmapFactory.decodeFile(image_file.getAbsolutePath()));
+                }catch (Exception e){
+
+                }
             }else{
                 Log.i(TAG, "Downloading Image: \n");
                 Log.i(TAG, " Image Name: "+DiscipleLists.get(position).getPicture());
@@ -244,5 +248,12 @@ public class DiscipleListAdapter extends RecyclerView.Adapter<deeplife.gcme.com.
     public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
-
+    public String Capitalize(String str){
+        if(str != null){
+            String string = str.toLowerCase();
+            return string.substring(0,1).toUpperCase()+string.substring(1);
+        }else {
+            return "";
+        }
+    }
 }

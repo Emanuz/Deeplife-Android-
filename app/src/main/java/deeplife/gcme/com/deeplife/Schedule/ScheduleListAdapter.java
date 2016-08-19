@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import deeplife.gcme.com.deeplife.Database.Database;
+import deeplife.gcme.com.deeplife.DeepLife;
 import deeplife.gcme.com.deeplife.MainActivity;
 import deeplife.gcme.com.deeplife.Models.Disciples;
 import deeplife.gcme.com.deeplife.Models.Schedule;
@@ -55,36 +56,30 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
 
         @Override
         public boolean onLongClick(View v) {
-            //Toast.makeText(myContext,"Disciple ID: "+ScheduleList.get(getPosition()).getDisciple_Phone(), Toast.LENGTH_LONG).show();
-            try{
-                ScheduleListAdapter.delete_Dialog(Integer.parseInt(tv_id.getText().toString()));
-            }catch (Exception e){
-
+            if(tv_id.getText().toString().length()>0){
+                delete_Dialog(Integer.parseInt(tv_id.getText().toString()),tv_time.getText().toString());
             }
+
             return true;
         }
     }
 
-    public static void delete_Dialog(final int id) {
+    public static void delete_Dialog(final int id, final String time) {
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        long deleted = deeplife.gcme.com.deeplife.DeepLife.myDatabase.remove(Database.Table_SCHEDULES,id);
-                        if(deleted!=-1){
-                            Toast.makeText(myContext,"Successfully Deleted",Toast.LENGTH_SHORT).show();
+                        long deleted = DeepLife.myDatabase.remove(Database.Table_SCHEDULES,id);
+                        if(deleted>0){
+                            Toast.makeText(myContext,"Successfully Deleted: "+deleted,Toast.LENGTH_SHORT).show();
                             ContentValues log = new ContentValues();
-                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Schedule");
-                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[4]);
-                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], id);
-                            deeplife.gcme.com.deeplife.DeepLife.myDatabase.insert(deeplife.gcme.com.deeplife.Database.Database.Table_LOGS, log);
-
-                            Intent intent = new Intent(myContext,MainActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            myContext.startActivity(intent);
-                            ((Activity) myContext).finish();                        }
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[0],"Remove_Schedule");
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[1], SyncService.Sync_Tasks[0]);
+                            log.put(deeplife.gcme.com.deeplife.Database.Database.LOGS_FIELDS[2], time);
+                            DeepLife.myDatabase.insert(Database.Table_LOGS, log);
+                        }
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         //No button clicked
@@ -137,6 +132,8 @@ public class ScheduleListAdapter extends RecyclerView.Adapter<ScheduleListAdapte
             holder.tv_time.setText(time);
             holder.tv_disc.setText(discription);
             holder.tv_title.setText(title);
+            holder.tv_id.setText(""+id);
+
         }
     }
 

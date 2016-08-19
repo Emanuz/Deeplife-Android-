@@ -25,7 +25,7 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/main_back"
+                android:src="@drawable/splash"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true"

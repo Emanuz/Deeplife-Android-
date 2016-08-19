@@ -23,7 +23,7 @@ import me.tatarka.support.job.JobScheduler;
  */
 public class DeepLife extends Application {
 //    public static final String API_URL  = "http://deeplife.cccsea.org/deep_api";
-    public static final String DEEP_URL  = "http://192.168.0.202/";
+    public static final String DEEP_URL  = "http://192.168.0.206/";
     public static final String API_URL  = DEEP_URL+"DeepLife_Final/public/deep_api";
     public static final String PROFILE_PIC_URL  = DEEP_URL+"DeepLife_Final/public/img/profile/";
     private static final int JOB_ID = 100;

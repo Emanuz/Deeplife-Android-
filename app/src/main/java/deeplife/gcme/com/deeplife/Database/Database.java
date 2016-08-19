@@ -740,16 +740,22 @@ public class Database {
         try{
             Schedule dis = new Schedule();
             String DB_Table = Table_SCHEDULES;
-            Cursor c = myDatabase.rawQuery("select * from " + DB_Table + " where id=" + id, null);
-            c.moveToFirst();
-            if(c.getCount()>0){
+            Cursor c = myDatabase.query(DB_Table,getColumns(DB_Table),null,null,null,null,null);
+            for(int i=0;i<c.getCount();i++){
+                c.moveToPosition(i);
                 dis.setID(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[0])));
                 dis.setDisciple_Phone(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[1])));
                 dis.setTitle(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[2])));
                 dis.setAlarm_Time(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[3])));
                 dis.setAlarm_Repeat(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[4])));
                 dis.setDescription(c.getString(c.getColumnIndex(SCHEDULES_COLUMN[5])));
-                return dis;
+                if(dis.getID().equals(id)) {
+                    return dis;
+                }
+            }
+            if(c.getCount()>0){
+
+
             }
         }catch (Exception e){
 

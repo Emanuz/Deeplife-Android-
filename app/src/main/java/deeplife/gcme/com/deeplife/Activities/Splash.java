@@ -9,6 +9,7 @@ import android.view.Window;
 import deeplife.gcme.com.deeplife.Database.Database;
 import deeplife.gcme.com.deeplife.Helps.AppHelps;
 import deeplife.gcme.com.deeplife.MainActivity;
+import deeplife.gcme.com.deeplife.Main_Activity;
 import deeplife.gcme.com.deeplife.R;
 
 
@@ -41,7 +42,7 @@ public class Splash extends Activity {
 
 		int Count = deeplife.gcme.com.deeplife.DeepLife.myDatabase.count(Database.Table_USER);
 		if(Count ==1){
-			Intent intent = new Intent(this, MainActivity.class);
+			Intent intent = new Intent(this, Main_Activity.class);
 			startActivity(intent);
 			finish();
 		}else{

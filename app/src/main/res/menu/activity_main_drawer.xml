@@ -22,10 +22,6 @@
             android:id="@+id/nav_learning"
             android:icon="@drawable/icon_nav_learn"
             android:title="Learning Tools" />
-        <item
-            android:id="@+id/nav_learning_test"
-            android:icon="@drawable/icon_nav_learn"
-            android:title="Testing Tools" />
     </group>
 
 
